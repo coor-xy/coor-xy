@@ -7,6 +7,8 @@ import LineComp from './components/chartComponents/LineComp';
 import SimpleScatterComp from './components/chartComponents/SimpleScatterComp';
 import SimpleAreaComp from './components/chartComponents/SimpleAreaComp';
 import Home from './components/Home';
+import {me} from './store'
+import PieComp from './components/chartComponents/PieComp';
 import { me } from './store';
 import FunnelComp from './components/chartComponents/FunnelComp';
 
@@ -26,6 +28,9 @@ const Routes = () => {
     <div>
       {isLoggedIn ? (
         <Switch>
+          <Route path="/bar" component={BarComp} />
+          <Route path="/pie" component={PieComp} />
+
           <Route path='/home' component={Home} />
           <Redirect to='/home' />
         </Switch>
@@ -49,4 +54,7 @@ const Routes = () => {
   );
 };
 
+
+
 export default Routes;
+
