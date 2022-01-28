@@ -11,6 +11,7 @@ import {me} from './store'
 import PieComp from './components/chartComponents/PieComp';
 import { me } from './store';
 import FunnelComp from './components/chartComponents/FunnelComp';
+import Create from './components/Create';
 
 /**
  * COMPONENT
@@ -49,6 +50,7 @@ const Routes = () => {
         <Route path='/simplescatter' component={SimpleScatterComp} />
         <Route path='/simplearea' component={SimpleAreaComp} />
         <Route path='/funnel' component={FunnelComp} />
+        <Route path='/create' component={Create} />
       </Switch>
     </div>
   );
