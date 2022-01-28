@@ -1,5 +1,5 @@
 {
-  "name": "fs-app-template",
+  "name": "coor-xy",
   "version": "2.0.0",
   "description": "Some boilerplate code to get you started - get shakin'!",
   "main": "index.js",
@@ -28,6 +28,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
+    "recharts": "^2.1.8",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {

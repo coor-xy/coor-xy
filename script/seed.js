@@ -2,28 +2,56 @@
 
 const {db, models: {User} } = require('../server/db')
 
-/**
- * seed - this function clears the database, updates tables to
- *      match the models, and populates the database.
- */
+const users = [
+{
+  username: 'Danny',
+  password: '123',
+  isAdmin: true,
+  email: 'danny@fsa.com',
+},
+{
+  username: 'cody',
+  password: '123',
+  isAdmin: false,
+  email: 'cody@fsa.com',
+},
+ {
+  username: 'murphy',
+  password: '123',
+  isAdmin: false,
+  email: 'murphy@fsa.com',
+},
+{
+  username: 'Blaine',
+  password: '123',
+  isAdmin: true,
+  email: 'blaine@fsa.com',
+},
+{
+  username: 'Edward',
+  password: '123',
+  isAdmin: true,
+  email: 'edward@fsa.com',
+},
+{
+  username: 'David',
+  password: '123',
+  isAdmin: true,
+  email: 'david@fsa.com',
+},
+]
+
 async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log('db synced!')
 
   // Creating Users
-  const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
-  ])
+  await Promise.all(users.map(user => {
+    return User.create(user);
+  }))
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
-  }
 }
 
 /*

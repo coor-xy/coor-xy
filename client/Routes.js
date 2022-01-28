@@ -2,6 +2,7 @@ import React, {Component, Fragment, useEffect } from 'react'
 import {connect, useSelector, useDispatch } from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
+import BarComp from './components/chartComponents/BarComp';
 import Home from './components/Home';
 import {me} from './store'
 
@@ -31,6 +32,9 @@ const Routes = () => {
             <Route path="/signup">{Signup}</Route>
           </Switch>
         )}
+        <Switch>
+          <Route path="/bar" component={BarComp} />
+        </Switch>
       </div>
   )
 
