@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import BarComp from './components/chartComponents/BarComp';
 import Home from './components/Home';
 import {me} from './store'
+import Create from './components/Create'
 
 /**
  * COMPONENT
@@ -34,6 +35,7 @@ const Routes = () => {
         )}
         <Switch>
           <Route path="/bar" component={BarComp} />
+          <Route path="/create" component={Create} />
         </Switch>
       </div>
   )
