@@ -6,6 +6,11 @@ const Create = () => {
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [hasHeaders, setHasHeaders] = useState(true);
   const [data, setData] = useState([]);
+  const [columns, setColumns] = useState([]);
+  const [selectedAxis, setSelectedAxis] = useState({
+      x: "",
+      y: ""
+  });
 
   const handleSelectFile = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -22,11 +27,27 @@ const Create = () => {
     setIsFileSelected(false);
   };
 
+  const handleData = (data) => {
+    if (hasHeaders) {
+      setData(data);
+      setColumns(Object.keys(data[0]));
+    } else {
+      const formattedData = data.map((d) =>
+        d.reduce((acc, cellValue, i) => {
+          acc[`Col ${i + 1}`] = cellValue;
+          return acc;
+        }, {})
+      );
+      setData(formattedData);
+      setColumns(Object.keys(formattedData[0]));
+    }
+  };
+
   const handleLoadFile = () => {
     Papa.parse(selectedFile, {
       header: hasHeaders,
       complete: function (results) {
-        setData(results.data);
+        handleData(results.data);
       },
     });
     handleCancelSelect();
@@ -34,15 +55,17 @@ const Create = () => {
 
   const setPreviewRange = (data) => {
     const rowLimit = 5;
-    return data.length >= rowLimit
-      ? data.slice(0, rowLimit)
-      : data;
+    return data.length >= rowLimit ? data.slice(0, rowLimit) : data;
   };
 
   const handleCancelLoad = () => {
     setData([]);
     setHasHeaders(true);
   };
+
+  const handleAxisSelection = (e) => {
+    setSelectedAxis({...selectedAxis, [e.target.name]: e.target.value });
+  }
 
   return (
     <div>
@@ -79,45 +102,45 @@ const Create = () => {
           <div>
             <button onClick={handleCancelLoad}>Cancel</button>
           </div>
-          {!hasHeaders ? (
-            <table>
-              <thead>
-                <tr>
-                  {data[0].map((th, i) => (
-                    <th key={i}>{i}</th>
+          <table>
+            <thead>
+              <tr>
+                {Object.keys(data[0]).map((th, i) => (
+                  <th key={i}>{th}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {setPreviewRange(data).map((tr, i) => (
+                <tr key={i}>
+                  {Object.values(tr).map((td, j) => (
+                    <td key={j}>{td}</td>
                   ))}
                 </tr>
-              </thead>
-              <tbody>
-                {setPreviewRange(data).map((tr, i) => (
-                  <tr key={i}>
-                    {tr.map((td, j) => (
-                      <td key={j}>{td}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <table>
-              <thead>
-                <tr>
-                  {Object.keys(data[0]).map((th, i) => (
-                    <th key={i}>{th}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {setPreviewRange(data).map((tr, i) => (
-                  <tr key={i}>
-                    {Object.values(tr).map((td, j) => (
-                      <td key={j}>{td}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+              ))}
+            </tbody>
+          </table>
+          <div>
+            <label htmlFor="x">Choose horizontal axis:</label>
+            <select name="x" id="horizontal-column-select" onChange={handleAxisSelection}>
+              <option value="">--Choose an option--</option>
+              {columns.map((c, i) => (
+                <option key={i} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="y">Choose vertical axis:</label>
+            <select name="y" id="vertical-column-select" onChange={handleAxisSelection}>
+              <option value="">--Choose an option--</option>
+              {columns.map((c, i) => (
+                <option key={i} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            {console.log(selectedAxis)}
+          </div> 
         </div>
       )}
     </div>
