@@ -9,7 +9,6 @@ import SimpleAreaComp from './components/chartComponents/SimpleAreaComp';
 import Home from './components/Home';
 import {me} from './store'
 import PieComp from './components/chartComponents/PieComp';
-import { me } from './store';
 import FunnelComp from './components/chartComponents/FunnelComp';
 import Create from './components/Create';
 
