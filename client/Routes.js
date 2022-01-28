@@ -5,11 +5,11 @@ import { Login, Signup } from './components/AuthForm';
 import BarComp from './components/chartComponents/BarComp';
 import Home from './components/Home';
 import {me} from './store'
-
+import PieComp from './components/chartComponents/PieComp';
 /**
  * COMPONENT
  */
-  
+
 const Routes = () => {
   const isLoggedIn = useSelector(state => !!state.auth.id)
   const dispatch = useDispatch()
@@ -34,6 +34,7 @@ const Routes = () => {
         )}
         <Switch>
           <Route path="/bar" component={BarComp} />
+          <Route path="/pie" component={PieComp} />
         </Switch>
       </div>
   )
