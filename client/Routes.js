@@ -9,6 +9,7 @@ import SimpleAreaComp from './components/chartComponents/SimpleAreaComp';
 import Home from './components/Home';
 import { me } from './store';
 import FunnelComp from './components/chartComponents/FunnelComp';
+import Create from './components/Create';
 
 /**
  * COMPONENT
@@ -44,6 +45,7 @@ const Routes = () => {
         <Route path='/simplescatter' component={SimpleScatterComp} />
         <Route path='/simplearea' component={SimpleAreaComp} />
         <Route path='/funnel' component={FunnelComp} />
+        <Route path='/create' component={Create} />
       </Switch>
     </div>
   );
