@@ -33,11 +33,15 @@ const Create = () => {
   };
 
   const setPreviewRange = (data) => {
-    return data.length >= 10 ? data.slice(0, 11) : data;
+    const rowLimit = 5;
+    return data.length >= rowLimit
+      ? data.slice(0, rowLimit)
+      : data;
   };
 
   const handleCancelLoad = () => {
     setData([]);
+    setHasHeaders(true);
   };
 
   return (
@@ -77,6 +81,13 @@ const Create = () => {
           </div>
           {!hasHeaders ? (
             <table>
+              <thead>
+                <tr>
+                  {data[0].map((th, i) => (
+                    <th key={i}>{i}</th>
+                  ))}
+                </tr>
+              </thead>
               <tbody>
                 {setPreviewRange(data).map((tr, i) => (
                   <tr key={i}>
@@ -104,9 +115,6 @@ const Create = () => {
                     ))}
                   </tr>
                 ))}
-                <tr>
-                  <th></th>
-                </tr>
               </tbody>
             </table>
           )}
