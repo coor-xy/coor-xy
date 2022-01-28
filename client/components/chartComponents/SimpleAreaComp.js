@@ -1,20 +1,13 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
   AreaChart,
   Area,
-  BarChart,
-  Bar,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
-  LineChart,
-  Line,
 } from 'recharts';
-
 const data = [
   {
     name: 'Page A',
@@ -60,29 +53,30 @@ const data = [
   },
 ];
 
-const BarComp = () => {
+const SimpleAreaComp = () => {
   return (
-    <BarChart
-      width={500}
-      height={400}
-      data={data}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-    >
-      <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey='name' />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Bar type='monotone' dataKey='uv' fill='#82ca9d' />
-      <Bar type='monotone' dataKey='pv' fill='#8884d8' />
-      <Bar type='monotone' dataKey='amt' fill='#82ca6d' />
-    </BarChart>
+    <div className='areachart'>
+      <ResponsiveContainer width='100%' height='100%'>
+        <AreaChart
+          width={500}
+          height={400}
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='name' />
+          <YAxis />
+          <Tooltip />
+          <Area type='monotone' dataKey='uv' stroke='#8884d8' fill='#8884d8' />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
-export default BarComp;
+export default SimpleAreaComp;
