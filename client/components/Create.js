@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
+import TestbarComp from "./chartComponents/TESTbarComp";
 
 const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
@@ -7,9 +8,9 @@ const Create = () => {
   const [hasHeaders, setHasHeaders] = useState(true);
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
-  const [selectedAxis, setSelectedAxis] = useState({
-      x: "",
-      y: ""
+  const [selectedColumns, setSelectedColumns] = useState({
+    primary: "",
+    values: [],
   });
 
   const handleSelectFile = (e) => {
@@ -61,11 +62,35 @@ const Create = () => {
   const handleCancelLoad = () => {
     setData([]);
     setHasHeaders(true);
+    setSelectedColumns({
+      primary: "",
+      values: [],
+    })
   };
 
-  const handleAxisSelection = (e) => {
-    setSelectedAxis({...selectedAxis, [e.target.name]: e.target.value });
-  }
+  const handleSelectColumn = (e) => {
+    const axis = e.target.name;
+    const column = e.target.value;
+    if (axis === "primary") {
+      setSelectedColumns({ ...selectedColumns, [axis]: column });
+    } else if (!selectedColumns[axis].includes(column)) {
+      setSelectedColumns({
+        ...selectedColumns,
+        [axis]: [...selectedColumns[axis], column],
+      });
+    }
+  };
+
+  const handleDeSelectColumn = (axis, column) => {
+    if (axis === "primary") {
+      setSelectedColumns({ ...selectedColumns, [axis]: "" });
+    } else {
+      setSelectedColumns({
+        ...selectedColumns,
+        [axis]: selectedColumns[axis].filter((y) => y !== column),
+      });
+    }
+  };
 
   return (
     <div>
@@ -121,26 +146,102 @@ const Create = () => {
             </tbody>
           </table>
           <div>
-            <label htmlFor="x">Choose horizontal axis:</label>
-            <select name="x" id="horizontal-column-select" onChange={handleAxisSelection}>
-              <option value="">--Choose an option--</option>
-              {columns.map((c, i) => (
-                <option key={i} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-            <label htmlFor="y">Choose vertical axis:</label>
-            <select name="y" id="vertical-column-select" onChange={handleAxisSelection}>
-              <option value="">--Choose an option--</option>
-              {columns.map((c, i) => (
-                <option key={i} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-            {console.log(selectedAxis)}
-          </div> 
+            <div>
+              <div>
+                <label htmlFor="primary">Select a primary axis:</label>
+                <select
+                  name="primary"
+                  id="primary-column-select"
+                  size="3"
+                  onChange={handleSelectColumn}
+                >
+                  <option value="" disabled>
+                    --Choose a column--
+                  </option>
+                  {columns.map((c, i) => (
+                    <option key={i} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+                {!selectedColumns.primary ? (
+                  <div>
+                    <p>
+                      <small>You haven't selected anything</small>
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p>
+                      <small>Selected column: </small>
+                    </p>
+                    <p>
+                      {`${selectedColumns.primary} `}
+                      <small onClick={() => handleDeSelectColumn("primary")}>
+                        remove
+                      </small>
+                    </p>
+                  </div>
+                )}
+              </div>
+              <div>
+                <label htmlFor="values">Select values:</label>
+                <select
+                  name="values"
+                  id="values-column-select"
+                  size="3"
+                  onChange={handleSelectColumn}
+                >
+                  <option value="" disabled>
+                    --Choose a column--
+                  </option>
+                  {columns.map((c, i) => (
+                    <option key={i} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+                {!selectedColumns.values.length ? (
+                  <div>
+                    <p>
+                      <small>You haven't selected anything</small>
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p>
+                      <small>Selected Columns: </small>
+                    </p>
+                    {selectedColumns.values.map((val, i) => (
+                      <p key={i}>
+                        {`${val} `}
+                        <small
+                          onClick={() => handleDeSelectColumn("values", val)}
+                        >
+                          remove
+                        </small>
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div>
+            {selectedColumns.primary && selectedColumns.values.length ? (
+              <div>
+                <TestbarComp
+                  data={data}
+                  primaryColumn={selectedColumns.primary}
+                  valueColumns={selectedColumns.values}
+                />
+              </div>
+            ) : (
+              <div>
+                {/*not sure what goes here, maybe charts with default data */}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
