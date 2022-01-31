@@ -11,6 +11,7 @@ import {me} from './store'
 import PieComp from './components/chartComponents/PieComp';
 import FunnelComp from './components/chartComponents/FunnelComp';
 import Create from './components/Create';
+import Edit from './components/Edit';
 
 /**
  * COMPONENT
@@ -50,6 +51,7 @@ const Routes = () => {
         <Route path='/simplearea' component={SimpleAreaComp} />
         <Route path='/funnel' component={FunnelComp} />
         <Route path='/create' component={Create} />
+        <Route path='/edit' component={Edit} />
       </Switch>
     </div>
   );
