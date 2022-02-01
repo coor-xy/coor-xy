@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { getRandomColor } from "../utility";
-
-const TESTvalueColumns = ["Group A", "Group B", "Group C", "Group D"];
-const TESTavailableCharts = ["Bar", "Funnel", "Line", "Pie", "Area", "Scatter"];
+import { useLocation } from 'react-router-dom'
+import TestbarComp from "./chartComponents/TESTbarComp";
 
 const Edit = () => {
-  const valueColumns = TESTvalueColumns; // we should get columns from props or redux store
-  const availableCharts = TESTavailableCharts; // we should get columns from props or redux store
+  const location = useLocation();
+  const { data, selectedColumns } = useSelector(state => state);
+  const availableCharts = ["Bar", "Funnel", "Line", "Pie", "Area", "Scatter"];
   const [chartConfig, setChartConfig] = useState({
-    type: "Bar",
+    type: location.state.type,
     width: 500,
     height: 400,
     seriesColors: [],
@@ -17,12 +18,9 @@ const Edit = () => {
   useEffect(() => {
     // We can fetch a user's saved chart config in this hook if it exists
     // Otherwise, we can set the chart config in state with some defaults
+
     if (!chartConfig.seriesColors.length) {
-      const mapRandomColors = valueColumns.map((col) => ({
-        name: col,
-        color: getRandomColor(),
-      }));
-      setChartConfig({ ...chartConfig, seriesColors: [...mapRandomColors] });
+      setChartConfig({ ...chartConfig, seriesColors: [...selectedColumns.values] });
     }
   }, []);
 
@@ -118,6 +116,15 @@ const Edit = () => {
       </div>
       <div>
         <p>chart goes here</p>
+        
+        { chartConfig.type === "Bar" && 
+           <TestbarComp
+          data={data}
+          primaryColumn={selectedColumns.primary}
+          valueColumns={selectedColumns.values}
+        /> 
+        }
+        { chartConfig.type === "Scatter" && <p>this is scatter</p>}
       </div>
     </div>
   );

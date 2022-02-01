@@ -37,7 +37,7 @@ const TestBarComp = (props) => {
       <Tooltip />
       <Legend />
       {valueColumns.map((col, i) => (
-        <Bar key={i} type="monotone" dataKey={col} fill={getRandomColor()} />
+        <Bar key={i} type="monotone" dataKey={col.name} fill={col.color} />
       ))}
     </BarChart>
   );

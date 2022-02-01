@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Papa from "papaparse";
 import TestbarComp from "./chartComponents/TESTbarComp";
+import {Link} from 'react-router-dom'
+import { _setSelectedColumns } from '../store/selectColumns'
+import { _setData } from '../store/data'
 import axios from 'axios'
+import { getRandomColor } from "../utility";
 
 const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
@@ -13,6 +18,7 @@ const Create = () => {
     primary: "",
     values: [],
   });
+  const dispatch = useDispatch();
 
   const handleSelectFile = async (e) => {
     const file = e.target.files[0]
@@ -86,7 +92,7 @@ const Create = () => {
     } else if (!selectedColumns[axis].includes(column)) {
       setSelectedColumns({
         ...selectedColumns,
-        [axis]: [...selectedColumns[axis], column],
+        [axis]: [...selectedColumns[axis], {name:column,color:getRandomColor()}],
       });
     }
   };
@@ -97,10 +103,15 @@ const Create = () => {
     } else {
       setSelectedColumns({
         ...selectedColumns,
-        [axis]: selectedColumns[axis].filter((y) => y !== column),
+        [axis]: selectedColumns[axis].filter((y) => y.name !== column),
       });
     }
   };
+
+  const handleSendToReduxStore = () => {
+    dispatch(_setData(data));
+    dispatch(_setSelectedColumns(selectedColumns));
+  }
 
   return (
     <div>
@@ -229,9 +240,9 @@ const Create = () => {
                     </p>
                     {selectedColumns.values.map((val, i) => (
                       <p key={i}>
-                        {`${val} `}
+                        {`${val.name} `}
                         <small
-                          onClick={() => handleDeSelectColumn("values", val)}
+                          onClick={() => handleDeSelectColumn("values", val.name)}
                         >
                           remove
                         </small>
@@ -245,11 +256,18 @@ const Create = () => {
           <div>
             {selectedColumns.primary && selectedColumns.values.length ? (
               <div>
-                <TestbarComp
-                  data={data}
-                  primaryColumn={selectedColumns.primary}
-                  valueColumns={selectedColumns.values}
-                />
+                <Link to={{
+                  pathname: "/edit",
+                  state: { type: "Bar" }
+                }} 
+                 onClick={handleSendToReduxStore}
+                >
+                  <TestbarComp
+                    data={data}
+                    primaryColumn={selectedColumns.primary}
+                    valueColumns={selectedColumns.values}
+                  />
+                </Link>
               </div>
             ) : (
               <div>
