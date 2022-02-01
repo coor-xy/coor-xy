@@ -13,6 +13,7 @@ app.use(express.json())
 // auth and api routes
 app.use('/auth', require('./auth'))
 app.use('/api', require('./api'))
+app.use('/s3url', require('./awsS3'))
 
 app.get('/', (req, res)=> res.sendFile(path.join(__dirname, '..', 'public/index.html')));
 

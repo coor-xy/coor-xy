@@ -20,9 +20,11 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.1066.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "compression": "^1.7.3",
+    "dotenv": "^14.3.2",
     "express": "^4.16.4",
     "history": "^4.9.0",
     "jsonwebtoken": "^8.5.1",
@@ -30,7 +32,8 @@
     "papaparse": "^5.3.1",
     "pg": "^8.5.1",
     "recharts": "^2.1.8",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
