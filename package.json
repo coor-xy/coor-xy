@@ -26,7 +26,6 @@
     "compression": "^1.7.3",
     "dotenv": "^14.3.2",
     "express": "^4.16.4",
-    "fs": "^0.0.1-security",
     "history": "^4.9.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",

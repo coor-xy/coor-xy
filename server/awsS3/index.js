@@ -23,7 +23,7 @@ const s3 = new aws.S3({
 async function generateUploadURL() {
     const params = ({
         Bucket: bucketName,
-        Key: 'file4',
+        Key: uuidv4()+'.csv',
         Expires: 60
     })
 

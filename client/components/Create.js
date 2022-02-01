@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Papa from "papaparse";
 import TestbarComp from "./chartComponents/TESTbarComp";
 import axios from 'axios'
-// import fs from 'fs'
 
 const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
@@ -14,22 +13,19 @@ const Create = () => {
     primary: "",
     values: [],
   });
-  const [image, setImage] = useState('')
 
   const handleSelectFile = async (e) => {
-    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0]
+    setSelectedFile(file);
     setIsFileSelected(true);
-    const { data: url } = await axios.get('/s3url')
-    console.log('full url:',url)
-    // const file = fs.createReadStream(selectedFile)
-    await axios.put(url, selectedFile, {
-      headers: {
-        'Contenet-Type': 'multipart/form-data'
-      }
-    })
-    const fileUrl = url.split('?')[0]
-    console.log('file url:', fileUrl)
-    setImage(fileUrl)
+    // const { data: url } = await axios.get('/s3url')
+    // await axios.put(url, file, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   }
+    // })
+    // const fileUrl = url.split('?')[0]
+    // console.log('file url:', fileUrl)
   };
 
   const handleHasHeaders = (e) => {
@@ -125,7 +121,6 @@ const Create = () => {
             <button onClick={handleLoadFile}>Load file</button>
             <button onClick={handleCancelSelect}>Cancel</button>
           </div>
-          <img src={image}/>
         </div>
       ) : !data.length ? (
         <div>
@@ -133,8 +128,13 @@ const Create = () => {
           <input
             type="file"
             name="file"
-            // accept=".csv"
+            accept=".csv"
             onChange={handleSelectFile}
+            // onClick={async () => {
+            //   const {data} = await axios.get('https://coor-xy-files.s3.amazonaws.com/1ac043e6-e16d-4fd6-aaa1-6ed483062e23.csv')
+            //   setSelectedFile(data)
+            //   setIsFileSelected(true)
+            // }}
           />
         </div>
       ) : (
