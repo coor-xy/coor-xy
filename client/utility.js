@@ -2,7 +2,7 @@ export const transformData = (data, primaryColumn, valueColumns) => {
   return data.map((d) => {
     const row = {};
     row[primaryColumn] = d[primaryColumn];
-    valueColumns.map((val) => (row[val] = parseInt(d[val])));
+    valueColumns.map((column) => (row[column.name] = parseInt(d[column.name])));
     return row;
   });
 };

@@ -20,11 +20,7 @@ const Edit = () => {
     // Otherwise, we can set the chart config in state with some defaults
 
     if (!chartConfig.seriesColors.length) {
-      const mapRandomColors = selectedColumns.values.map((col) => ({
-        name: col,
-        color: getRandomColor(),
-      }));
-      setChartConfig({ ...chartConfig, seriesColors: [...mapRandomColors] });
+      setChartConfig({ ...chartConfig, seriesColors: [...selectedColumns.values] });
     }
   }, []);
 

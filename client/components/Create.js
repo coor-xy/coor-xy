@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 import { _setSelectedColumns } from '../store/selectColumns'
 import { _setData } from '../store/data'
 import axios from 'axios'
+import { getRandomColor } from "../utility";
 
 const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
@@ -91,7 +92,7 @@ const Create = () => {
     } else if (!selectedColumns[axis].includes(column)) {
       setSelectedColumns({
         ...selectedColumns,
-        [axis]: [...selectedColumns[axis], column],
+        [axis]: [...selectedColumns[axis], {name:column,color:getRandomColor()}],
       });
     }
   };
@@ -102,7 +103,7 @@ const Create = () => {
     } else {
       setSelectedColumns({
         ...selectedColumns,
-        [axis]: selectedColumns[axis].filter((y) => y !== column),
+        [axis]: selectedColumns[axis].filter((y) => y.name !== column),
       });
     }
   };
@@ -239,9 +240,9 @@ const Create = () => {
                     </p>
                     {selectedColumns.values.map((val, i) => (
                       <p key={i}>
-                        {`${val} `}
+                        {`${val.name} `}
                         <small
-                          onClick={() => handleDeSelectColumn("values", val)}
+                          onClick={() => handleDeSelectColumn("values", val.name)}
                         >
                           remove
                         </small>
