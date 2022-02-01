@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Papa from "papaparse";
 import TestbarComp from "./chartComponents/TESTbarComp";
+import {Link} from 'react-router-dom'
+import { _setSelectedColumns } from '../store/selectColumns'
+import { _setData } from '../store/data'
 import axios from 'axios'
 
 const Create = () => {
@@ -13,6 +17,7 @@ const Create = () => {
     primary: "",
     values: [],
   });
+  const dispatch = useDispatch();
 
   const handleSelectFile = async (e) => {
     const file = e.target.files[0]
@@ -101,6 +106,11 @@ const Create = () => {
       });
     }
   };
+
+  const handleSendToReduxStore = () => {
+    dispatch(_setData(data));
+    dispatch(_setSelectedColumns(selectedColumns));
+  }
 
   return (
     <div>
@@ -245,11 +255,18 @@ const Create = () => {
           <div>
             {selectedColumns.primary && selectedColumns.values.length ? (
               <div>
-                <TestbarComp
-                  data={data}
-                  primaryColumn={selectedColumns.primary}
-                  valueColumns={selectedColumns.values}
-                />
+                <Link to={{
+                  pathname: "/edit",
+                  state: { type: "Bar" }
+                }} 
+                 onClick={handleSendToReduxStore}
+                >
+                  <TestbarComp
+                    data={data}
+                    primaryColumn={selectedColumns.primary}
+                    valueColumns={selectedColumns.values}
+                  />
+                </Link>
               </div>
             ) : (
               <div>
