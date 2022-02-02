@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Papa from "papaparse";
-import TestbarComp from "./chartComponents/TESTbarComp";
-import {Link} from 'react-router-dom'
-import { _setSelectedColumns } from '../store/selectColumns'
-import { _setData } from '../store/data'
-import axios from 'axios'
+import charts from "./chartComponents";
+import { Link } from "react-router-dom";
+import { _setSelectedColumns } from "../store/selectColumns";
+import { _setData } from "../store/data";
+import axios from "axios";
 import { getRandomColor } from "../utility";
+const {
+  BarComp,
+  SimpleAreaComp,
+  SimpleScatterComp,
+  LineComp
+} = charts;
 
 const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
@@ -21,7 +27,7 @@ const Create = () => {
   const dispatch = useDispatch();
 
   const handleSelectFile = async (e) => {
-    const file = e.target.files[0]
+    const file = e.target.files[0];
     setSelectedFile(file);
     setIsFileSelected(true);
     // const { data: url } = await axios.get('/s3url')
@@ -81,7 +87,7 @@ const Create = () => {
     setSelectedColumns({
       primary: "",
       values: [],
-    })
+    });
   };
 
   const handleSelectColumn = (e) => {
@@ -92,7 +98,10 @@ const Create = () => {
     } else if (!selectedColumns[axis].includes(column)) {
       setSelectedColumns({
         ...selectedColumns,
-        [axis]: [...selectedColumns[axis], {name:column,color:getRandomColor()}],
+        [axis]: [
+          ...selectedColumns[axis],
+          { name: column, color: getRandomColor() },
+        ],
       });
     }
   };
@@ -111,7 +120,7 @@ const Create = () => {
   const handleSendToReduxStore = () => {
     dispatch(_setData(data));
     dispatch(_setSelectedColumns(selectedColumns));
-  }
+  };
 
   return (
     <div>
@@ -242,7 +251,9 @@ const Create = () => {
                       <p key={i}>
                         {`${val.name} `}
                         <small
-                          onClick={() => handleDeSelectColumn("values", val.name)}
+                          onClick={() =>
+                            handleDeSelectColumn("values", val.name)
+                          }
                         >
                           remove
                         </small>
@@ -256,13 +267,53 @@ const Create = () => {
           <div>
             {selectedColumns.primary && selectedColumns.values.length ? (
               <div>
-                <Link to={{
-                  pathname: "/edit",
-                  state: { type: "Bar" }
-                }} 
-                 onClick={handleSendToReduxStore}
+                <Link
+                  to={{
+                    pathname: "/edit",
+                    state: { type: "Bar" },
+                  }}
+                  onClick={handleSendToReduxStore}
                 >
-                  <TestbarComp
+                  <BarComp
+                    data={data}
+                    primaryColumn={selectedColumns.primary}
+                    valueColumns={selectedColumns.values}
+                  />
+                </Link>
+                <Link
+                  to={{
+                    pathname: "/edit",
+                    state: { type: "Scatter" },
+                  }}
+                  onClick={handleSendToReduxStore}
+                >
+                  <SimpleScatterComp
+                    data={data}
+                    primaryColumn={selectedColumns.primary}
+                    valueColumns={selectedColumns.values}
+                  />
+                </Link>
+                <Link
+                  to={{
+                    pathname: "/edit",
+                    state: { type: "Area" },
+                  }}
+                  onClick={handleSendToReduxStore}
+                >
+                  <SimpleAreaComp
+                    data={data}
+                    primaryColumn={selectedColumns.primary}
+                    valueColumns={selectedColumns.values}
+                  />
+                </Link>
+                <Link
+                  to={{
+                    pathname: "/edit",
+                    state: { type: "Line" },
+                  }}
+                  onClick={handleSendToReduxStore}
+                >
+                  <LineComp
                     data={data}
                     primaryColumn={selectedColumns.primary}
                     valueColumns={selectedColumns.values}

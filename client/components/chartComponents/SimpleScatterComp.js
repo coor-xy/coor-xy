@@ -6,19 +6,11 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
 } from 'recharts';
+import { transformData } from "../../utility";
 
-const data = [
-  { x: 100, y: 200, z: 200 },
-  { x: 120, y: 100, z: 260 },
-  { x: 170, y: 300, z: 400 },
-  { x: 140, y: 250, z: 280 },
-  { x: 150, y: 400, z: 500 },
-  { x: 110, y: 280, z: 200 },
-];
-
-const SimpleScatterComp = () => {
+const SimpleScatterComp = (props) => {
+  const { data, primaryColumn, valueColumns } = props;
   return (
     <ScatterChart
       width={400}
@@ -31,10 +23,10 @@ const SimpleScatterComp = () => {
       }}
     >
       <CartesianGrid />
-      <XAxis type='number' dataKey='x' name='stature' unit='cm' />
-      <YAxis type='number' dataKey='y' name='weight' unit='kg' />
+      <XAxis type='number' dataKey={primaryColumn} name={primaryColumn} />
+      <YAxis type='number' dataKey={valueColumns[0].name} name={valueColumns[0].name} />
       <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-      <Scatter name='A school' data={data} fill='#8884d8' />
+      <Scatter name='A school' data={transformData(data, primaryColumn, valueColumns)} fill={valueColumns[0].color} />
     </ScatterChart>
   );
 };
