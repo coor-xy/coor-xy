@@ -15,6 +15,8 @@ const Edit = () => {
     height: 400,
     seriesColors: [],
   });
+  const [localSelectedColumns, setLocalSelectedColumn] = useState({})
+  const [columns, setColumns] = useState([])
 
   useEffect(() => {
     // We can fetch a user's saved chart config in this hook if it exists
@@ -26,6 +28,9 @@ const Edit = () => {
         seriesColors: [...selectedColumns.values],
       });
     }
+
+    setLocalSelectedColumn(selectedColumns)
+    setColumns(Object.keys(data[0]))
   }, []);
 
   const handleConfigChange = (e) => {

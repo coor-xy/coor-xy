@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Papa from "papaparse";
 import charts from "./chartComponents";
 import { Link } from "react-router-dom";
-import { _setSelectedColumns } from "../store/selectColumns";
+import { _removePrimaryColumn, _clearAllValues } from "../store/selectColumns";
 import { _setData } from "../store/data";
 import axios from "axios";
-import { getRandomColor } from "../utility";
+import ColumnSelector from "./ColumnSelector";
+
 const {
   BarComp,
   SimpleAreaComp,
@@ -18,12 +19,7 @@ const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [hasHeaders, setHasHeaders] = useState(true);
-  const [data, setData] = useState([]);
-  const [columns, setColumns] = useState([]);
-  const [selectedColumns, setSelectedColumns] = useState({
-    primary: "",
-    values: [],
-  });
+  const { selectedColumns, data } = useSelector(state=>state)
   const dispatch = useDispatch();
 
   const handleSelectFile = async (e) => {
@@ -52,8 +48,7 @@ const Create = () => {
 
   const handleData = (data) => {
     if (hasHeaders) {
-      setData(data);
-      setColumns(Object.keys(data[0]));
+      dispatch(_setData(data));
     } else {
       const formattedData = data.map((d) =>
         d.reduce((acc, cellValue, i) => {
@@ -61,8 +56,7 @@ const Create = () => {
           return acc;
         }, {})
       );
-      setData(formattedData);
-      setColumns(Object.keys(formattedData[0]));
+      dispatch(_setData(formattedData));
     }
   };
 
@@ -82,44 +76,10 @@ const Create = () => {
   };
 
   const handleCancelLoad = () => {
-    setData([]);
+    dispatch(_setData([]));
+    dispatch(_removePrimaryColumn(''))
+    dispatch(_clearAllValues())
     setHasHeaders(true);
-    setSelectedColumns({
-      primary: "",
-      values: [],
-    });
-  };
-
-  const handleSelectColumn = (e) => {
-    const axis = e.target.name;
-    const column = e.target.value;
-    if (axis === "primary") {
-      setSelectedColumns({ ...selectedColumns, [axis]: column });
-    } else if (!selectedColumns[axis].includes(column)) {
-      setSelectedColumns({
-        ...selectedColumns,
-        [axis]: [
-          ...selectedColumns[axis],
-          { name: column, color: getRandomColor() },
-        ],
-      });
-    }
-  };
-
-  const handleDeSelectColumn = (axis, column) => {
-    if (axis === "primary") {
-      setSelectedColumns({ ...selectedColumns, [axis]: "" });
-    } else {
-      setSelectedColumns({
-        ...selectedColumns,
-        [axis]: selectedColumns[axis].filter((y) => y.name !== column),
-      });
-    }
-  };
-
-  const handleSendToReduxStore = () => {
-    dispatch(_setData(data));
-    dispatch(_setSelectedColumns(selectedColumns));
   };
 
   return (
@@ -181,88 +141,7 @@ const Create = () => {
             </tbody>
           </table>
           <div>
-            <div>
-              <div>
-                <label htmlFor="primary">Select a primary axis:</label>
-                <select
-                  name="primary"
-                  id="primary-column-select"
-                  size="3"
-                  onChange={handleSelectColumn}
-                >
-                  <option value="" disabled>
-                    --Choose a column--
-                  </option>
-                  {columns.map((c, i) => (
-                    <option key={i} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-                {!selectedColumns.primary ? (
-                  <div>
-                    <p>
-                      <small>You haven't selected anything</small>
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <p>
-                      <small>Selected column: </small>
-                    </p>
-                    <p>
-                      {`${selectedColumns.primary} `}
-                      <small onClick={() => handleDeSelectColumn("primary")}>
-                        remove
-                      </small>
-                    </p>
-                  </div>
-                )}
-              </div>
-              <div>
-                <label htmlFor="values">Select values:</label>
-                <select
-                  name="values"
-                  id="values-column-select"
-                  size="3"
-                  onChange={handleSelectColumn}
-                >
-                  <option value="" disabled>
-                    --Choose a column--
-                  </option>
-                  {columns.map((c, i) => (
-                    <option key={i} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-                {!selectedColumns.values.length ? (
-                  <div>
-                    <p>
-                      <small>You haven't selected anything</small>
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <p>
-                      <small>Selected Columns: </small>
-                    </p>
-                    {selectedColumns.values.map((val, i) => (
-                      <p key={i}>
-                        {`${val.name} `}
-                        <small
-                          onClick={() =>
-                            handleDeSelectColumn("values", val.name)
-                          }
-                        >
-                          remove
-                        </small>
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+            <ColumnSelector />
           </div>
           <div>
             {selectedColumns.primary && selectedColumns.values.length ? (
@@ -272,7 +151,6 @@ const Create = () => {
                     pathname: "/edit",
                     state: { type: "Bar" },
                   }}
-                  onClick={handleSendToReduxStore}
                 >
                   <BarComp
                     data={data}
@@ -285,7 +163,6 @@ const Create = () => {
                     pathname: "/edit",
                     state: { type: "Scatter" },
                   }}
-                  onClick={handleSendToReduxStore}
                 >
                   <SimpleScatterComp
                     data={data}
@@ -298,7 +175,6 @@ const Create = () => {
                     pathname: "/edit",
                     state: { type: "Area" },
                   }}
-                  onClick={handleSendToReduxStore}
                 >
                   <SimpleAreaComp
                     data={data}
@@ -311,7 +187,6 @@ const Create = () => {
                     pathname: "/edit",
                     state: { type: "Line" },
                   }}
-                  onClick={handleSendToReduxStore}
                 >
                   <LineComp
                     data={data}
