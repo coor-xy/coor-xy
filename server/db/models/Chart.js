@@ -6,30 +6,23 @@ const Chart = db.define('chart', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    dataURL: {
-        type: Sequelize.STRING
-    },
     colorPref: {
-        type: Sequelize.STRING,
-        defaultValue: 'black'
+        type: Sequelize.JSON,
     },
     title: {
         type: Sequelize.STRING,
-        defaultValue: 'Title'
     },
     yLabel: {
         type: Sequelize.STRING,
-        defaultValue: 'Y Axis'
     },
     xLabel: {
         type: Sequelize.STRING,
-        defaultValue: 'X Axis'
     },
-    xColumn: {
+    primaryColumn: {
         type: Sequelize.STRING,
     },
-    yColumn: {
-        type: Sequelize.STRING,
+    valueColumns: {
+        type: Sequelize.ARRAY(Sequelize.JSON),
     }
 })
 
