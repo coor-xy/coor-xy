@@ -30,22 +30,24 @@ const Routes = () => {
       {isLoggedIn ? (
         <Switch>
           <Route path="/bar" component={BarComp} />
-          <Route path="/pie" component={PieComp} />
-
           <Route path='/home' component={Home} />
           <Redirect to='/home' />
         </Switch>
       ) : (
         <Switch>
-          <Route path='/' exact>
+          {/* <Route path='/' exact>
             {Login}
           </Route>
+          <Route path='/login'>{Login}</Route>
+          <Route path='/signup'>{Signup}</Route> */}
+          <Route path='/' exact component={Home} />
           <Route path='/login'>{Login}</Route>
           <Route path='/signup'>{Signup}</Route>
         </Switch>
       )}
       <Switch>
         <Route path='/bar' component={BarComp} />
+        <Route path="/pie" component={PieComp} />
         <Route path='/line' component={LineComp} />
         <Route path='/simplescatter' component={SimpleScatterComp} />
         <Route path='/simplearea' component={SimpleAreaComp} />

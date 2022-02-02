@@ -15,7 +15,7 @@ const PieComp = () => {
         <Pie
           dataKey="value"
           //isAnimationActive Toggles the animation
-          isAnimationActive={true}
+          isAnimationActive={false}
           data={data}
           cx={200}
           cy={200}
