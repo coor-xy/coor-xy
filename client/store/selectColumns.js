@@ -3,6 +3,7 @@ const REMOVE_PRIMARY_COLUMN = "REMOVE_PRIMARY_COLUMN"
 const SET_VALUE_COLUMNS = "SET_VALUE_COLUMNS";
 const REMOVE_VALUE_COLUMN = "REMOVE_VALUE_COLUMN"
 const CLEAR_ALL_VALUES = "CLEAR_ALL_VALUES"
+const CHANGE_COLOR = "CHANGE_COLOR"
 
 export const _setPrimaryColumn = (column) => ({
   type: SET_PRIMARY_COLUMN,
@@ -28,6 +29,11 @@ export const _clearAllValues = () => ({
   type: CLEAR_ALL_VALUES
 })
 
+export const _changeColor = (columnObj) => ({
+  type: CHANGE_COLOR,
+  columnObj
+})
+
 const initialState = {
   primary: "",
   values: [],
@@ -44,6 +50,12 @@ export default function columnsReducer(state = initialState, action) {
       return {...state, ['values']: state.values.filter(obj=>obj.name!==action.columnName)}
     case CLEAR_ALL_VALUES:
       return {...state, ['values']: []}
+    case CHANGE_COLOR:{
+      const stateCopy = state.values
+      const idx = stateCopy.map(obj=>obj.name).indexOf(action.columnObj.name)
+      stateCopy[idx]=action.columnObj
+      return {...state, ['values']:stateCopy}
+    }
     default:
       return state;
   }

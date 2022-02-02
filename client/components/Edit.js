@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getRandomColor } from "../utility";
 import { useLocation } from "react-router-dom";
 import charts from "./chartComponents";
+import { _changeColor } from "../store/selectColumns"
+import ColumnSelector from "./ColumnSelector";
 const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
 
 const Edit = () => {
@@ -13,25 +15,8 @@ const Edit = () => {
     type: location.state.type,
     width: 500,
     height: 400,
-    seriesColors: [],
   });
-  const [localSelectedColumns, setLocalSelectedColumn] = useState({})
-  const [columns, setColumns] = useState([])
-
-  useEffect(() => {
-    // We can fetch a user's saved chart config in this hook if it exists
-    // Otherwise, we can set the chart config in state with some defaults
-
-    if (!chartConfig.seriesColors.length) {
-      setChartConfig({
-        ...chartConfig,
-        seriesColors: [...selectedColumns.values],
-      });
-    }
-
-    setLocalSelectedColumn(selectedColumns)
-    setColumns(Object.keys(data[0]))
-  }, []);
+  const dispatch = useDispatch()
 
   const handleConfigChange = (e) => {
     if (e.target.type === "number") {
@@ -45,9 +30,8 @@ const Edit = () => {
   };
 
   const handleSeriesColorChange = (e) => {
-    const { seriesColors } = chartConfig;
-    seriesColors[e.target.name].color = e.target.value;
-    setChartConfig({ ...chartConfig, seriesColors });
+    const { name, value } = e.target
+    dispatch(_changeColor({name, color: value}))
   };
 
   const handleConfigSubmit = (e) => {
@@ -111,13 +95,13 @@ const Edit = () => {
                 />
               </div>
 
-              {chartConfig.seriesColors.map((series, index) => (
+              {selectedColumns.values.map((series, index) => (
                 <div key={index}>
                   <label htmlFor={series.name}>
                     <small>{`${series.name} color`}</small>
                   </label>
                   <input
-                    name={index}
+                    name={series.name}
                     type="color"
                     value={series.color}
                     onChange={handleSeriesColorChange}
@@ -129,6 +113,7 @@ const Edit = () => {
             </form>
             {console.log(chartConfig)}
           </div>
+          <ColumnSelector />
           <div>
             {chartConfig.type === "Bar" && (
               <BarComp
