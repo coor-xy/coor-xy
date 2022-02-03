@@ -13,16 +13,15 @@ const Navbar = () =>  {
       <nav>
         {isLoggedIn ? (
           <div>
-            {/* The navbar will show these links after you log in */}
             <Link to="/home">Home</Link>
             <a href="#" onClick={ () => dispatch(logout()) }>
               Logout
             </a>
-            <Link to="/create">Create New Chart</Link>
+            <Link to="/mycharts">My Charts</Link>
           </div>
         ) : (
           <div>
-            {/* The navbar will show these links before you log in */}
+            <Link to="/home">Home</Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>

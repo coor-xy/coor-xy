@@ -79,4 +79,27 @@ form div {
   justify-content: center;
 }
 
+.myCharts {
+  display: flex;
+  align-items: flex-start;
+  place-content: space-between space-around;
+}
 
+.mycharts-main-container {
+  display: flex;
+  align-items: center;
+  place-content: space-between flex-start;
+  flex-direction: column;
+}
+
+.charts-header {
+  display: flex;
+  align-items: center;
+}
+
+.charts-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+}
