@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Chart, Data },
+  models: { User, Chart, DataTable },
 } = require('../server/db');
 
 const users = [
@@ -66,7 +66,7 @@ const charts = [
         color: '#F1D2A2',
       },
     ],
-    dataId: 1
+    dataTableId: 1
   },
   {
     userId: 2,
@@ -88,7 +88,7 @@ const charts = [
         color: '#F1D2A2',
       },
     ],
-    dataId: 2
+    dataTableId: 2
   },
   {
     userId: 1,
@@ -110,7 +110,7 @@ const charts = [
         color: '#F1D2A2',
       },
     ],
-    dataId: 1
+    dataTableId: 1
   },
 ];
 
@@ -204,7 +204,7 @@ async function seed() {
 
   await Promise.all(
     data.map((data) => {
-      return Data.create(data);
+      return DataTable.create(data);
     })
   );
 

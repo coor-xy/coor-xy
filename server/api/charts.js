@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { Chart, Data },
+  models: { Chart, DataTable },
 } = require('../db');
 
 // get all charts with data for user
@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
   try {
     const charts = await Chart.findAll({
       include: {
-        model: Data,
+        model: DataTable,
       },
     });
     res.send(charts).status(200);
@@ -27,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
         userId: req.params.id,
       },
       include: {
-        model: Data,
+        model: DataTable,
       },
     });
     res.send(charts).status(200);
@@ -41,7 +41,7 @@ router.put('/:chartId', async (req, res, next) => {
   try {
     const chart = await Chart.findByPk(req.params.chartId, {
       include: {
-        model: Data,
+        model: DataTable,
       },
     });
     const updated = await chart.update({
@@ -64,7 +64,7 @@ router.delete('/:chartId', async (req, res, next) => {
   try {
     const chart = await Chart.findByPk(req.params.chartId, {
       include: {
-        model: Data,
+        model: DataTable,
       },
     });
     await chart.destroy();
