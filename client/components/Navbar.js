@@ -18,6 +18,7 @@ const Navbar = () =>  {
             <a href="#" onClick={ () => dispatch(logout()) }>
               Logout
             </a>
+            <Link to="/create">Create New Chart</Link>
           </div>
         ) : (
           <div>

@@ -30,30 +30,27 @@ const Routes = () => {
       {isLoggedIn ? (
         <Switch>
           <Route path="/bar" component={BarComp} />
+          <Route exact path='/' component={Home} />
           <Route path='/home' component={Home} />
-          <Redirect to='/home' />
+          <Route path='/bar' component={BarComp} />
+          <Route path="/pie" component={PieComp} />
+          <Route path='/line' component={LineComp} />
+          <Route path='/simplescatter' component={SimpleScatterComp} />
+          <Route path='/simplearea' component={SimpleAreaComp} />
+          <Route path='/funnel' component={FunnelComp} />
+          <Route path='/create' component={Create} />
+          <Route path='/edit' component={Edit} />
         </Switch>
       ) : (
         <Switch>
-          {/* <Route path='/' exact>
-            {Login}
-          </Route>
-          <Route path='/login'>{Login}</Route>
-          <Route path='/signup'>{Signup}</Route> */}
-          <Route path='/' exact component={Home} />
+          <Route exact path='/' component={Home} />
+          <Route exact path='/home' component={Home} />
           <Route path='/login'>{Login}</Route>
           <Route path='/signup'>{Signup}</Route>
         </Switch>
       )}
       <Switch>
-        <Route path='/bar' component={BarComp} />
-        <Route path="/pie" component={PieComp} />
-        <Route path='/line' component={LineComp} />
-        <Route path='/simplescatter' component={SimpleScatterComp} />
-        <Route path='/simplearea' component={SimpleAreaComp} />
-        <Route path='/funnel' component={FunnelComp} />
-        <Route path='/create' component={Create} />
-        <Route path='/edit' component={Edit} />
+        
       </Switch>
     </div>
   );

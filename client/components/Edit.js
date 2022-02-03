@@ -9,10 +9,14 @@ const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
 
 const Edit = () => {
   const location = useLocation();
+  let type;
+  if (location.state){
+    type = location.state.type
+  }
   const { data, selectedColumns } = useSelector((state) => state);
   const availableCharts = ["Bar", "Funnel", "Line", "Pie", "Area", "Scatter"];
   const [chartConfig, setChartConfig] = useState({
-    type: location.state.type,
+    type: type || '',
     width: 500,
     height: 400,
   });

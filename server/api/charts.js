@@ -7,9 +7,18 @@ const {
 // refactor to use findByPk user token
 router.get('/', async (req, res, next) => {
   try {
+    const tempUserId = 1;     //Grab from User Token
+
     const charts = await Chart.findAll({
+      where: {
+        userId: tempUserId
+      },
+      attributes: [
+        "id", "type", "colorPref", "title",  "yLabel", "xLabel",  "primaryColumn", "valueColumns", "userId"
+      ],
       include: {
         model: DataTable,
+        attributes: ["data"]
       },
     });
     res.send(charts).status(200);
@@ -19,18 +28,19 @@ router.get('/', async (req, res, next) => {
 });
 
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:chartId', async (req, res, next) => {
   try {
-    console.log('req', req.user);
-    const charts = await Chart.findAll({
-      where: {
-        userId: req.params.id,
-      },
+    const { chartId } = req.params
+    const chart = await Chart.findByPk(chartId, {
+      attributes: [
+        "id", "type", "colorPref", "title",  "yLabel", "xLabel",  "primaryColumn", "valueColumns", "userId"
+      ],
       include: {
         model: DataTable,
+        attributes: ["data"]
       },
     });
-    res.send(charts).status(200);
+    res.send(chart).status(200);
   } catch (err) {
     next(err);
   }
@@ -39,21 +49,40 @@ router.get('/:id', async (req, res, next) => {
 // this does not update the Data...
 router.put('/:chartId', async (req, res, next) => {
   try {
-    const chart = await Chart.findByPk(req.params.chartId, {
+    const tempUserId = 1;     //Grab from User Token
+    const {type, colorPref, title,  yLabel, xLabel,  primaryColumn, valueColumns} = req.body
+    const { chartId } = req.params
+    const chart = await Chart.findByPk(chartId, {
+      attributes: [
+        "id", "type", "colorPref", "title",  "yLabel", "xLabel",  "primaryColumn", "valueColumns", "userId"
+      ],
       include: {
         model: DataTable,
+        attributes: ["data"]
       },
     });
-    const updated = await chart.update({
-      type: req.body.type,
-      title: req.body.title,
-      yLabel: req.body.yLabel,
-      xLabel: req.body.xLabel,
-      primaryColumn: req.body.primaryColumn,
-      valueColumns: req.body.valueColumns,
-      Data: req.body.Data,
-    });
-    res.send(updated).status(200);
+    if (!chart.id) {
+      const error = new Error("Chart Not Found")
+      error.status = 404;
+      next(error)
+    }
+    else if (chart.userId !== tempUserId) {
+      const error = new Error("Not Authorized to edit this chart")
+      error.status = 401;
+      next(error)
+    }
+    else {
+      const updatedChart = await chart.update({
+        type,
+        colorPref,
+        title,
+        yLabel,
+        xLabel,
+        primaryColumn,
+        valueColumns,
+      });
+      res.send(updatedChart).status(200);
+    }
   } catch (err) {
     next(err);
   }
@@ -62,13 +91,31 @@ router.put('/:chartId', async (req, res, next) => {
 // deletes the association from Data but not associated row data
 router.delete('/:chartId', async (req, res, next) => {
   try {
-    const chart = await Chart.findByPk(req.params.chartId, {
+    const tempUserId = 1;     //Grab from User Token
+    const { chartId } = req.params
+    const chart = await Chart.findByPk(chartId, {
+      attributes: [
+        "id", "type", "colorPref", "title",  "yLabel", "xLabel",  "primaryColumn", "valueColumns", "userId"
+      ],
       include: {
         model: DataTable,
+        attributes: ["data"]
       },
     });
-    await chart.destroy();
-    res.sendStatus(200);
+    if (!chart.id) {
+      const error = new Error("Chart Not Found")
+      error.status = 404;
+      next(error)
+    }
+    else if (chart.userId !== tempUserId) {
+      const error = new Error("Not Authorized to delete this chart")
+      error.status = 401;
+      next(error)
+    }
+    else {
+      await chart.destroy();
+      res.send(chart).status(200);
+    }
   } catch (err) {
     next(err);
   }
