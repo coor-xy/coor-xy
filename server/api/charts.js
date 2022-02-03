@@ -1,24 +1,30 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const {
   models: { Chart, DataTable },
-} = require('../db');
+} = require("../db");
+const { isUser } = require("./gatekeeping");
 
-// get all charts with data for user
-// refactor to use findByPk user token
-router.get('/', async (req, res, next) => {
+router.get("/", isUser, async (req, res, next) => {
   try {
-    const tempUserId = 1;     //Grab from User Token
-
+    const userId = req.user.id;
     const charts = await Chart.findAll({
       where: {
-        userId: tempUserId
+        userId: userId,
       },
       attributes: [
-        "id", "type", "colorPref", "title",  "yLabel", "xLabel",  "primaryColumn", "valueColumns", "userId"
+        "id",
+        "type",
+        "colorPref",
+        "title",
+        "yLabel",
+        "xLabel",
+        "primaryColumn",
+        "valueColumns",
+        "userId",
       ],
       include: {
         model: DataTable,
-        attributes: ["data"]
+        attributes: ["data"],
       },
     });
     res.send(charts).status(200);
@@ -27,17 +33,82 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-
-router.get('/:chartId', async (req, res, next) => {
+router.get("/:chartId", isUser, async (req, res, next) => {
   try {
-    const { chartId } = req.params
+    const { chartId } = req.params;
+    const userId = req.user.id;
     const chart = await Chart.findByPk(chartId, {
       attributes: [
-        "id", "type", "colorPref", "title",  "yLabel", "xLabel",  "primaryColumn", "valueColumns", "userId"
+        "id",
+        "type",
+        "colorPref",
+        "title",
+        "yLabel",
+        "xLabel",
+        "primaryColumn",
+        "valueColumns",
+        "userId",
       ],
       include: {
         model: DataTable,
-        attributes: ["data"]
+        attributes: ["data"],
+      },
+    });
+    if (!chart.id) {
+      const error = new Error("Chart Not Found");
+      error.status = 404;
+      next(error);
+    } else if (chart.userId !== userId) {
+      const error = new Error("Not Authorized to view this chart");
+      error.status = 401;
+      next(error);
+    } else {
+      res.send(chart).status(200);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/", isUser, async (req, res, next) => {
+  try {
+    const {
+      type,
+      colorPref,
+      title,
+      yLabel,
+      xLabel,
+      primaryColumn,
+      valueColumns,
+      dataTableId,
+    } = req.body;
+    const userId = req.user.id;
+    const newChart = await Chart.create({
+      type,
+      colorPref,
+      title,
+      yLabel,
+      xLabel,
+      primaryColumn,
+      valueColumns,
+      dataTableId,
+      userId,
+    });
+    const chart = await Chart.findByPk(newChart.id, {
+      attributes: [
+        "id",
+        "type",
+        "colorPref",
+        "title",
+        "yLabel",
+        "xLabel",
+        "primaryColumn",
+        "valueColumns",
+        "userId",
+      ],
+      include: {
+        model: DataTable,
+        attributes: ["data"],
       },
     });
     res.send(chart).status(200);
@@ -46,32 +117,45 @@ router.get('/:chartId', async (req, res, next) => {
   }
 });
 
-// this does not update the Data...
-router.put('/:chartId', async (req, res, next) => {
+router.put("/:chartId", isUser, async (req, res, next) => {
   try {
-    const tempUserId = 1;     //Grab from User Token
-    const {type, colorPref, title,  yLabel, xLabel,  primaryColumn, valueColumns} = req.body
-    const { chartId } = req.params
+    const userId = req.user.id;
+    const {
+      type,
+      colorPref,
+      title,
+      yLabel,
+      xLabel,
+      primaryColumn,
+      valueColumns,
+    } = req.body;
+    const { chartId } = req.params;
     const chart = await Chart.findByPk(chartId, {
       attributes: [
-        "id", "type", "colorPref", "title",  "yLabel", "xLabel",  "primaryColumn", "valueColumns", "userId"
+        "id",
+        "type",
+        "colorPref",
+        "title",
+        "yLabel",
+        "xLabel",
+        "primaryColumn",
+        "valueColumns",
+        "userId",
       ],
       include: {
         model: DataTable,
-        attributes: ["data"]
+        attributes: ["data"],
       },
     });
     if (!chart.id) {
-      const error = new Error("Chart Not Found")
+      const error = new Error("Chart Not Found");
       error.status = 404;
-      next(error)
-    }
-    else if (chart.userId !== tempUserId) {
-      const error = new Error("Not Authorized to edit this chart")
+      next(error);
+    } else if (chart.userId !== userId) {
+      const error = new Error("Not Authorized to edit this chart");
       error.status = 401;
-      next(error)
-    }
-    else {
+      next(error);
+    } else {
       const updatedChart = await chart.update({
         type,
         colorPref,
@@ -88,31 +172,36 @@ router.put('/:chartId', async (req, res, next) => {
   }
 });
 
-// deletes the association from Data but not associated row data
-router.delete('/:chartId', async (req, res, next) => {
+router.delete("/:chartId", isUser, async (req, res, next) => {
   try {
-    const tempUserId = 1;     //Grab from User Token
-    const { chartId } = req.params
+    const userId = req.user.id;
+    const { chartId } = req.params;
     const chart = await Chart.findByPk(chartId, {
       attributes: [
-        "id", "type", "colorPref", "title",  "yLabel", "xLabel",  "primaryColumn", "valueColumns", "userId"
+        "id",
+        "type",
+        "colorPref",
+        "title",
+        "yLabel",
+        "xLabel",
+        "primaryColumn",
+        "valueColumns",
+        "userId",
       ],
       include: {
         model: DataTable,
-        attributes: ["data"]
+        attributes: ["data"],
       },
     });
     if (!chart.id) {
-      const error = new Error("Chart Not Found")
+      const error = new Error("Chart Not Found");
       error.status = 404;
-      next(error)
-    }
-    else if (chart.userId !== tempUserId) {
-      const error = new Error("Not Authorized to delete this chart")
+      next(error);
+    } else if (chart.userId !== userId) {
+      const error = new Error("Not Authorized to delete this chart");
       error.status = 401;
-      next(error)
-    }
-    else {
+      next(error);
+    } else {
       await chart.destroy();
       res.send(chart).status(200);
     }
