@@ -4,19 +4,23 @@ const db = require('./db')
 
 const User = require('./models/User')
 const Chart = require('./models/Chart')
-const RowData = require('./models/RowData')
+const Data = require('./models/Data')
 
 //associations could go here!
 Chart.belongsTo(User)
 User.hasMany(Chart)
-RowData.belongsTo(Chart)
-Chart.hasMany(RowData)
+Data.hasMany(Chart)
+Chart.belongsTo(Data, {
+  foreignKey: 'dataId'
+})
+User.hasMany(Data)
+Data.belongsTo(User)
 
 module.exports = {
   db,
   models: {
     User,
     Chart,
-    RowData
+    Data
   },
 }
