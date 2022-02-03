@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const RowData = db.define('rowData', {
-    rowData: {
+const DataTable = db.define('dataTable', {
+    data: {
         type: Sequelize.JSON
     }
 });
 
-module.exports = RowData;
+module.exports = DataTable;

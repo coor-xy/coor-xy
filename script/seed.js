@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Chart, RowData },
+  models: { User, Chart, DataTable },
 } = require('../server/db');
 
 const users = [
@@ -66,6 +66,29 @@ const charts = [
         color: '#F1D2A2',
       },
     ],
+    dataTableId: 1
+  },
+  {
+    userId: 2,
+    type: 'Line',
+    colorPref: [
+      {
+        name: 'Q1',
+        color: '#001487',
+      },
+    ],
+
+    title: 'Line Chart',
+    yLabel: 'value',
+    xLabel: 'Year',
+    primaryColumn: 'Year',
+    valueColumns: [
+      {
+        name: 'Q1',
+        color: '#F1D2A2',
+      },
+    ],
+    dataTableId: 2
   },
   {
     userId: 1,
@@ -87,153 +110,75 @@ const charts = [
         color: '#F1D2A2',
       },
     ],
-  },
-  {
-    userId: 2,
-    type: 'Bar',
-    colorPref: [
-      {
-        name: 'Q1',
-        color: '#001487',
-      },
-    ],
-
-    title: 'Bar Chart',
-    yLabel: 'value',
-    xLabel: 'Group',
-    primaryColumn: 'Group',
-    valueColumns: [
-      {
-        name: 'Q1',
-        color: '#F1D2A2',
-      },
-    ],
+    dataTableId: 1
   },
 ];
 
-//const datas =
-const data1 = [
-  {
-    chartId: 1,
-    rowData: {
-      Group: 'Group A',
-      Q1: '1000',
-      Q2: '1100',
-      Q3: '1200',
-      Q4: '1300',
-    },
+
+const data = [
+{userId: 1,
+  data: [{
+  Group: 'Group A',
+  Q1: '1000',
+  Q2: '1100',
+  Q3: '1200',
+  Q4: '1300',
+},
+{
+  Group: 'Group B',
+  Q1: '2250',
+  Q2: '2350',
+  Q3: '2300',
+  Q4: '2250',
+},
+{
+  Group: 'Group C',
+  Q1: '1280',
+  Q2: '1380',
+  Q3: '1480',
+  Q4: '1580',
+},
+{
+  Group: 'Group D',
+  Q1: '970',
+  Q2: '1070',
+  Q3: '1170',
+  Q4: '1270',
+}
+]},
+  {userId: 2,
+    data:  [
+    {
+    Year: '2019',
+    Q1: '1000',
+    Q2: '1100',
+    Q3: '1200',
+    Q4: '1300',
   },
   {
-    chartId: 1,
-    rowData: {
-      Group: 'Group B',
-      Q1: '2250',
-      Q2: '2350',
-      Q3: '2300',
-      Q4: '2250',
-    },
+    Year: '2020',
+    Q1: '2250',
+    Q2: '2350',
+    Q3: '2300',
+    Q4: '2250',
   },
   {
-    chartId: 1,
-    rowData: {
-      Group: 'Group C',
-      Q1: '1280',
-      Q2: '1380',
-      Q3: '1480',
-      Q4: '1580',
-    },
+    Year: '2021',
+    Q1: '1280',
+    Q2: '1380',
+    Q3: '1480',
+    Q4: '1580',
   },
   {
-    chartId: 1,
-    rowData: {
-      Group: 'Group D',
-      Q1: '970',
-      Q2: '1070',
-      Q3: '1170',
-      Q4: '1270',
-    },
-  },
-  {
-    chartId: 2,
-    rowData: {
-      Group: 'Group E',
-      Q1: '1050',
-      Q2: '1100',
-      Q3: '1200',
-      Q4: '1350',
-    },
-  },
-  {
-    chartId: 2,
-    rowData: {
-      Group: 'Group F',
-      Q1: '2300',
-      Q2: '2350',
-      Q3: '2300',
-      Q4: '2300',
-    },
-  },
-  {
-    chartId: 2,
-    rowData: {
-      Group: 'Group G',
-      Q1: '1200',
-      Q2: '1380',
-      Q3: '1480',
-      Q4: '1600',
-    },
-  },
-  {
-    chartId: 2,
-    rowData: {
-      Group: 'Group H',
-      Q1: '1000',
-      Q2: '1070',
-      Q3: '1170',
-      Q4: '1130',
-    },
-  },
-  {
-    chartId: 3,
-    rowData: {
-      Group: 'Group I',
-      Q1: '1050',
-      Q2: '1100',
-      Q3: '1200',
-      Q4: '1350',
-    },
-  },
-  {
-    chartId: 3,
-    rowData: {
-      Group: 'Group G',
-      Q1: '2300',
-      Q2: '2350',
-      Q3: '2300',
-      Q4: '2300',
-    },
-  },
-  {
-    chartId: 3,
-    rowData: {
-      Group: 'Group K',
-      Q1: '1200',
-      Q2: '1380',
-      Q3: '1480',
-      Q4: '1600',
-    },
-  },
-  {
-    chartId: 3,
-    rowData: {
-      Group: 'Group L',
-      Q1: '1000',
-      Q2: '1070',
-      Q3: '1170',
-      Q4: '1130',
-    },
-  },
-];
+    Year: '2022',
+    Q1: '970',
+    Q2: '1070',
+    Q3: '1170',
+    Q4: '1270',
+  }
+]}
+]
+
 
 // const data2 =
 //   {
@@ -258,20 +203,20 @@ async function seed() {
   );
 
   await Promise.all(
+    data.map((data) => {
+      return DataTable.create(data);
+    })
+  );
+
+  await Promise.all(
     charts.map((chart) => {
       return Chart.create(chart);
     })
   );
 
-  await Promise.all(
-    data1.map((data) => {
-      return RowData.create(data);
-    })
-  );
-
   console.log(`seeded ${users.length} Users`);
   console.log(`seeded ${charts.length} Charts`);
-  console.log(`seeded ${data1.length} rowDatas`);
+  console.log(`seeded ${data.length} rowDatas`);
   console.log(`seeded successfully`);
 }
 
