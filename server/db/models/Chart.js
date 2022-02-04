@@ -24,6 +24,18 @@ const Chart = db.define('chart', {
   valueColumns: {
     type: Sequelize.JSON,
   },
+  width: {
+    type: Sequelize.INTEGER
+  },
+  height: {
+    type: Sequelize.INTEGER
+  },
+  legend: {
+    type: Sequelize.BOOLEAN
+  },
+  grid: {
+    type: Sequelize.BOOLEAN
+  }
 });
 
 module.exports = Chart;
