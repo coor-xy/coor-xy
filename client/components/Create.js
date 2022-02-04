@@ -7,6 +7,7 @@ import { _removePrimaryColumn, _clearAllValues } from '../store/selectColumns';
 import { _setData } from '../store/data';
 import ColumnSelector from './ColumnSelector';
 import { fetchDataDB } from '../store/dataDB';
+import { _setDataId } from '../store/dataId';
 
 const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
 
@@ -80,13 +81,17 @@ const Create = () => {
     dispatch(_setData([]));
     dispatch(_removePrimaryColumn(''));
     dispatch(_clearAllValues());
+    dispatch(_setDataId(0));
     setHasHeaders(true);
   };
 
   const handlePreviousDataSelect = (e) => {
-    const dataTableId = e.target.value;
-    const prevData = userData.filter((c) => c.id === parseInt(dataTableId));
-    dispatch(_setData(prevData[0].data));
+    const dataTableId = parseInt(e.target.value);
+    if (dataTableId) {
+      const prevData = userData.filter((c) => c.id === dataTableId);
+      dispatch(_setData(prevData[0].data));
+      dispatch(_setDataId(dataTableId));
+    }
   };
 
   return (
@@ -135,7 +140,7 @@ const Create = () => {
                 id='previousData'
                 onChange={handlePreviousDataSelect}
               >
-                <option value='' disabled>
+                <option value=''>
                   --Choose data--
                 </option>
                 {userData.map((c, i) => (

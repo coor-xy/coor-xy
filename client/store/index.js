@@ -7,12 +7,14 @@ import dataReducer from './data';
 import columnsReducer from './selectColumns';
 import allCharts from './charts';
 import dataDBReducer from './dataDB';
+import dataIdReducer from './dataId'
 
 const reducer = combineReducers({
   auth,
   data: dataReducer,
   userData: dataDBReducer,
   selectedColumns: columnsReducer,
+  prevDataId: dataIdReducer,
   allCharts,
 });
 const middleware = composeWithDevTools(
