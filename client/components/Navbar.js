@@ -2,6 +2,8 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import { _setData } from '../store/data'
+import { _clearAllValues, _removePrimaryColumn } from '../store/selectColumns'
 
 const Navbar = () =>  {
   const isLoggedIn = useSelector(state => !!state.auth.id)
@@ -17,7 +19,11 @@ const Navbar = () =>  {
             <a href="#" onClick={ () => dispatch(logout()) }>
               Logout
             </a>
-            <Link to="/mycharts">My Charts</Link>
+            <Link to="/mycharts" onClick={()=>{
+              dispatch(_setData([]));
+              dispatch(_removePrimaryColumn(''))
+              dispatch(_clearAllValues())
+            }}>My Charts</Link>
           </div>
         ) : (
           <div>

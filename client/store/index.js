@@ -5,11 +5,13 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import auth from './auth'
 import dataReducer from './data'
 import columnsReducer from './selectColumns'
+import allCharts from './charts'
 
 const reducer = combineReducers({ 
   auth,
   data: dataReducer,
-  selectedColumns: columnsReducer
+  selectedColumns: columnsReducer,
+  allCharts
  })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
