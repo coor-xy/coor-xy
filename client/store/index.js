@@ -1,22 +1,26 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux'
-import {createLogger} from 'redux-logger'
-import thunkMiddleware from 'redux-thunk'
-import {composeWithDevTools} from 'redux-devtools-extension'
-import auth from './auth'
-import dataReducer from './data'
-import columnsReducer from './selectColumns'
-import allCharts from './charts'
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import auth from './auth';
+import dataReducer from './data';
+import columnsReducer from './selectColumns';
+import allCharts from './charts';
+import dataDBReducer from './dataDB';
+import dataIdReducer from './dataId'
 
-const reducer = combineReducers({ 
+const reducer = combineReducers({
   auth,
   data: dataReducer,
+  userData: dataDBReducer,
   selectedColumns: columnsReducer,
-  allCharts
- })
+  prevDataId: dataIdReducer,
+  allCharts,
+});
 const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
-)
-const store = createStore(reducer, middleware)
+  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+);
+const store = createStore(reducer, middleware);
 
-export default store
-export * from './auth'
+export default store;
+export * from './auth';
