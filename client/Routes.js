@@ -12,10 +12,7 @@ import PieComp from './components/chartComponents/PieComp';
 import FunnelComp from './components/chartComponents/FunnelComp';
 import Create from './components/Create';
 import Edit from './components/Edit';
-
-/**
- * COMPONENT
- */
+import MyCharts from './components/MyCharts';
 
 const Routes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
@@ -40,6 +37,7 @@ const Routes = () => {
           <Route path='/funnel' component={FunnelComp} />
           <Route path='/create' component={Create} />
           <Route path='/edit' component={Edit} />
+          <Route path='/mycharts' component={MyCharts}/>
         </Switch>
       ) : (
         <Switch>
