@@ -84,7 +84,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="width">
-                  <small>Width</small>
+                  <small>Width:</small>
                 </label>
                 <input
                   name="width"
@@ -96,7 +96,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="height">
-                  <small>Height</small>
+                  <small>Height:</small>
                 </label>
                 <input
                   name="height"
@@ -108,7 +108,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="title">
-                  <small>Title</small>
+                  <small>Title:</small>
                 </label>
                 <input
                   name="title"
@@ -119,7 +119,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="xLabel">
-                  <small>X-Label</small>
+                  <small>X-Label:</small>
                 </label>
                 <input
                   name="xLabel"
@@ -130,7 +130,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="yLabel">
-                  <small>Y-Label</small>
+                  <small>Y-Label:</small>
                 </label>
                 <input
                   name="yLabel"
