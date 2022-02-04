@@ -21,7 +21,9 @@ const Edit = () => {
     height: 400,
     xLabel: '',
     yLabel: '',
-    legend: true,
+    legend: false,
+    title:'',
+    grid: false,
   });
   const dispatch = useDispatch()
 
@@ -31,6 +33,8 @@ const Edit = () => {
         ...chartConfig,
         [e.target.name]: parseInt(e.target.value),
       });
+    } else if (e.target.type === "checkbox"){
+      setChartConfig({ ...chartConfig, [e.target.name]: !chartConfig[e.target.name] })
     } else {
       setChartConfig({ ...chartConfig, [e.target.name]: e.target.value });
     }
@@ -103,6 +107,17 @@ const Edit = () => {
               </div>
 
               <div>
+                <label htmlFor="title">
+                  <small>Title</small>
+                </label>
+                <input
+                  name="title"
+                  value={chartConfig.title}
+                  onChange={handleConfigChange}
+                />
+              </div>
+
+              <div>
                 <label htmlFor="xLabel">
                   <small>X-Label</small>
                 </label>
@@ -136,6 +151,18 @@ const Edit = () => {
                 />
               </div>
 
+              <div>
+                <label htmlFor="grid">
+                  <small>Grid:</small>
+                </label>
+                <input
+                  name="grid"
+                  type="checkbox"
+                  value={chartConfig.grid}
+                  onChange={handleConfigChange}
+                />
+              </div>
+
               {selectedColumns.values.map((series, index) => (
                 <div key={index}>
                   <label htmlFor={series.name}>
@@ -165,6 +192,9 @@ const Edit = () => {
                 height={chartConfig.height}
                 xLabel={chartConfig.xLabel}
                 yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
               />
             )}
             {chartConfig.type === "Scatter" && (
@@ -176,6 +206,9 @@ const Edit = () => {
                 height={chartConfig.height}
                 xLabel={chartConfig.xLabel}
                 yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
               />
             )}
             {chartConfig.type === "Area" && (
@@ -187,6 +220,9 @@ const Edit = () => {
                 height={chartConfig.height}
                 xLabel={chartConfig.xLabel}
                 yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
               />
             )}
             {chartConfig.type === "Line" && (
@@ -198,6 +234,9 @@ const Edit = () => {
                 height={chartConfig.height}
                 xLabel={chartConfig.xLabel}
                 yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
               />
             )}
           </div>
