@@ -1,25 +1,35 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Papa from "papaparse";
-import charts from "./chartComponents";
-import { Link } from "react-router-dom";
-import { _removePrimaryColumn, _clearAllValues } from "../store/selectColumns";
-import { _setData } from "../store/data";
-import axios from "axios";
-import ColumnSelector from "./ColumnSelector";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Papa from 'papaparse';
+import charts from './chartComponents';
+import { Link } from 'react-router-dom';
+import { _removePrimaryColumn, _clearAllValues } from '../store/selectColumns';
+import { _setData } from '../store/data';
+import axios from 'axios';
+import ColumnSelector from './ColumnSelector';
+import { fetchDataDB } from '../store/dataDB';
 
-const {
-  BarComp,
-  SimpleAreaComp,
-  SimpleScatterComp,
-  LineComp
-} = charts;
+const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
 
 const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [hasHeaders, setHasHeaders] = useState(true);
-  const { selectedColumns, data } = useSelector(state=>state)
+  const [useDataDB, setUseDataDB] = useState(false);
+
+  const { selectedColumns, data, dataDB, isUser } = useSelector((state) => {
+    return {
+      selectedColumns: state.selectedColumns,
+      data: state.data,
+      dataDB: state.dataDB,
+      isUser: state.auth.id,
+    };
+  });
+
+  useEffect(() => {
+    dispatch(fetchDataDB());
+  }, []);
+
   const dispatch = useDispatch();
 
   const handleSelectFile = async (e) => {
@@ -37,7 +47,7 @@ const Create = () => {
   };
 
   const handleHasHeaders = (e) => {
-    const bool = e.target.value === "false" ? false : true;
+    const bool = e.target.value === 'false' ? false : true;
     setHasHeaders(bool);
   };
 
@@ -74,13 +84,16 @@ const Create = () => {
     const rowLimit = 5;
     return data.length >= rowLimit ? data.slice(0, rowLimit) : data;
   };
-
   const handleCancelLoad = () => {
     dispatch(_setData([]));
-    dispatch(_removePrimaryColumn(''))
-    dispatch(_clearAllValues())
+    dispatch(_removePrimaryColumn(''));
+    dispatch(_clearAllValues());
     setHasHeaders(true);
   };
+
+  const dataName = dataDB.map((data) => {
+    return data.id;
+  });
 
   return (
     <div>
@@ -89,12 +102,12 @@ const Create = () => {
           <p>Filename: {selectedFile.name}</p>
           <p>Filetype: {selectedFile.type}</p>
           <p>Size in bytes: {selectedFile.size}</p>
-          <label htmlFor="headers">My data has headers</label>
+          <label htmlFor='headers'>My data has headers</label>
           <br></br>
           <div onChange={handleHasHeaders}>
-            <input type="radio" value={true} name="headers" defaultChecked />{" "}
+            <input type='radio' value={true} name='headers' defaultChecked />{' '}
             <small>Yes</small>
-            <input type="radio" value={false} name="headers" />{" "}
+            <input type='radio' value={false} name='headers' />{' '}
             <small>No</small>
           </div>
           <div>
@@ -106,9 +119,9 @@ const Create = () => {
         <div>
           <p>Select a CSV file</p>
           <input
-            type="file"
-            name="file"
-            accept=".csv"
+            type='file'
+            name='file'
+            accept='.csv'
             onChange={handleSelectFile}
             // onClick={async () => {
             //   const {data} = await axios.get('https://coor-xy-files.s3.amazonaws.com/1ac043e6-e16d-4fd6-aaa1-6ed483062e23.csv')
@@ -116,6 +129,29 @@ const Create = () => {
             //   setIsFileSelected(true)
             // }}
           />
+          {isUser && (
+            // add later case for ifData is available
+            <div>
+              <p>OR</p>
+
+              <label htmlFor='primary'>Select from saved Data:</label>
+              <select
+                name='primary'
+                id='primary-column-select'
+                size='3'
+                //  onChange={}
+              >
+                <option value='' disabled>
+                  --Choose data--
+                </option>
+                {dataName.map((c, i) => (
+                  <option key={i} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
       ) : (
         <div>
@@ -148,8 +184,8 @@ const Create = () => {
               <div>
                 <Link
                   to={{
-                    pathname: "/edit",
-                    state: { type: "Bar" },
+                    pathname: '/edit',
+                    state: { type: 'Bar' },
                   }}
                 >
                   <BarComp
@@ -160,8 +196,8 @@ const Create = () => {
                 </Link>
                 <Link
                   to={{
-                    pathname: "/edit",
-                    state: { type: "Scatter" },
+                    pathname: '/edit',
+                    state: { type: 'Scatter' },
                   }}
                 >
                   <SimpleScatterComp
@@ -172,8 +208,8 @@ const Create = () => {
                 </Link>
                 <Link
                   to={{
-                    pathname: "/edit",
-                    state: { type: "Area" },
+                    pathname: '/edit',
+                    state: { type: 'Area' },
                   }}
                 >
                   <SimpleAreaComp
@@ -184,8 +220,8 @@ const Create = () => {
                 </Link>
                 <Link
                   to={{
-                    pathname: "/edit",
-                    state: { type: "Line" },
+                    pathname: '/edit',
+                    state: { type: 'Line' },
                   }}
                 >
                   <LineComp
