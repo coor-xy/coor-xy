@@ -19,6 +19,9 @@ const Edit = () => {
     type: type || '',
     width: 500,
     height: 400,
+    xLabel: '',
+    yLabel: '',
+    legend: true,
   });
   const dispatch = useDispatch()
 
@@ -26,7 +29,7 @@ const Edit = () => {
     if (e.target.type === "number") {
       setChartConfig({
         ...chartConfig,
-        [e.target.name]: parseInt(e.target.value || 0),
+        [e.target.name]: parseInt(e.target.value),
       });
     } else {
       setChartConfig({ ...chartConfig, [e.target.name]: e.target.value });
@@ -99,6 +102,40 @@ const Edit = () => {
                 />
               </div>
 
+              <div>
+                <label htmlFor="xLabel">
+                  <small>X-Label</small>
+                </label>
+                <input
+                  name="xLabel"
+                  value={chartConfig.xLabel}
+                  onChange={handleConfigChange}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="yLabel">
+                  <small>Y-Label</small>
+                </label>
+                <input
+                  name="yLabel"
+                  value={chartConfig.yLabel}
+                  onChange={handleConfigChange}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="legend">
+                  <small>Legend:</small>
+                </label>
+                <input
+                  name="legend"
+                  type="checkbox"
+                  value={chartConfig.legend}
+                  onChange={handleConfigChange}
+                />
+              </div>
+
               {selectedColumns.values.map((series, index) => (
                 <div key={index}>
                   <label htmlFor={series.name}>
@@ -117,13 +154,17 @@ const Edit = () => {
             </form>
             {console.log(chartConfig)}
           </div>
+          <div className="bottom-half-container">
           <ColumnSelector />
-          <div>
             {chartConfig.type === "Bar" && (
               <BarComp
                 data={data}
                 primaryColumn={selectedColumns.primary}
                 valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
               />
             )}
             {chartConfig.type === "Scatter" && (
@@ -131,6 +172,10 @@ const Edit = () => {
                 data={data}
                 primaryColumn={selectedColumns.primary}
                 valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
               />
             )}
             {chartConfig.type === "Area" && (
@@ -138,6 +183,10 @@ const Edit = () => {
                 data={data}
                 primaryColumn={selectedColumns.primary}
                 valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
               />
             )}
             {chartConfig.type === "Line" && (
@@ -145,6 +194,10 @@ const Edit = () => {
                 data={data}
                 primaryColumn={selectedColumns.primary}
                 valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
               />
             )}
           </div>

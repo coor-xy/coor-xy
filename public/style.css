@@ -103,3 +103,19 @@ form div {
   justify-content: flex-start;
   flex-direction: row;
 }
+
+.column-selector-container {
+  display: flex;
+  place-content: space-between flex-start;
+  align-items: center;
+}
+
+.selectors {
+  margin: 20px;
+}
+
+.bottom-half-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
