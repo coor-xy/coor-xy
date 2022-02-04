@@ -5,7 +5,6 @@ import charts from './chartComponents';
 import { Link } from 'react-router-dom';
 import { _removePrimaryColumn, _clearAllValues } from '../store/selectColumns';
 import { _setData } from '../store/data';
-import axios from 'axios';
 import ColumnSelector from './ColumnSelector';
 import { fetchDataDB } from '../store/dataDB';
 
@@ -15,16 +14,9 @@ const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [hasHeaders, setHasHeaders] = useState(true);
-  const [useDataDB, setUseDataDB] = useState(false);
+  //const [useDataDB, setUseDataDB] = useState(false);
 
-  const { selectedColumns, data, dataDB, isUser } = useSelector((state) => {
-    return {
-      selectedColumns: state.selectedColumns,
-      data: state.data,
-      dataDB: state.dataDB,
-      isUser: state.auth.id,
-    };
-  });
+  const { selectedColumns, data, userData } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(fetchDataDB());
@@ -91,9 +83,11 @@ const Create = () => {
     setHasHeaders(true);
   };
 
-  const dataName = dataDB.map((data) => {
-    return data.id;
-  });
+  const handlePreviousDataSelect = (e) => {
+    const dataTableId = e.target.value;
+    const prevData = userData.filter((c) => c.id === parseInt(dataTableId));
+    dispatch(_setData(prevData[0].data));
+  };
 
   return (
     <div>
@@ -129,24 +123,24 @@ const Create = () => {
             //   setIsFileSelected(true)
             // }}
           />
-          {isUser && (
-            // add later case for ifData is available
+          {!!userData.length && (
             <div>
               <p>OR</p>
 
-              <label htmlFor='primary'>Select from saved Data:</label>
+              <label htmlFor='previousData'>
+                Select data you've already uploaded:
+              </label>
               <select
-                name='primary'
-                id='primary-column-select'
-                size='3'
-                //  onChange={}
+                name='previousData'
+                id='previousData'
+                onChange={handlePreviousDataSelect}
               >
                 <option value='' disabled>
                   --Choose data--
                 </option>
-                {dataName.map((c, i) => (
-                  <option key={i} value={c}>
-                    {c}
+                {userData.map((c, i) => (
+                  <option key={i} value={c.id}>
+                    {c.id}
                   </option>
                 ))}
               </select>
