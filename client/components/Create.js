@@ -1,13 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Papa from 'papaparse';
-import charts from './chartComponents';
-import { Link } from 'react-router-dom';
-import { _removePrimaryColumn, _clearAllValues } from '../store/selectColumns';
-import { _setData } from '../store/data';
-import ColumnSelector from './ColumnSelector';
-import { fetchDataDB } from '../store/dataDB';
-import { _setDataId } from '../store/dataId';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Papa from "papaparse";
+import charts from "./chartComponents";
+import { Link } from "react-router-dom";
+import { _removePrimaryColumn, _clearAllValues } from "../store/selectColumns";
+import { _setData } from "../store/data";
+import ColumnSelector from "./ColumnSelector";
+import { fetchDataDB } from "../store/dataDB";
+import { _setDataId } from "../store/dataId";
+
+const dummyData = [
+  {
+    "Group": "Group A",
+    "Q1": "1000",
+    "Q2": "1100",
+    "Q3": "1200",
+    "Q4": "1300",
+    "Price": "100",
+    "Quantity": "10",
+    "Arch": ".3",
+    "Month": "1",
+    "Weight": "180"
+  },
+  {
+    "Group": "Group B",
+    "Q1": "2250",
+    "Q2": "2350",
+    "Q3": "2300",
+    "Q4": "2250",
+    "Price": "80",
+    "Quantity": "15",
+    "Arch": ".2",
+    "Month": "2",
+    "Weight": "175"
+  },
+  {
+    "Group": "Group C",
+    "Q1": "1280",
+    "Q2": "1380",
+    "Q3": "1480",
+    "Q4": "1580",
+    "Price": "60",
+    "Quantity": "30",
+    "Arch": ".4",
+    "Month": "3",
+    "Weight": "170"
+  },
+  {
+    "Group": "Group D",
+    "Q1": "970",
+    "Q2": "1070",
+    "Q3": "1170",
+    "Q4": "1270",
+    "Price": "20",
+    "Quantity": "50",
+    "Arch": ".1",
+    "Month": "4",
+    "Weight": "165"
+  }
+]
 
 const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
 
@@ -15,9 +66,8 @@ const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [hasHeaders, setHasHeaders] = useState(true);
-  //const [useDataDB, setUseDataDB] = useState(false);
-
   const { selectedColumns, data, userData } = useSelector((state) => state);
+  const [selectedChartType, setSelectedChartType] = useState("");
 
   useEffect(() => {
     dispatch(fetchDataDB());
@@ -40,7 +90,7 @@ const Create = () => {
   };
 
   const handleHasHeaders = (e) => {
-    const bool = e.target.value === 'false' ? false : true;
+    const bool = e.target.value === "false" ? false : true;
     setHasHeaders(bool);
   };
 
@@ -79,7 +129,7 @@ const Create = () => {
   };
   const handleCancelLoad = () => {
     dispatch(_setData([]));
-    dispatch(_removePrimaryColumn(''));
+    dispatch(_removePrimaryColumn(""));
     dispatch(_clearAllValues());
     dispatch(_setDataId(0));
     setHasHeaders(true);
@@ -101,12 +151,12 @@ const Create = () => {
           <p>Filename: {selectedFile.name}</p>
           <p>Filetype: {selectedFile.type}</p>
           <p>Size in bytes: {selectedFile.size}</p>
-          <label htmlFor='headers'>My data has headers</label>
+          <label htmlFor="headers">My data has headers</label>
           <br></br>
           <div onChange={handleHasHeaders}>
-            <input type='radio' value={true} name='headers' defaultChecked />{' '}
+            <input type="radio" value={true} name="headers" defaultChecked />{" "}
             <small>Yes</small>
-            <input type='radio' value={false} name='headers' />{' '}
+            <input type="radio" value={false} name="headers" />{" "}
             <small>No</small>
           </div>
           <div>
@@ -118,9 +168,9 @@ const Create = () => {
         <div>
           <p>Select a CSV file</p>
           <input
-            type='file'
-            name='file'
-            accept='.csv'
+            type="file"
+            name="file"
+            accept=".csv"
             onChange={handleSelectFile}
             // onClick={async () => {
             //   const {data} = await axios.get('https://coor-xy-files.s3.amazonaws.com/1ac043e6-e16d-4fd6-aaa1-6ed483062e23.csv')
@@ -132,17 +182,15 @@ const Create = () => {
             <div>
               <p>OR</p>
 
-              <label htmlFor='previousData'>
+              <label htmlFor="previousData">
                 Select data you've already uploaded:
               </label>
               <select
-                name='previousData'
-                id='previousData'
+                name="previousData"
+                id="previousData"
                 onChange={handlePreviousDataSelect}
               >
-                <option value=''>
-                  --Choose data--
-                </option>
+                <option value="">--Choose data--</option>
                 {userData.map((c, i) => (
                   <option key={i} value={c.id}>
                     {c.id}
@@ -176,63 +224,67 @@ const Create = () => {
             </tbody>
           </table>
           <div>
+            <p>
+              DevNote: Choose charts here and setSelectedChartType to that chart
+              type
+            </p>
+            <BarComp
+              data={dummyData}
+              primaryColumn={"Group"}
+              valueColumns={[
+                { name: "Q1", color: "#fda25a" },
+                { name: "Q2", color: "#74bdb4" },
+                { name: "Q3", color: "#8067f5" },
+                { name: "Q4", color: "#e6837d" },
+              ]}
+            />
+            <SimpleScatterComp
+              data={dummyData}
+              primaryColumn={"Quantity"}
+              valueColumns={[{ name: "Price", color: "#e6837d" }]}
+            />
+          </div>
+          <div>
             <ColumnSelector />
           </div>
           <div>
             {selectedColumns.primary && selectedColumns.values.length ? (
               <div>
-                <Link
-                  to={{
-                    pathname: '/edit',
-                    state: { type: 'Bar' },
-                  }}
-                >
+                {selectedChartType === "Bar" && (
                   <BarComp
                     data={data}
                     primaryColumn={selectedColumns.primary}
                     valueColumns={selectedColumns.values}
                   />
-                </Link>
-                <Link
-                  to={{
-                    pathname: '/edit',
-                    state: { type: 'Scatter' },
-                  }}
-                >
+                )}
+                {selectedChartType === "Scatter" && (
                   <SimpleScatterComp
                     data={data}
                     primaryColumn={selectedColumns.primary}
                     valueColumns={selectedColumns.values}
                   />
-                </Link>
-                <Link
-                  to={{
-                    pathname: '/edit',
-                    state: { type: 'Area' },
-                  }}
-                >
+                )}
+                {selectedChartType === "Area" && (
                   <SimpleAreaComp
                     data={data}
                     primaryColumn={selectedColumns.primary}
                     valueColumns={selectedColumns.values}
                   />
-                </Link>
-                <Link
-                  to={{
-                    pathname: '/edit',
-                    state: { type: 'Line' },
-                  }}
-                >
+                )}
+                {selectedChartType === "Line" && (
                   <LineComp
                     data={data}
                     primaryColumn={selectedColumns.primary}
                     valueColumns={selectedColumns.values}
                   />
-                </Link>
+                )}
               </div>
             ) : (
               <div>
-                {/*not sure what goes here, maybe charts with default data */}
+                <p>
+                  DevNote: display a blank box where a chart would go (goes away
+                  when they select dimensions)
+                </p>
               </div>
             )}
           </div>
