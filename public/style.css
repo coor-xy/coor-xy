@@ -13,6 +13,21 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+  text-align: center;
+  align-items: center;
+}
+
+nav a:hover {
+  background-color: #888;
+  color: black;
+}
+
+.navbar-name {
+  font-weight: bold;
+}
+
+.logout {
+  justify-content: right;
 }
 
 form div {
