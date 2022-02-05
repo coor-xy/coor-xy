@@ -8,58 +8,7 @@ import { _setData } from "../store/data";
 import ColumnSelector from "./ColumnSelector";
 import { fetchDataDB } from "../store/dataDB";
 import { _setDataId } from "../store/dataId";
-
-const dummyData = [
-  {
-    "Group": "Group A",
-    "Q1": "1000",
-    "Q2": "1100",
-    "Q3": "1200",
-    "Q4": "1300",
-    "Price": "100",
-    "Quantity": "10",
-    "Arch": ".3",
-    "Month": "1",
-    "Weight": "180"
-  },
-  {
-    "Group": "Group B",
-    "Q1": "2250",
-    "Q2": "2350",
-    "Q3": "2300",
-    "Q4": "2250",
-    "Price": "80",
-    "Quantity": "15",
-    "Arch": ".2",
-    "Month": "2",
-    "Weight": "175"
-  },
-  {
-    "Group": "Group C",
-    "Q1": "1280",
-    "Q2": "1380",
-    "Q3": "1480",
-    "Q4": "1580",
-    "Price": "60",
-    "Quantity": "30",
-    "Arch": ".4",
-    "Month": "3",
-    "Weight": "170"
-  },
-  {
-    "Group": "Group D",
-    "Q1": "970",
-    "Q2": "1070",
-    "Q3": "1170",
-    "Q4": "1270",
-    "Price": "20",
-    "Quantity": "50",
-    "Arch": ".1",
-    "Month": "4",
-    "Weight": "165"
-  }
-]
-
+import DummyChart from "./DummyChart";
 const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
 
 const Create = () => {
@@ -228,21 +177,18 @@ const Create = () => {
               DevNote: Choose charts here and setSelectedChartType to that chart
               type
             </p>
-            <BarComp
-              data={dummyData}
-              primaryColumn={"Group"}
-              valueColumns={[
-                { name: "Q1", color: "#fda25a" },
-                { name: "Q2", color: "#74bdb4" },
-                { name: "Q3", color: "#8067f5" },
-                { name: "Q4", color: "#e6837d" },
-              ]}
-            />
-            <SimpleScatterComp
-              data={dummyData}
-              primaryColumn={"Quantity"}
-              valueColumns={[{ name: "Price", color: "#e6837d" }]}
-            />
+            {/* <Link
+              to={{
+                pathname: "/edit",
+                state: { type: "Line" },
+              }}
+            >
+              <p>chart goes here</p>
+            </Link> */}
+            <DummyChart type={"Bar"} />
+            <DummyChart type={"Line"} />
+            <DummyChart type={"Scatter"} />
+            <DummyChart type={"Area"} />
           </div>
           <div>
             <ColumnSelector />
