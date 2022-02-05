@@ -119,3 +119,51 @@ form div {
   justify-content: flex-start;
   align-items: center;
 }
+
+.data-select-container {
+  height: 250px;
+  display: grid;
+  grid-template-columns: minmax(150px, 25%) 1fr;
+}
+
+.data-select-sidebar-container,
+.data-preview-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid gainsboro;
+}
+
+.data-select-sidebar-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* top | right | bottom | left */
+  margin: 1em 0 1em 0;
+}
+
+.file-selector-input {
+  border: 1px solid gainsboro;
+}
+
+.table-container {
+  width: 95%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+td {
+  text-align: center;
+  border: 1px solid gainsboro;
+  padding: 0.5rem;
+}

@@ -24,18 +24,10 @@ const Create = () => {
 
   const dispatch = useDispatch();
 
-  const handleSelectFile = async (e) => {
+  const handleSelectFile = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
     setIsFileSelected(true);
-    // const { data: url } = await axios.get('/s3url')
-    // await axios.put(url, file, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-    // })
-    // const fileUrl = url.split('?')[0]
-    // console.log('file url:', fileUrl)
   };
 
   const handleHasHeaders = (e) => {
@@ -76,12 +68,14 @@ const Create = () => {
     const rowLimit = 5;
     return data.length >= rowLimit ? data.slice(0, rowLimit) : data;
   };
+
   const handleCancelLoad = () => {
     dispatch(_setData([]));
     dispatch(_removePrimaryColumn(""));
     dispatch(_clearAllValues());
     dispatch(_setDataId(0));
     setHasHeaders(true);
+    setSelectedChartType("");
   };
 
   const handlePreviousDataSelect = (e) => {
@@ -93,8 +87,116 @@ const Create = () => {
     }
   };
 
+  const handleChartSelect = (type) => {
+    setSelectedChartType(type);
+  };
+
   return (
     <div>
+        <h3>Step 1: Select your data</h3>
+      <div className="data-select-container">
+        <div className="data-select-sidebar-container">
+          {!data.length ? (
+            !isFileSelected ? (
+              <div>
+                <div className="data-select-sidebar-item">
+                  <label htmlFor="file">Upload a CSV file</label>
+                  <div className="file-selector-input">
+                    <input
+                      type="file"
+                      name="file"
+                      accept=".csv"
+                      onChange={handleSelectFile}
+                    />
+                  </div>
+                </div>
+                {!!userData.length && (
+                  <div className="data-select-sidebar-item">
+                    <label htmlFor="previousData">
+                      Or select data you've already uploaded:
+                    </label>
+                    <select
+                      name="previousData"
+                      id="previousData"
+                      onChange={handlePreviousDataSelect}
+                    >
+                      <option value="">--Choose data--</option>
+                      {userData.map((c, i) => (
+                        <option key={i} value={c.id}>
+                          {c.id}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="data-select-sidebar-item">
+                <p>Filename: {selectedFile.name}</p>
+                <label htmlFor="headers">My data has headers</label>
+                <div onChange={handleHasHeaders}>
+                  <input
+                    type="radio"
+                    value={true}
+                    name="headers"
+                    defaultChecked
+                  />{" "}
+                  <small>Yes</small>
+                  <input type="radio" value={false} name="headers" />{" "}
+                  <small>No</small>
+                </div>
+                <br></br>
+                <div>
+                  <button onClick={handleLoadFile}>Load file</button>
+                  <button onClick={handleCancelSelect}>Cancel</button>
+                </div>
+              </div>
+            )
+          ) : (
+            <div>
+              <button onClick={handleCancelLoad}>Reset</button>
+            </div>
+          )}
+        </div>
+        <div className="data-preview-container">
+          {!data.length ? (
+            <div>
+              <p>
+                <small>
+                  You can upload a .CSV file or select from data you've used in
+                  other charts.
+                </small>
+              </p>
+            </div>
+          ) : (
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    {Object.keys(data[0]).map((th, i) => (
+                      <th key={i}>{th}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {setPreviewRange(data).map((tr, i) => (
+                    <tr key={i}>
+                      {Object.values(tr).map((td, j) => (
+                        <td key={j}>{td}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div>
+        <hr />
+      </div>
+
       {isFileSelected ? (
         <div>
           <p>Filename: {selectedFile.name}</p>
@@ -115,24 +217,19 @@ const Create = () => {
         </div>
       ) : !data.length ? (
         <div>
-          <p>Select a CSV file</p>
-          <input
-            type="file"
-            name="file"
-            accept=".csv"
-            onChange={handleSelectFile}
-            // onClick={async () => {
-            //   const {data} = await axios.get('https://coor-xy-files.s3.amazonaws.com/1ac043e6-e16d-4fd6-aaa1-6ed483062e23.csv')
-            //   setSelectedFile(data)
-            //   setIsFileSelected(true)
-            // }}
-          />
+          <div>
+            <label htmlFor="file">Select a CSV file</label>
+            <input
+              type="file"
+              name="file"
+              accept=".csv"
+              onChange={handleSelectFile}
+            />
+          </div>
           {!!userData.length && (
             <div>
-              <p>OR</p>
-
               <label htmlFor="previousData">
-                Select data you've already uploaded:
+                Or select data you've already uploaded:
               </label>
               <select
                 name="previousData"
@@ -185,10 +282,19 @@ const Create = () => {
             >
               <p>chart goes here</p>
             </Link> */}
-            <DummyChart type={"Bar"} />
-            <DummyChart type={"Line"} />
-            <DummyChart type={"Scatter"} />
-            <DummyChart type={"Area"} />
+            <div onClick={() => handleChartSelect("Bar")}>
+              <DummyChart type={"Bar"} />
+            </div>
+            <div onClick={() => handleChartSelect("Line")}>
+              <DummyChart type={"Line"} />
+            </div>
+            <div onClick={() => handleChartSelect("Scatter")}>
+              <DummyChart type={"Scatter"} />
+            </div>
+            <div onClick={() => handleChartSelect("Area")}>
+              <DummyChart type={"Area"} />
+            </div>
+            {console.log(selectedChartType)}
           </div>
           <div>
             <ColumnSelector />
