@@ -48,10 +48,7 @@ const charts = [
   {
     userId: 1,
     type: 'Bar',
-    colorPref: [
-      { name: 'Q1', color: '#58AC56' },
-      { name: 'Q2', color: '#3C8311' },
-    ],
+    
     title: 'Bar Chart',
     yLabel: 'value',
     xLabel: 'Group',
@@ -71,12 +68,6 @@ const charts = [
   {
     userId: 2,
     type: 'Line',
-    colorPref: [
-      {
-        name: 'Q1',
-        color: '#001487',
-      },
-    ],
 
     title: 'Line Chart',
     yLabel: 'value',
@@ -93,12 +84,6 @@ const charts = [
   {
     userId: 1,
     type: 'Line',
-    colorPref: [
-      {
-        name: 'Q1',
-        color: '#001487',
-      },
-    ],
 
     title: 'Line Chart',
     yLabel: 'value',

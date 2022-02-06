@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { DataTable },
+  models: { DataTable, Chart },
 } = require("../db");
 const { isUser } = require("./gatekeeping");
 
@@ -44,11 +44,40 @@ router.get("/:dataId", isUser, async (req, res, next) => {
 
 router.post("/", isUser, async (req, res, next) => {
   try {
+    console.log(req.body)
     const userId = req.user.id;
     const { data } = req.body;
     const addedData = await DataTable.create({ data, userId });
     const newData = await DataTable.findByPk(addedData.id, {
       attributes: ["id", "data", "userId"],
+    });
+
+    const {
+      type,
+      title,
+      yLabel,
+      xLabel,
+      primaryColumn,
+      valueColumns,
+      legend,
+      grid,
+      width,
+      height,
+    } = req.body.config
+    const dataTableId = addedData.id
+    await Chart.create({
+      type,
+      title,
+      yLabel,
+      xLabel,
+      primaryColumn,
+      valueColumns,
+      width,
+      height,
+      legend,
+      grid,
+      userId,
+      dataTableId,
     });
     res.send(newData).status(200);
   } catch (err) {
