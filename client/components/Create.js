@@ -10,6 +10,7 @@ import { fetchDataDB } from "../store/dataDB";
 import { _setDataId } from "../store/dataId";
 import DummyChart from "./DummyChart";
 const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
+import ColSelectorCreate from "./ColSelectorCreate";
 
 const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
@@ -93,7 +94,7 @@ const Create = () => {
 
   return (
     <div>
-        <h3>Step 1: Select your data</h3>
+      <h3>Step 1: Select your data</h3>
       <div className="data-select-container">
         <div className="data-select-sidebar-container">
           {!data.length ? (
@@ -154,7 +155,7 @@ const Create = () => {
             )
           ) : (
             <div>
-              <button onClick={handleCancelLoad}>Reset</button>
+              <button onClick={handleCancelLoad}>Start Over</button>
             </div>
           )}
         </div>
@@ -164,7 +165,7 @@ const Create = () => {
               <p>
                 <small>
                   You can upload a .CSV file or select from data you've used in
-                  other charts.
+                  you saved charts.
                 </small>
               </p>
             </div>
@@ -191,6 +192,56 @@ const Create = () => {
             </div>
           )}
         </div>
+      </div>
+      <h3>Step 2: Select a chart</h3>
+      <div className="chart-select-container">
+        <div
+          className={`chart-tile ${
+            selectedChartType === "Bar" ? "selected-chart" : ""
+          }`}
+          onClick={() => handleChartSelect("Bar")}
+        >
+          <DummyChart type={"Bar"} />
+        </div>
+        <div
+          className={`chart-tile ${
+            selectedChartType === "Line" ? "selected-chart" : ""
+          }`}
+          onClick={() => handleChartSelect("Line")}
+        >
+          <DummyChart type={"Line"} />
+        </div>
+        <div
+          className={`chart-tile ${
+            selectedChartType === "Scatter" ? "selected-chart" : ""
+          }`}
+          onClick={() => handleChartSelect("Scatter")}
+        >
+          <DummyChart type={"Scatter"} />
+        </div>
+        <div
+          className={`chart-tile ${
+            selectedChartType === "Area" ? "selected-chart" : ""
+          }`}
+          onClick={() => handleChartSelect("Area")}
+        >
+          <DummyChart type={"Area"} />
+        </div>
+      </div>
+      <h3>Step 3: Select chart variables</h3>
+      <div className="chart-variable-container">
+        {data.length && selectedChartType ? (
+          <ColSelectorCreate type={selectedChartType}/>
+        ) : (
+          <div>
+            <p>
+              <small>
+                Load your data and select a chart before choosing your chart
+                variables.
+              </small>
+            </p>
+          </div>
+        )}
       </div>
 
       <div>
@@ -294,7 +345,6 @@ const Create = () => {
             <div onClick={() => handleChartSelect("Area")}>
               <DummyChart type={"Area"} />
             </div>
-            {console.log(selectedChartType)}
           </div>
           <div>
             <ColumnSelector />

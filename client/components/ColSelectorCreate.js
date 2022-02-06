@@ -8,7 +8,8 @@ import {
   _removeValueColumn,
 } from "../store/selectColumns";
 
-const ColumnSelector = () => {
+const ColSelectorCreate = (props) => {
+  const { type } = props;
   const { data, selectedColumns } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [columns, setColumns] = useState([]);
@@ -38,8 +39,8 @@ const ColumnSelector = () => {
   };
 
   return (
-    <div className="column-selector-container">
-      <div className="selectors">
+    <div className="col-selector-container">
+      <div className="primary-selector">
         <label htmlFor="primary">Select a primary axis:</label>
         <select
           name="primary"
@@ -56,27 +57,28 @@ const ColumnSelector = () => {
             </option>
           ))}
         </select>
-        {!selectedColumns.primary ? (
-          <div>
-            <p>
-              <small>You haven't selected anything</small>
-            </p>
-          </div>
-        ) : (
-          <div>
-            <p>
-              <small>Selected column: </small>
-            </p>
-            <p>
-              {`${selectedColumns.primary} `}
-              <small onClick={() => handleDeSelectColumn("primary")}>
-                remove
-              </small>
-            </p>
-          </div>
-        )}
       </div>
-      <div className="selectors">
+      {!selectedColumns.primary ? (
+        <div className="selected-primary">
+          <p>
+            <small>You haven't selected anything</small>
+          </p>
+        </div>
+      ) : (
+        <div className="selected-primary">
+          <p>
+            <small>Selected dimension: </small>
+          </p>
+          <p>
+            {`${selectedColumns.primary} `}
+            <small onClick={() => handleDeSelectColumn("primary")}>
+              remove
+            </small>
+          </p>
+        </div>
+      )}
+
+      <div className="values-selector">
         <label htmlFor="values">Select values:</label>
         <select
           name="values"
@@ -85,7 +87,7 @@ const ColumnSelector = () => {
           onChange={handleSelectColumn}
         >
           <option value="" disabled>
-            --Choose a column--
+            --Choose column--
           </option>
           {columns.map((c, i) => (
             <option key={i} value={c}>
@@ -93,30 +95,30 @@ const ColumnSelector = () => {
             </option>
           ))}
         </select>
-        {!selectedColumns.values.length ? (
-          <div>
-            <p>
-              <small>You haven't selected anything</small>
-            </p>
-          </div>
-        ) : (
-          <div>
-            <p>
-              <small>Selected Columns: </small>
-            </p>
-            {selectedColumns.values.map((val, i) => (
-              <p key={i}>
-                {`${val.name} `}
-                <small onClick={() => handleDeSelectColumn("values", val.name)}>
-                  remove
-                </small>
-              </p>
-            ))}
-          </div>
-        )}
       </div>
+      {!selectedColumns.values.length ? (
+        <div className="selected-values">
+          <p>
+            <small>You haven't selected anything</small>
+          </p>
+        </div>
+      ) : (
+        <div className="selected-values">
+          <p>
+            <small>Selected dimensions: </small>
+          </p>
+          {selectedColumns.values.map((val, i) => (
+            <p key={i}>
+              {`${val.name} `}
+              <small onClick={() => handleDeSelectColumn("values", val.name)}>
+                remove
+              </small>
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-export default ColumnSelector;
+export default ColSelectorCreate;

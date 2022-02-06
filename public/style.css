@@ -133,6 +133,7 @@ form div {
   justify-content: center;
   align-items: center;
   border: 2px solid gainsboro;
+  flex-wrap: wrap;
 }
 
 .data-select-sidebar-item {
@@ -142,10 +143,16 @@ form div {
   align-items: center;
   /* top | right | bottom | left */
   margin: 1em 0 1em 0;
+  flex-wrap: wrap;
+}
+
+.data-select-sidebar-item > select {
+  margin-top: 0.5em;
 }
 
 .file-selector-input {
   border: 1px solid gainsboro;
+  margin-top: 0.5em;
 }
 
 .table-container {
@@ -166,4 +173,72 @@ td {
   text-align: center;
   border: 1px solid gainsboro;
   padding: 0.5rem;
+}
+
+.chart-select-container {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+}
+
+.chart-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid gainsboro;
+}
+
+.chart-tile:hover,
+.chart-tile svg:hover {
+  cursor: pointer;
+}
+
+.selected-chart {
+  background-color: rgb(235, 253, 235);
+  border: 1px solid rgb(45, 182, 45);
+}
+
+.chart-variable-container {
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 2px solid gainsboro;
+  flex-wrap: wrap;
+}
+
+.col-selector-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 95%;
+  height: 100%;
+}
+
+.primary-selector {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  border-bottom: 1px solid gainsboro;
+  padding: 0.5em;
+}
+
+.selected-primary {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  border-bottom: 1px solid gainsboro;
+  padding: 0.5em;
+}
+
+.values-selector {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  padding: 0.5em;
+}
+
+.selected-values {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  padding: 0.5em;
 }
