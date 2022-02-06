@@ -13,10 +13,20 @@ const ColSelectorCreate = (props) => {
   const { data, selectedColumns } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [columns, setColumns] = useState([]);
+  const [infoBox, setInfoBox] = useState("");
 
   useEffect(() => {
     setColumns(Object.keys(data[0]));
   }, []);
+
+  useEffect(() => {
+    const primaryInfo = {
+        "": "Select a chart.",
+        "Bar": "Accepts numbers, strings, and dates.",
+        "Scatter": "Accepts numbers and dates.",
+        
+    }
+  }, [type])
 
   const handleSelectColumn = (e) => {
     const axis = e.target.name;
@@ -40,83 +50,90 @@ const ColSelectorCreate = (props) => {
 
   return (
     <div className="col-selector-container">
-      <div className="primary-selector">
-        <label htmlFor="primary">Select a primary axis:</label>
-        <select
-          name="primary"
-          id="primary-column-select"
-          size="3"
-          onChange={handleSelectColumn}
-        >
-          <option value="" disabled>
-            --Choose a column--
-          </option>
-          {columns.map((c, i) => (
-            <option key={i} value={c}>
-              {c}
+      <div className="primary-container">
+        <div className="primary-selector">
+          <label htmlFor="primary">Select a primary axis:</label>
+          <select
+            name="primary"
+            id="primary-column-select"
+            size="3"
+            onChange={handleSelectColumn}
+          >
+            <option value="" disabled>
+              --Choose a column--
             </option>
-          ))}
-        </select>
-      </div>
-      {!selectedColumns.primary ? (
-        <div className="selected-primary">
-          <p>
-            <small>You haven't selected anything</small>
-          </p>
+            {columns.map((c, i) => (
+              <option key={i} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
         </div>
-      ) : (
-        <div className="selected-primary">
-          <p>
-            <small>Selected dimension: </small>
-          </p>
-          <p>
-            {`${selectedColumns.primary} `}
-            <small onClick={() => handleDeSelectColumn("primary")}>
-              remove
-            </small>
-          </p>
-        </div>
-      )}
-
-      <div className="values-selector">
-        <label htmlFor="values">Select values:</label>
-        <select
-          name="values"
-          id="values-column-select"
-          size="3"
-          onChange={handleSelectColumn}
-        >
-          <option value="" disabled>
-            --Choose column--
-          </option>
-          {columns.map((c, i) => (
-            <option key={i} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-      </div>
-      {!selectedColumns.values.length ? (
-        <div className="selected-values">
-          <p>
-            <small>You haven't selected anything</small>
-          </p>
-        </div>
-      ) : (
-        <div className="selected-values">
-          <p>
-            <small>Selected dimensions: </small>
-          </p>
-          {selectedColumns.values.map((val, i) => (
-            <p key={i}>
-              {`${val.name} `}
-              <small onClick={() => handleDeSelectColumn("values", val.name)}>
-                remove
-              </small>
+        {!selectedColumns.primary ? (
+          <div className="selected-primary">
+            <div className="col-info-box">
+              <p>info box</p>
+            </div>
+            <p>
+              <small>You haven't selected anything</small>
             </p>
-          ))}
+          </div>
+        ) : (
+          <div className="selected-primary">
+            <div className="col-info-box">
+              <p>info box</p>
+            </div>
+            <div className="col-selected">
+              <p>{`${selectedColumns.primary} `}</p>
+              <small onClick={() => handleDeSelectColumn("primary")}>X</small>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="values-container">
+        <div className="values-selector">
+          <label htmlFor="values">Select values:</label>
+          <select
+            name="values"
+            id="values-column-select"
+            size="3"
+            onChange={handleSelectColumn}
+          >
+            <option value="" disabled>
+              --Choose column--
+            </option>
+            {columns.map((c, i) => (
+              <option key={i} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
         </div>
-      )}
+        {!selectedColumns.values.length ? (
+          <div className="selected-values">
+            <div className="col-info-box">
+              <p>info box</p>
+            </div>
+            <p>
+              <small>You haven't selected anything</small>
+            </p>
+          </div>
+        ) : (
+          <div className="selected-values">
+            <div className="col-info-box">
+              <p>info box</p>
+            </div>
+            {selectedColumns.values.map((val, i) => (
+              <div key={i} className="col-selected">
+                <p>{`${val.name} `}</p>
+                <small onClick={() => handleDeSelectColumn("values", val.name)}>
+                  X
+                </small>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

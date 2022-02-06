@@ -157,6 +157,8 @@ form div {
 
 .table-container {
   width: 95%;
+  padding: 0 1em 0 1em;
+  overflow-x: auto;
 }
 
 table {
@@ -203,7 +205,7 @@ td {
   min-height: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   border: 2px solid gainsboro;
   flex-wrap: wrap;
@@ -211,34 +213,66 @@ td {
 
 .col-selector-container {
   display: grid;
-  grid-template-columns: auto 1fr;
   grid-template-rows: 1fr 1fr;
   width: 95%;
   height: 100%;
 }
 
-.primary-selector {
-  grid-column: 1 / 2;
+.primary-container {
   grid-row: 1 / 2;
-  border-bottom: 1px solid gainsboro;
-  padding: 0.5em;
+  border-bottom: 0.5px solid gainsboro;
 }
 
-.selected-primary {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-  border-bottom: 1px solid gainsboro;
-  padding: 0.5em;
+.values-container {
+  grid-row: 2 / 3;
+  border-top: 0.5px solid gainsboro;
 }
 
+.primary-container, 
+.values-container {
+  display: flex;
+  align-items: center;
+  height: 100px;
+}
+
+.primary-selector,
 .values-selector {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  padding: 0.5em;
+  min-width: 250px;
 }
 
+.selected-primary,
 .selected-values {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-  padding: 0.5em;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-selected,
+.col-info-box {
+  border: 1px solid gainsboro;
+  min-width: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 0.5em 0 0.5em;
+  margin: 0 0.5em 0 0.5em;
+}
+
+.col-selected small {
+  color: crimson;
+}
+
+.col-selected small:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.chart-preview-container {
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 2px solid gainsboro;
+  flex-wrap: wrap;
 }

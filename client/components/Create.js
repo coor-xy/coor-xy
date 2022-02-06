@@ -11,6 +11,7 @@ import { _setDataId } from "../store/dataId";
 import DummyChart from "./DummyChart";
 const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
 import ColSelectorCreate from "./ColSelectorCreate";
+import ChartPreview from "./ChartPreview";
 
 const Create = () => {
   const [selectedFile, setSelectedFile] = useState();
@@ -231,7 +232,7 @@ const Create = () => {
       <h3>Step 3: Select chart variables</h3>
       <div className="chart-variable-container">
         {data.length && selectedChartType ? (
-          <ColSelectorCreate type={selectedChartType}/>
+          <ColSelectorCreate type={selectedChartType} />
         ) : (
           <div>
             <p>
@@ -243,155 +244,44 @@ const Create = () => {
           </div>
         )}
       </div>
-
-      <div>
-        <hr />
-      </div>
-
-      {isFileSelected ? (
+      <h3>Step 4: Proceed to customize your chart</h3>
+      <div className="chart-preview-container">
         <div>
-          <p>Filename: {selectedFile.name}</p>
-          <p>Filetype: {selectedFile.type}</p>
-          <p>Size in bytes: {selectedFile.size}</p>
-          <label htmlFor="headers">My data has headers</label>
-          <br></br>
-          <div onChange={handleHasHeaders}>
-            <input type="radio" value={true} name="headers" defaultChecked />{" "}
-            <small>Yes</small>
-            <input type="radio" value={false} name="headers" />{" "}
-            <small>No</small>
-          </div>
-          <div>
-            <button onClick={handleLoadFile}>Load file</button>
-            <button onClick={handleCancelSelect}>Cancel</button>
-          </div>
+          <button onClick={handleCancelLoad}>Start over</button>
         </div>
-      ) : !data.length ? (
-        <div>
-          <div>
-            <label htmlFor="file">Select a CSV file</label>
-            <input
-              type="file"
-              name="file"
-              accept=".csv"
-              onChange={handleSelectFile}
-            />
-          </div>
-          {!!userData.length && (
-            <div>
-              <label htmlFor="previousData">
-                Or select data you've already uploaded:
-              </label>
-              <select
-                name="previousData"
-                id="previousData"
-                onChange={handlePreviousDataSelect}
-              >
-                <option value="">--Choose data--</option>
-                {userData.map((c, i) => (
-                  <option key={i} value={c.id}>
-                    {c.id}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div>
-          <div>
-            <button onClick={handleCancelLoad}>Cancel</button>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                {Object.keys(data[0]).map((th, i) => (
-                  <th key={i}>{th}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {setPreviewRange(data).map((tr, i) => (
-                <tr key={i}>
-                  {Object.values(tr).map((td, j) => (
-                    <td key={j}>{td}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {selectedColumns.primary && selectedColumns.values.length ? (
+          <ChartPreview
+            type={selectedChartType}
+            data={data}
+            selectedColumns={selectedColumns}
+          />
+        ) : (
           <div>
             <p>
-              DevNote: Choose charts here and setSelectedChartType to that chart
-              type
+              Once you load your data, select a chart and your chart variables a
+              preview will appear.
             </p>
-            {/* <Link
+          </div>
+        )}
+        <div>
+          {selectedChartType !== "" &&
+          selectedColumns.primary &&
+          selectedColumns.values.length ? (
+            <Link
               to={{
                 pathname: "/edit",
-                state: { type: "Line" },
+                state: { type: selectedChartType },
               }}
             >
-              <p>chart goes here</p>
-            </Link> */}
-            <div onClick={() => handleChartSelect("Bar")}>
-              <DummyChart type={"Bar"} />
-            </div>
-            <div onClick={() => handleChartSelect("Line")}>
-              <DummyChart type={"Line"} />
-            </div>
-            <div onClick={() => handleChartSelect("Scatter")}>
-              <DummyChart type={"Scatter"} />
-            </div>
-            <div onClick={() => handleChartSelect("Area")}>
-              <DummyChart type={"Area"} />
-            </div>
-          </div>
-          <div>
-            <ColumnSelector />
-          </div>
-          <div>
-            {selectedColumns.primary && selectedColumns.values.length ? (
-              <div>
-                {selectedChartType === "Bar" && (
-                  <BarComp
-                    data={data}
-                    primaryColumn={selectedColumns.primary}
-                    valueColumns={selectedColumns.values}
-                  />
-                )}
-                {selectedChartType === "Scatter" && (
-                  <SimpleScatterComp
-                    data={data}
-                    primaryColumn={selectedColumns.primary}
-                    valueColumns={selectedColumns.values}
-                  />
-                )}
-                {selectedChartType === "Area" && (
-                  <SimpleAreaComp
-                    data={data}
-                    primaryColumn={selectedColumns.primary}
-                    valueColumns={selectedColumns.values}
-                  />
-                )}
-                {selectedChartType === "Line" && (
-                  <LineComp
-                    data={data}
-                    primaryColumn={selectedColumns.primary}
-                    valueColumns={selectedColumns.values}
-                  />
-                )}
-              </div>
-            ) : (
-              <div>
-                <p>
-                  DevNote: display a blank box where a chart would go (goes away
-                  when they select dimensions)
-                </p>
-              </div>
-            )}
-          </div>
+              <button className="go-customize">Customize</button>
+            </Link>
+          ) : (
+            <a>
+              <button className="no-go-customize">Customize</button>
+            </a>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
