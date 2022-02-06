@@ -245,43 +245,35 @@ const Create = () => {
         )}
       </div>
       <h3>Step 4: Proceed to customize your chart</h3>
-      <div className="chart-preview-container">
-        <div>
-          <button onClick={handleCancelLoad}>Start over</button>
-        </div>
-        {selectedColumns.primary && selectedColumns.values.length ? (
+      {selectedColumns.primary && selectedColumns.values.length ? (
+        <div className="chart-preview-container">
+          <div>
+            <button onClick={handleCancelLoad}>Start over</button>
+          </div>
           <ChartPreview
             type={selectedChartType}
             data={data}
             selectedColumns={selectedColumns}
           />
-        ) : (
           <div>
-            <p>
-              Once you load your data, select a chart and your chart variables a
-              preview will appear.
-            </p>
-          </div>
-        )}
-        <div>
-          {selectedChartType !== "" &&
-          selectedColumns.primary &&
-          selectedColumns.values.length ? (
             <Link
               to={{
                 pathname: "/edit",
                 state: { type: selectedChartType },
               }}
             >
-              <button className="go-customize">Customize</button>
+              <button>Customize</button>
             </Link>
-          ) : (
-            <a>
-              <button className="no-go-customize">Customize</button>
-            </a>
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="chart-preview-container">
+          <p>
+            Once you load your data, select a chart and your chart variables a
+            preview will appear.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

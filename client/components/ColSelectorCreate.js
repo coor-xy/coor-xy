@@ -8,25 +8,53 @@ import {
   _removeValueColumn,
 } from "../store/selectColumns";
 
+const columnInfo = {
+  "": {
+    primaryInfoBox: "Select a chart.",
+    valuesInfoBox: "Select a chart.",
+    primaryLabel: "",
+    valuesLabel: "",
+  },
+  Bar: {
+    primaryInfoBox: "Accepts numbers, strings, and dates",
+    valuesInfoBox: "Accepts numbers",
+    primaryLabel: "Select a horizontal variable",
+    valuesLabel: "Select vertical variables",
+  },
+  Scatter: {
+    primaryInfoBox: "Accepts numbers and dates",
+    valuesInfoBox: "Accepts numbers",
+    primaryLabel: "Select a X variable",
+    valuesLabel: "Select a Y variable",
+  },
+  Line: {
+    primaryInfoBox: "Accepts numbers and dates",
+    valuesInfoBox: "Accepts numbers",
+    primaryLabel: "Select a horizontal variable",
+    valuesLabel: "Select lines",
+  },
+  Area: {
+    primaryInfoBox: "Accepts numbers, strings, and dates",
+    valuesInfoBox: "Accepts numbers",
+    primaryLabel: "Select a horizontal variable",
+    valuesLabel: "Select vertical variables",
+  }
+};
+
 const ColSelectorCreate = (props) => {
   const { type } = props;
   const { data, selectedColumns } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [columns, setColumns] = useState([]);
-  const [infoBox, setInfoBox] = useState("");
+  const [colGuidance, setColGuidance] = useState({});
 
   useEffect(() => {
     setColumns(Object.keys(data[0]));
   }, []);
 
   useEffect(() => {
-    const primaryInfo = {
-        "": "Select a chart.",
-        "Bar": "Accepts numbers, strings, and dates.",
-        "Scatter": "Accepts numbers and dates.",
-        
-    }
-  }, [type])
+      setColGuidance(columnInfo[type]);
+  }, [type]);
 
   const handleSelectColumn = (e) => {
     const axis = e.target.name;
@@ -52,7 +80,7 @@ const ColSelectorCreate = (props) => {
     <div className="col-selector-container">
       <div className="primary-container">
         <div className="primary-selector">
-          <label htmlFor="primary">Select a primary axis:</label>
+          <label htmlFor="primary">{colGuidance.primaryLabel}</label>
           <select
             name="primary"
             id="primary-column-select"
@@ -72,7 +100,7 @@ const ColSelectorCreate = (props) => {
         {!selectedColumns.primary ? (
           <div className="selected-primary">
             <div className="col-info-box">
-              <p>info box</p>
+            <p><small>{colGuidance.primaryInfoBox}</small></p>
             </div>
             <p>
               <small>You haven't selected anything</small>
@@ -81,7 +109,7 @@ const ColSelectorCreate = (props) => {
         ) : (
           <div className="selected-primary">
             <div className="col-info-box">
-              <p>info box</p>
+              <p><small>{colGuidance.primaryInfoBox}</small></p>
             </div>
             <div className="col-selected">
               <p>{`${selectedColumns.primary} `}</p>
@@ -92,7 +120,7 @@ const ColSelectorCreate = (props) => {
       </div>
       <div className="values-container">
         <div className="values-selector">
-          <label htmlFor="values">Select values:</label>
+          <label htmlFor="values">{colGuidance.valuesLabel}</label>
           <select
             name="values"
             id="values-column-select"
@@ -112,7 +140,7 @@ const ColSelectorCreate = (props) => {
         {!selectedColumns.values.length ? (
           <div className="selected-values">
             <div className="col-info-box">
-              <p>info box</p>
+              <p><small>{colGuidance.valuesInfoBox}</small></p>
             </div>
             <p>
               <small>You haven't selected anything</small>
@@ -121,7 +149,7 @@ const ColSelectorCreate = (props) => {
         ) : (
           <div className="selected-values">
             <div className="col-info-box">
-              <p>info box</p>
+              <p><small>{colGuidance.valuesInfoBox}</small></p>
             </div>
             {selectedColumns.values.map((val, i) => (
               <div key={i} className="col-selected">
