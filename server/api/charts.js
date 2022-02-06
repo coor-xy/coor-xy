@@ -14,17 +14,20 @@ router.get("/", isUser, async (req, res, next) => {
       attributes: [
         "id",
         "type",
-        "colorPref",
         "title",
         "yLabel",
         "xLabel",
         "primaryColumn",
         "valueColumns",
         "userId",
+        "legend",
+        "grid",
+        "width",
+        "height",
       ],
       include: {
         model: DataTable,
-        attributes: ["data"],
+        attributes: ["data","id"],
       },
     });
     res.send(charts).status(200);
@@ -41,13 +44,16 @@ router.get("/:chartId", isUser, async (req, res, next) => {
       attributes: [
         "id",
         "type",
-        "colorPref",
         "title",
         "yLabel",
         "xLabel",
         "primaryColumn",
         "valueColumns",
         "userId",
+        "legend",
+        "grid",
+        "width",
+        "height",
       ],
       include: {
         model: DataTable,
@@ -74,18 +80,20 @@ router.post("/", isUser, async (req, res, next) => {
   try {
     const {
       type,
-      colorPref,
       title,
       yLabel,
       xLabel,
       primaryColumn,
       valueColumns,
       dataTableId,
+      legend,
+      grid,
+      width,
+      height,
     } = req.body;
     const userId = req.user.id;
     const newChart = await Chart.create({
       type,
-      colorPref,
       title,
       yLabel,
       xLabel,
@@ -93,18 +101,25 @@ router.post("/", isUser, async (req, res, next) => {
       valueColumns,
       dataTableId,
       userId,
+      legend,
+      grid,
+      width,
+      height
     });
     const chart = await Chart.findByPk(newChart.id, {
       attributes: [
         "id",
         "type",
-        "colorPref",
         "title",
         "yLabel",
         "xLabel",
         "primaryColumn",
         "valueColumns",
         "userId",
+        "legend",
+        "grid",
+        "width",
+        "height",
       ],
       include: {
         model: DataTable,
@@ -122,25 +137,31 @@ router.put("/:chartId", isUser, async (req, res, next) => {
     const userId = req.user.id;
     const {
       type,
-      colorPref,
       title,
       yLabel,
       xLabel,
       primaryColumn,
       valueColumns,
+      legend,
+      grid,
+      width,
+      height
     } = req.body;
     const { chartId } = req.params;
     const chart = await Chart.findByPk(chartId, {
       attributes: [
         "id",
         "type",
-        "colorPref",
         "title",
         "yLabel",
         "xLabel",
         "primaryColumn",
         "valueColumns",
         "userId",
+        "legend",
+        "grid",
+        "width",
+        "height",
       ],
       include: {
         model: DataTable,
@@ -158,12 +179,15 @@ router.put("/:chartId", isUser, async (req, res, next) => {
     } else {
       const updatedChart = await chart.update({
         type,
-        colorPref,
         title,
         yLabel,
         xLabel,
         primaryColumn,
         valueColumns,
+        legend,
+        grid,
+        width,
+        height
       });
       res.send(updatedChart).status(200);
     }
@@ -180,7 +204,6 @@ router.delete("/:chartId", isUser, async (req, res, next) => {
       attributes: [
         "id",
         "type",
-        "colorPref",
         "title",
         "yLabel",
         "xLabel",
