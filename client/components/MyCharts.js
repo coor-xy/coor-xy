@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
+import { _setChartConfigs } from '../store/chartConfigs';
 import { fetchCharts } from '../store/charts';
 import { _setData } from '../store/data';
 import { _setPrimaryColumn, _setValueColumns } from '../store/selectColumns';
 import charts from "./chartComponents";
+import { _setDataId } from "../store/dataId"
 
 const {
     BarComp,
@@ -24,7 +26,7 @@ const MyCharts = () => {
 
     useEffect(()=>{
         setCharts(allCharts)
-    },[allCharts.length])
+    },[allCharts])
 
     return (
         <div className='myCharts'>
@@ -53,7 +55,10 @@ const MyCharts = () => {
                             <div>
                                 <Link to={{
                                     pathname: "/edit",
-                                    state: { type: "Bar" },
+                                    state: { 
+                                        type: "Bar",
+                                        chartId: chart.id
+                                    },
                                 }}
                                 onClick={()=>{
                                     dispatch(_setData(chart.dataTable.data))
@@ -61,6 +66,16 @@ const MyCharts = () => {
                                     chart.valueColumns.forEach(obj=>{
                                         dispatch(_setValueColumns(obj))
                                     })
+                                    dispatch(_setDataId(chart.dataTable.id))
+                                    dispatch(_setChartConfigs({
+                                        title:chart.title,
+                                        width:chart.width,
+                                        height:chart.height,
+                                        xLabel:chart.xLabel,
+                                        yLabel:chart.yLabel,
+                                        grid:chart.grid,
+                                        legend:chart.legend,
+                                    }))
                                 }}
                                 >
                                     <BarComp data={chart.dataTable.data} primaryColumn={chart.primaryColumn} valueColumns={chart.valueColumns} height={250} width={300}/>
@@ -70,7 +85,9 @@ const MyCharts = () => {
                             <div>
                                 <Link to={{
                                     pathname: "/edit",
-                                    state: { type: "Line" },
+                                    state: { type: "Line",
+                                    chartId: chart.id
+                                    },
                                 }}
                                 onClick={()=>{
                                     dispatch(_setData(chart.dataTable.data))
@@ -78,9 +95,48 @@ const MyCharts = () => {
                                     chart.valueColumns.forEach(obj=>{
                                         dispatch(_setValueColumns(obj))
                                     })
+                                    dispatch(_setDataId(chart.dataTable.id))
+                                    dispatch(_setChartConfigs({
+                                        title:chart.title,
+                                        width:chart.width,
+                                        height:chart.height,
+                                        xLabel:chart.xLabel,
+                                        yLabel:chart.yLabel,
+                                        grid:chart.grid,
+                                        legend:chart.legend,
+                                    }))
                                 }}
                                 >
                                     <LineComp data={chart.dataTable.data} primaryColumn={chart.primaryColumn} valueColumns={chart.valueColumns} height={250} width={300}/>
+                                </Link>
+                            </div>
+                            : chart.type==='Area' ? 
+                            <div>
+                                <Link to={{
+                                    pathname: "/edit",
+                                    state: { type: "Area",
+                                    chartId: chart.id
+                                     },
+                                }}
+                                onClick={()=>{
+                                    dispatch(_setData(chart.dataTable.data))
+                                    dispatch(_setPrimaryColumn(chart.primaryColumn))
+                                    chart.valueColumns.forEach(obj=>{
+                                        dispatch(_setValueColumns(obj))
+                                    })
+                                    dispatch(_setDataId(chart.dataTable.id))
+                                    dispatch(_setChartConfigs({
+                                        title:chart.title,
+                                        width:chart.width,
+                                        height:chart.height,
+                                        xLabel:chart.xLabel,
+                                        yLabel:chart.yLabel,
+                                        grid:chart.grid,
+                                        legend:chart.legend,
+                                    }))
+                                }}
+                                >
+                                    <SimpleAreaComp data={chart.dataTable.data} primaryColumn={chart.primaryColumn} valueColumns={chart.valueColumns} height={250} width={300}/>
                                 </Link>
                             </div>
                             : <></>}
