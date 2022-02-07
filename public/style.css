@@ -48,7 +48,7 @@ form div {
   width: auto;
   max-width: 100%;
   line-height: 1;
-  margin:auto;
+  margin: auto;
   width: 100%;
 }
 .carousel-container {
@@ -65,7 +65,7 @@ form div {
 }
 
 .page-description {
-  display:flex;
+  display: flex;
   margin-top: 40px;
   margin-bottom: 40px;
   justify-content: center;
@@ -73,7 +73,7 @@ form div {
 }
 
 .card-container {
-  display:flex;
+  display: flex;
   margin-top: 100px;
   margin: auto;
   justify-content: center;
@@ -239,7 +239,7 @@ td {
   border-top: 0.5px solid gainsboro;
 }
 
-.primary-container, 
+.primary-container,
 .values-container {
   display: flex;
   align-items: center;
@@ -295,4 +295,20 @@ td {
   flex-wrap: wrap;
   padding: 0 0.5em 0 0.5em;
   margin: 0 0.5em 0 0.5em;
+}
+
+.homepage-chart-grid {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  padding: 0.5em;
+  margin: 0.5em;
+}
+
+.homepage-chart-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid gainsboro;
 }
