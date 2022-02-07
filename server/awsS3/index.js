@@ -1,6 +1,12 @@
 const router = require('express').Router();
 module.exports = router;
-// const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = require('./secrets')
+const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID
+  ? process.env.AWS_ACCESS_KEY_ID
+  : require('./secrets').AWS_ACCESS_KEY_ID;
+
+const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY
+  ? process.env.AWS_SECRET_ACCESS_KEY
+  : require('./secrets').AWS_SECRET_ACCESS_KEY;
 
 // const dotenv = require('dotenv')
 const aws = require('aws-sdk');
