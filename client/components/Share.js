@@ -1,33 +1,36 @@
 import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
+import { Button } from 'react-bootstrap'
 
-const Share = () => {
+function Share (chart) {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const id = chart.id
   return (
     <div>
-      <Button variant="primary" onClick={handleOpen}>
-        Launch demo modal
+      <Button variant="primary" onClick={handleShow}>
+        Share
       </Button>
 
-      <Modal show={open} onHide={handleClose} animation={false}>
+      <Modal show={show}
+      onHide={handleClose}
+      animation={false}>
+        <div className="modal-container">
         <Modal.Header closeButton>
-          <Modal.Title>Shareable URL</Modal.Title>
+          <Modal.Title>Sharable URL</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>{window.location + `/share/${id}`} </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
         </Modal.Footer>
+        </div>
       </Modal>
     </div>
-  )
+  );
 }
 
 export default Share

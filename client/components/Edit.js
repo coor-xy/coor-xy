@@ -1,32 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getRandomColor } from "../utility";
 import { useLocation } from "react-router-dom";
 import charts from "./chartComponents";
 import { _changeColor } from "../store/selectColumns"
 import ColumnSelector from "./ColumnSelector";
 import Share from './Share'
 import Modal from 'react-bootstrap/Modal'
+import { postConfig } from "../store/chartConfigs";
+import { _setDataId } from "../store/dataId";
+import { postData, _setData } from "../store/data";
 const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
 
 
 const Edit = () => {
   const location = useLocation();
   let type;
+  let chartId;
   if (location.state){
     type = location.state.type
+    chartId = location.state.chartId
   }
-  const { data, selectedColumns } = useSelector((state) => state);
+  const { data, selectedColumns, chartConfigs, prevDataId } = useSelector((state) => state);
   const availableCharts = ["Bar", "Funnel", "Line", "Pie", "Area", "Scatter"];
   const [chartConfig, setChartConfig] = useState({
     type: type || '',
-    width: 500,
-    height: 400,
-    xLabel: '',
-    yLabel: '',
-    legend: false,
-    title:'',
-    grid: false,
+    width: chartConfigs.width || 500,
+    height: chartConfigs.height || 350,
+    xLabel: chartConfigs.xLabel,
+    yLabel: chartConfigs.yLabel,
+    legend: chartConfigs.legend,
+    title: chartConfigs.title,
+    grid: chartConfigs.grid,
   });
   const dispatch = useDispatch()
 
@@ -37,7 +41,7 @@ const Edit = () => {
         [e.target.name]: parseInt(e.target.value),
       });
     } else if (e.target.type === "checkbox"){
-      setChartConfig({ ...chartConfig, [e.target.name]: !chartConfig[e.target.name] })
+      setChartConfig({ ...chartConfig, [e.target.name]: e.target.checked })
     } else {
       setChartConfig({ ...chartConfig, [e.target.name]: e.target.value });
     }
@@ -50,9 +54,14 @@ const Edit = () => {
 
   const handleConfigSubmit = (e) => {
     e.preventDefault();
-    // if new chart, dispatch thunk with post request to add chartConfig to chart model
-    // if existing chart, dispatch thunk with put request to update instance in chart model
+    if (chartId!==undefined){
+    dispatch(postConfig({...chartConfig,primaryColumn:selectedColumns.primary,valueColumns:selectedColumns.values}, chartId))
+    } else {
+      dispatch(postData(data,{...chartConfig,primaryColumn:selectedColumns.primary,valueColumns:selectedColumns.values}))
+    }
   };
+
+  const [modalShow, setModalShow] = React.useState(false)
 
   return (
     <div>
@@ -63,7 +72,10 @@ const Edit = () => {
       ) : (
         <div>
           <div>
-            <button >Share</button>
+      <Share
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
             <button>Delete</button>
           </div>
           <div>
@@ -87,7 +99,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="width">
-                  <small>Width</small>
+                  <small>Width:</small>
                 </label>
                 <input
                   name="width"
@@ -99,7 +111,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="height">
-                  <small>Height</small>
+                  <small>Height:</small>
                 </label>
                 <input
                   name="height"
@@ -111,7 +123,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="title">
-                  <small>Title</small>
+                  <small>Title:</small>
                 </label>
                 <input
                   name="title"
@@ -122,7 +134,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="xLabel">
-                  <small>X-Label</small>
+                  <small>X-Label:</small>
                 </label>
                 <input
                   name="xLabel"
@@ -133,7 +145,7 @@ const Edit = () => {
 
               <div>
                 <label htmlFor="yLabel">
-                  <small>Y-Label</small>
+                  <small>Y-Label:</small>
                 </label>
                 <input
                   name="yLabel"
@@ -149,7 +161,7 @@ const Edit = () => {
                 <input
                   name="legend"
                   type="checkbox"
-                  value={chartConfig.legend}
+                  checked={chartConfig.legend}
                   onChange={handleConfigChange}
                 />
               </div>
@@ -161,7 +173,7 @@ const Edit = () => {
                 <input
                   name="grid"
                   type="checkbox"
-                  value={chartConfig.grid}
+                  checked={chartConfig.grid}
                   onChange={handleConfigChange}
                 />
               </div>

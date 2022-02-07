@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import { _setChartConfigs } from '../store/chartConfigs'
 import { _setData } from '../store/data'
 import { _clearAllValues, _removePrimaryColumn } from '../store/selectColumns'
 

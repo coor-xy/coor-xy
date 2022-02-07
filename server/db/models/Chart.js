@@ -6,9 +6,6 @@ const Chart = db.define('chart', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  colorPref: {
-    type: Sequelize.JSON,
-  },
   title: {
     type: Sequelize.STRING,
   },
