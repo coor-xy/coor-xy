@@ -63,7 +63,7 @@ const MyCharts = () => {
                                     })
                                 }}
                                 >
-                                    <BarComp data={chart.dataTable.data} primaryColumn={chart.primaryColumn} valueColumns={chart.valueColumns} />
+                                    <BarComp data={chart.dataTable.data} primaryColumn={chart.primaryColumn} valueColumns={chart.valueColumns} height={250} width={300}/>
                                 </Link>
                             </div>
                             : chart.type==='Line' ? 
@@ -80,7 +80,7 @@ const MyCharts = () => {
                                     })
                                 }}
                                 >
-                                    <LineComp data={chart.dataTable.data} primaryColumn={chart.primaryColumn} valueColumns={chart.valueColumns} />
+                                    <LineComp data={chart.dataTable.data} primaryColumn={chart.primaryColumn} valueColumns={chart.valueColumns} height={250} width={300}/>
                                 </Link>
                             </div>
                             : <></>}

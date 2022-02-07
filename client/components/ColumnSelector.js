@@ -31,8 +31,8 @@ const ColumnSelector = () => {
     };
 
     return (
-        <div>
-              <div>
+        <div className="column-selector-container">
+              <div className="selectors">
                 <label htmlFor="primary">Select a primary axis:</label>
                 <select
                   name="primary"
@@ -69,7 +69,7 @@ const ColumnSelector = () => {
                   </div>
                 )}
               </div>
-              <div>
+              <div className="selectors">
                 <label htmlFor="values">Select values:</label>
                 <select
                   name="values"
