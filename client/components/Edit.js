@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
+import history from '../history'
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import charts from "./chartComponents";
-import { _changeColor } from "../store/selectColumns"
+import { _changeColor, _clearAllValues, _removePrimaryColumn } from "../store/selectColumns"
 import ColumnSelector from "./ColumnSelector";
 import Share from './Share'
 import Modal from 'react-bootstrap/Modal'
 import { postConfig } from "../store/chartConfigs";
 import { _setDataId } from "../store/dataId";
 import { postData, _setData } from "../store/data";
-const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
+import { removeChart } from "../store/charts";
+const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp, StackedBarComp, StackedAreaComp, PieComp } = charts;
 
 
 const Edit = () => {
@@ -21,7 +23,7 @@ const Edit = () => {
     chartId = location.state.chartId
   }
   const { data, selectedColumns, chartConfigs, prevDataId } = useSelector((state) => state);
-  const availableCharts = ["Bar", "Funnel", "Line", "Pie", "Area", "Scatter"];
+  const availableCharts = ["Bar", "Stacked Bar", "Funnel", "Line", "Pie", "Area", "Stacked Area", "Scatter"];
   const [chartConfig, setChartConfig] = useState({
     type: type || '',
     width: chartConfigs.width || 500,
@@ -63,6 +65,10 @@ const Edit = () => {
 
   const [modalShow, setModalShow] = React.useState(false)
 
+  const handleDelete = () => {
+    dispatch(removeChart(chartId))
+  }
+
   return (
     <div>
       {!data.length ? (
@@ -77,6 +83,14 @@ const Edit = () => {
         onHide={() => setModalShow(false)}
       />
             <button>Delete</button>
+            <button>Share</button>
+            {chartId!==undefined ?<button onClick={handleDelete}>Delete</button> : <></>}
+            <button onClick={()=>{
+              dispatch(_setData([]));
+              dispatch(_removePrimaryColumn(''))
+              dispatch(_clearAllValues())
+              history.goBack()
+              }}>Cancel</button>
           </div>
           <div>
             <form onSubmit={handleConfigSubmit}>
@@ -212,6 +226,20 @@ const Edit = () => {
                 grid={chartConfig.grid}
               />
             )}
+            {chartConfig.type === "Stacked Bar" && (
+              <StackedBarComp
+                data={data}
+                primaryColumn={selectedColumns.primary}
+                valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
+              />
+            )}
             {chartConfig.type === "Scatter" && (
               <SimpleScatterComp
                 data={data}
@@ -240,8 +268,36 @@ const Edit = () => {
                 grid={chartConfig.grid}
               />
             )}
+            {chartConfig.type === "Stacked Area" && (
+              <StackedAreaComp
+                data={data}
+                primaryColumn={selectedColumns.primary}
+                valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
+              />
+            )}
             {chartConfig.type === "Line" && (
               <LineComp
+                data={data}
+                primaryColumn={selectedColumns.primary}
+                valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
+              />
+            )}
+            {chartConfig.type === "Pie" && (
+              <PieComp
                 data={data}
                 primaryColumn={selectedColumns.primary}
                 valueColumns={selectedColumns.values}
