@@ -79,29 +79,40 @@ form div {
   justify-content: center;
 }
 
-.myCharts {
+.myCharts-container {
   display: flex;
-  align-items: flex-start;
-  place-content: space-between space-around;
-}
-
-.mycharts-main-container {
-  display: flex;
-  align-items: center;
-  place-content: space-between flex-start;
   flex-direction: column;
 }
 
-.charts-header {
+.myCharts-top-bar {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  margin: 1em 3em 1em 3em;
+  padding: 1em 5em 1em 5em;
+  border: 1px solid gainsboro;
 }
 
-.charts-container {
+.myCharts-filter {
+  display: flex;
+}
+
+.myCharts-filter select {
+  margin-left: 1em;
+}
+
+.myCharts-charts {
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  margin: 1em 3em 1em 3em;
+  padding: 1em 5em 1em 5em;
+  border: 1px solid gainsboro;
+}
+
+.myCharts-chart-tile {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  flex-direction: row;
+  justify-content: center;
 }
 
 .column-selector-container {
