@@ -26,15 +26,8 @@ const Routes = () => {
     <div>
       {isLoggedIn ? (
         <Switch>
-          <Route path="/bar" component={BarComp} />
           <Route exact path='/' component={Home} />
           <Route path='/home' component={Home} />
-          <Route path='/bar' component={BarComp} />
-          <Route path="/pie" component={PieComp} />
-          <Route path='/line' component={LineComp} />
-          <Route path='/simplescatter' component={SimpleScatterComp} />
-          <Route path='/simplearea' component={SimpleAreaComp} />
-          <Route path='/funnel' component={FunnelComp} />
           <Route path='/create' component={Create} />
           <Route path='/edit' component={Edit} />
           <Route path='/mycharts' component={MyCharts}/>
