@@ -316,4 +316,5 @@ td {
   background-color: white;
   border: 2px solid #000;
   box-shadow: 24;
+  position: absolute;
 }

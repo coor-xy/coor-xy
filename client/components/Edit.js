@@ -72,7 +72,7 @@ const Edit = () => {
       ) : (
         <div>
           <div>
-      <Share
+      <Share id = {chartId}
         show={modalShow}
         onHide={() => setModalShow(false)}
       />

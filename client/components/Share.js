@@ -1,15 +1,23 @@
 import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Button } from 'react-bootstrap'
+import ShareableUrl from './ShareableUrl';
 
-function Share (chart) {
+
+function Share ({id}) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const id = chart.id
+  const checkForSave = (id) => {
+    if (id === undefined) {
+      return "Save your work to share!"
+    }
+    return window.location.protocol + window.location.hostname + ':' + window.location.port + `/share/${id}`
+  }
   return (
-    <div>
+    <div >
+      {console.log(id)}
       <Button variant="primary" onClick={handleShow}>
         Share
       </Button>
@@ -18,10 +26,10 @@ function Share (chart) {
       onHide={handleClose}
       animation={false}>
         <div className="modal-container">
-        <Modal.Header closeButton>
-          <Modal.Title>Sharable URL</Modal.Title>
+        <Modal.Header >
+          <Modal.Title className="modal-title">Sharable URL</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{window.location + `/share/${id}`} </Modal.Body>
+        <Modal.Body>{checkForSave(id)} </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
