@@ -1,6 +1,6 @@
 import axios from "axios"
 import history from '../history'
-import { postData, _setData } from "./data"
+import { _setData } from "./data"
 import { _setDataId } from "./dataId"
 import { _clearAllValues, _removePrimaryColumn } from "./selectColumns"
 
