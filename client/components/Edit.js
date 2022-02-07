@@ -9,7 +9,7 @@ import { postConfig } from "../store/chartConfigs";
 import { _setDataId } from "../store/dataId";
 import { postData, _setData } from "../store/data";
 import { removeChart } from "../store/charts";
-const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
+const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp, StackedBarComp, StackedAreaComp, PieComp } = charts;
 
 const Edit = () => {
   const location = useLocation();
@@ -20,7 +20,7 @@ const Edit = () => {
     chartId = location.state.chartId
   }
   const { data, selectedColumns, chartConfigs, prevDataId } = useSelector((state) => state);
-  const availableCharts = ["Bar", "Funnel", "Line", "Pie", "Area", "Scatter"];
+  const availableCharts = ["Bar", "Stacked Bar", "Funnel", "Line", "Pie", "Area", "Stacked Area", "Scatter"];
   const [chartConfig, setChartConfig] = useState({
     type: type || '',
     width: chartConfigs.width || 500,
@@ -216,6 +216,20 @@ const Edit = () => {
                 grid={chartConfig.grid}
               />
             )}
+            {chartConfig.type === "Stacked Bar" && (
+              <StackedBarComp
+                data={data}
+                primaryColumn={selectedColumns.primary}
+                valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
+              />
+            )}
             {chartConfig.type === "Scatter" && (
               <SimpleScatterComp
                 data={data}
@@ -244,8 +258,36 @@ const Edit = () => {
                 grid={chartConfig.grid}
               />
             )}
+            {chartConfig.type === "Stacked Area" && (
+              <StackedAreaComp
+                data={data}
+                primaryColumn={selectedColumns.primary}
+                valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
+              />
+            )}
             {chartConfig.type === "Line" && (
               <LineComp
+                data={data}
+                primaryColumn={selectedColumns.primary}
+                valueColumns={selectedColumns.values}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                xLabel={chartConfig.xLabel}
+                yLabel={chartConfig.yLabel}
+                legend={chartConfig.legend}
+                title={chartConfig.title}
+                grid={chartConfig.grid}
+              />
+            )}
+            {chartConfig.type === "Pie" && (
+              <PieComp
                 data={data}
                 primaryColumn={selectedColumns.primary}
                 valueColumns={selectedColumns.values}
