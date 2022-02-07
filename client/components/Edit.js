@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
+import history from '../history'
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import charts from "./chartComponents";
-import { _changeColor } from "../store/selectColumns"
+import { _changeColor, _clearAllValues, _removePrimaryColumn } from "../store/selectColumns"
 import ColumnSelector from "./ColumnSelector";
 import { postConfig } from "../store/chartConfigs";
 import { _setDataId } from "../store/dataId";
 import { postData, _setData } from "../store/data";
+import { removeChart } from "../store/charts";
 const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
 
 const Edit = () => {
@@ -58,6 +60,10 @@ const Edit = () => {
     }
   };
 
+  const handleDelete = () => {
+    dispatch(removeChart(chartId))
+  }
+
   return (
     <div>
       {!data.length ? (
@@ -68,7 +74,13 @@ const Edit = () => {
         <div>
           <div>
             <button>Share</button>
-            <button>Delete</button>
+            {chartId!==undefined ?<button onClick={handleDelete}>Delete</button> : <></>}
+            <button onClick={()=>{
+              dispatch(_setData([]));
+              dispatch(_removePrimaryColumn(''))
+              dispatch(_clearAllValues())
+              history.goBack()
+              }}>Cancel</button>
           </div>
           <div>
             <form onSubmit={handleConfigSubmit}>
