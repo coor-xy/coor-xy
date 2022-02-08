@@ -13,7 +13,7 @@ import FunnelComp from './components/chartComponents/FunnelComp';
 import Create from './components/Create';
 import Edit from './components/Edit';
 import MyCharts from './components/MyCharts';
-
+import ShareableUrl from './components/ShareableUrl';
 const Routes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const Routes = () => {
           <Route path='/create' component={Create} />
           <Route path='/edit' component={Edit} />
           <Route path='/mycharts' component={MyCharts}/>
+          <Route exact path='/share/:chartId' component={ShareableUrl} />
         </Switch>
       ) : (
         <Switch>
@@ -38,10 +39,11 @@ const Routes = () => {
           <Route exact path='/home' component={Home} />
           <Route path='/login'>{Login}</Route>
           <Route path='/signup'>{Signup}</Route>
+          <Route path='/share/:chartId' component={ShareableUrl} />
         </Switch>
       )}
       <Switch>
-        
+
       </Switch>
     </div>
   );

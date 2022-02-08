@@ -9,7 +9,7 @@ import allCharts from './charts';
 import dataDBReducer from './dataDB';
 import dataIdReducer from './dataId'
 import chartConfigs from './chartConfigs'
-
+import singleChart from './singleChart';
 const reducer = combineReducers({
   auth,
   data: dataReducer,
@@ -18,6 +18,7 @@ const reducer = combineReducers({
   prevDataId: dataIdReducer,
   allCharts,
   chartConfigs,
+  singleChart
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

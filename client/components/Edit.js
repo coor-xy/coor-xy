@@ -5,11 +5,14 @@ import { useLocation, Link } from "react-router-dom";
 import charts from "./chartComponents";
 import { _changeColor, _clearAllValues, _removePrimaryColumn } from "../store/selectColumns"
 import ColumnSelector from "./ColumnSelector";
+import Share from './Share'
+import Modal from 'react-bootstrap/Modal'
 import { postConfig, putConfig } from "../store/chartConfigs";
 import { _setDataId } from "../store/dataId";
 import { postData, _setData } from "../store/data";
 import { removeChart } from "../store/charts";
 const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp, StackedBarComp, StackedAreaComp, PieComp } = charts;
+
 
 const Edit = () => {
   const location = useLocation();
@@ -62,7 +65,8 @@ const Edit = () => {
       dispatch(postData(data,{...chartConfig,primaryColumn:selectedColumns.primary,valueColumns:selectedColumns.values}))
     }
   };
-  
+  const [modalShow, setModalShow] = React.useState(false)
+
   const handleDelete = () => {
     dispatch(removeChart(chartId))
   }
@@ -76,7 +80,10 @@ const Edit = () => {
       ) : (
         <div>
           <div>
-            <button>Share</button>
+      <Share id = {chartId}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
             {chartId!==undefined ?<button onClick={handleDelete}>Delete</button> : <></>}
             <button onClick={()=>{
               dispatch(_setData([]));

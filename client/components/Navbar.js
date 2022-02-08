@@ -12,21 +12,22 @@ const Navbar = () =>  {
   const dispatch = useDispatch()
 
   return (
-    <div>
-      <h1>Coor|XY</h1>
+    <div className="navbar-container">
+      <h1 className="navbar-name">Coor|xy</h1>
       <nav>
         {isLoggedIn ? (
           <div>
             <Link to="/home">Home</Link>
-            <a href="#" onClick={ () => dispatch(logout()) }>
-              Logout
-            </a>
+
             <Link to="/mycharts" onClick={()=>{
               dispatch(_setData([]));
               dispatch(_removePrimaryColumn(''))
               dispatch(_clearAllValues())
               dispatch(_setDataId(0))
             }}>My Charts</Link>
+            <a href="#" className="logout" onClick={ () => dispatch(logout()) }>
+              Logout
+            </a>
           </div>
         ) : (
           <div>

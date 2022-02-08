@@ -13,6 +13,21 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+  text-align: center;
+  align-items: center;
+}
+
+nav a:hover {
+  background-color: #888;
+  color: black;
+}
+
+.navbar-name {
+  font-weight: bold;
+}
+
+.logout {
+  justify-content: right;
 }
 
 form div {
@@ -295,6 +310,18 @@ td {
   flex-wrap: wrap;
   padding: 0 0.5em 0 0.5em;
   margin: 0 0.5em 0 0.5em;
+}
+
+.modal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400;
+  background-color: white;
+  border: 2px solid #000;
+  box-shadow: 24;
+  position: absolute;
 }
 
 .homepage-chart-grid {

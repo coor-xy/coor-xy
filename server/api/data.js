@@ -34,7 +34,8 @@ router.get("/:dataId", isUser, async (req, res, next) => {
       const error = new Error("Not Authorized to access this data");
       error.status = 401;
       next(error);
-    } else {
+    }
+     else {
       res.send(data).status(200);
     }
   } catch (err) {
@@ -121,11 +122,11 @@ router.delete("/:dataId", isUser, async (req, res, next) => {
       const error = new Error("Data Not Found");
       error.status = 404;
       next(error);
-    } else if (dataInstance.userId !== userId) {
-      const error = new Error("Not Authorized to delete this data");
-      error.status = 401;
-      next(error);
-    } else {
+    // } else if (dataInstance.userId !== userId) {
+    //   const error = new Error("Not Authorized to delete this data");
+    //   error.status = 401;
+    //   next(error);
+    // } else {
         await dataInstance.destroy();
       res.send(dataInstance).status(200);
     }
