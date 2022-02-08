@@ -253,7 +253,6 @@ const Create = () => {
           <DummyChart type={"Pie"} />
         </div>
       </div>
-      {console.log(selectedChartType)}
       <h3>Step 3: Select chart variables</h3>
       <div className="chart-variable-container">
         {data.length && selectedChartType ? (
