@@ -36,6 +36,7 @@ router.get("/", isUser, async (req, res, next) => {
   }
 });
 
+
 router.get("/:chartId", isUser, async (req, res, next) => {
   try {
     const { chartId } = req.params;

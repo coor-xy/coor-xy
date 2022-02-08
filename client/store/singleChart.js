@@ -10,7 +10,7 @@ const got_single_chart = (chart) => ({
 export const fetchSingleChart = (id) => {
   return async (dispatch) => {
 
-      const {data} = await axios.get(`/api/charts/${id}`)
+      const {data} = await axios.get(`/api/share/${id}`)
       dispatch(got_single_chart(data))
   }
 }
