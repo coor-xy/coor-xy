@@ -7,7 +7,7 @@ import { _changeColor, _clearAllValues, _removePrimaryColumn } from "../store/se
 import ColumnSelector from "./ColumnSelector";
 import Share from './Share'
 import Modal from 'react-bootstrap/Modal'
-import { postConfig } from "../store/chartConfigs";
+import { postConfig, putConfig } from "../store/chartConfigs";
 import { _setDataId } from "../store/dataId";
 import { postData, _setData } from "../store/data";
 import { removeChart } from "../store/charts";
@@ -57,12 +57,14 @@ const Edit = () => {
   const handleConfigSubmit = (e) => {
     e.preventDefault();
     if (chartId!==undefined){
-    dispatch(postConfig({...chartConfig,primaryColumn:selectedColumns.primary,valueColumns:selectedColumns.values}, chartId))
-    } else {
+    dispatch(putConfig({...chartConfig,primaryColumn:selectedColumns.primary,valueColumns:selectedColumns.values}, chartId))
+    } else if (prevDataId!=0){
+      dispatch(postConfig({...chartConfig,primaryColumn:selectedColumns.primary,valueColumns:selectedColumns.values},prevDataId))
+    }
+    else {
       dispatch(postData(data,{...chartConfig,primaryColumn:selectedColumns.primary,valueColumns:selectedColumns.values}))
     }
   };
-
   const [modalShow, setModalShow] = React.useState(false)
 
   const handleDelete = () => {
@@ -87,6 +89,7 @@ const Edit = () => {
               dispatch(_setData([]));
               dispatch(_removePrimaryColumn(''))
               dispatch(_clearAllValues())
+              dispatch(_setDataId(0))
               history.goBack()
               }}>Cancel</button>
           </div>

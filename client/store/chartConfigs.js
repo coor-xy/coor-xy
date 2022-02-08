@@ -12,28 +12,61 @@ export const _setChartConfigs = (configs) => ({
     configs
 })
 
-export const postConfig = (configs, chartId) => {
+export const putConfig = (configs, chartId) => {
     return async (dispatch) => {
-        const token = window.localStorage.getItem(TOKEN)
-        await axios.put(`/api/charts/${chartId}`, configs,{
+        try {
+            const token = window.localStorage.getItem(TOKEN)
+            await axios.put(`/api/charts/${chartId}`, configs,{
+            headers: {
+              authorization: token,
+                }
+            })
+            dispatch(_setData([]));
+            dispatch(_setDataId(0))
+            dispatch(_removePrimaryColumn(''))
+            dispatch(_clearAllValues())
+            dispatch(_setChartConfigs({
+                title:'',
+                width:0,
+                height:0,
+                xLabel:'',
+                yLabel:'',
+                grid:false,
+                legend:false
+            }))
+            history.push('/mycharts')
+        } catch (error) {
+            console.log("uh oh can't update chart configs")
+        }
+    }
+}
+
+export const postConfig = (configs, dataId) => {
+    return async (dispatch) => {
+        try {
+            const token = window.localStorage.getItem(TOKEN)
+            await axios.post(`/api/charts/${dataId}`, configs,{
             headers: {
               authorization: token,
             }
-        })
-        dispatch(_setData([]));
-        dispatch(_setDataId(0))
-        dispatch(_removePrimaryColumn(''))
-        dispatch(_clearAllValues())
-        dispatch(_setChartConfigs({
-            title:'',
-            width:0,
-            height:0,
-            xLabel:'',
-            yLabel:'',
-            grid:false,
-            legend:false
-        }))
-        history.push('/mycharts')
+            })
+            dispatch(_setData([]));
+            dispatch(_setDataId(0))
+            dispatch(_removePrimaryColumn(''))
+            dispatch(_clearAllValues())
+            dispatch(_setChartConfigs({
+                title:'',
+                width:0,
+                height:0,
+                xLabel:'',
+                yLabel:'',
+                grid:false,
+                legend:false
+            }))
+            history.push('/mycharts')
+        } catch (error) {
+            console.log("uh oh can't post new chart config")
+        }
     }
 }
 

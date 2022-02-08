@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import { _setChartConfigs } from '../store/chartConfigs'
 import { _setData } from '../store/data'
+import { _setDataId } from '../store/dataId'
 import { _clearAllValues, _removePrimaryColumn } from '../store/selectColumns'
 
 const Navbar = () =>  {
@@ -22,6 +23,7 @@ const Navbar = () =>  {
               dispatch(_setData([]));
               dispatch(_removePrimaryColumn(''))
               dispatch(_clearAllValues())
+              dispatch(_setDataId(0))
             }}>My Charts</Link>
             <a href="#" className="logout" onClick={ () => dispatch(logout()) }>
               Logout

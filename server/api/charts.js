@@ -77,7 +77,7 @@ router.get("/:chartId", isUser, async (req, res, next) => {
   }
 });
 
-router.post("/", isUser, async (req, res, next) => {
+router.post("/:dataId", isUser, async (req, res, next) => {
   try {
     const {
       type,
@@ -86,12 +86,12 @@ router.post("/", isUser, async (req, res, next) => {
       xLabel,
       primaryColumn,
       valueColumns,
-      dataTableId,
       legend,
       grid,
       width,
       height,
     } = req.body;
+    const dataTableId = req.params.dataId;
     const userId = req.user.id;
     const newChart = await Chart.create({
       type,
