@@ -18,6 +18,15 @@ const Page = () => {
       <div className='homepage-chart-tile'>
         <DummyChart type={'Area'} />
       </div>
+      <div className='homepage-chart-tile'>
+        <DummyChart type={'Stacked Bar'} />
+      </div>
+      <div className='homepage-chart-tile'>
+        <DummyChart type={'Stacked Area'} />
+      </div>
+      <div className='homepage-chart-tile'>
+        <DummyChart type={'Pie'} />
+      </div>
     </div>
   );
 };

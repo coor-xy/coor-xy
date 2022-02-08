@@ -8,7 +8,15 @@ import { _setPrimaryColumn, _setValueColumns } from "../store/selectColumns";
 import charts from "./chartComponents";
 import { _setDataId } from "../store/dataId";
 
-const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
+const {
+  BarComp,
+  SimpleAreaComp,
+  SimpleScatterComp,
+  LineComp,
+  StackedAreaComp,
+  StackedBarComp,
+  PieComp,
+} = charts;
 
 const MyCharts = () => {
   const [charts, setCharts] = useState([]);
@@ -32,19 +40,23 @@ const MyCharts = () => {
 
   const handleChartTypeFilterChange = (e) => {
     setFilteredChartType(e.target.value);
-  }
+  };
 
   const filterCharts = (charts) => {
     if (filteredChartType === "All") return charts;
-    return charts.filter(chart => chart.type === filteredChartType);
-  }
+    return charts.filter((chart) => chart.type === filteredChartType);
+  };
 
   return (
     <div className="myCharts-container">
       <div className="myCharts-top-bar">
         <div className="myCharts-filter">
           <label htmlFor="filter-type">Filter by chart type:</label>
-          <select name="filter-type" id="filter-type" onChange={handleChartTypeFilterChange}>
+          <select
+            name="filter-type"
+            id="filter-type"
+            onChange={handleChartTypeFilterChange}
+          >
             <option value="All">All</option>
             {getUniqueChartTypes(charts).map((type) => (
               <option value={type} key={type}>
@@ -165,6 +177,114 @@ const MyCharts = () => {
                   }}
                 >
                   <SimpleAreaComp
+                    data={chart.dataTable.data}
+                    primaryColumn={chart.primaryColumn}
+                    valueColumns={chart.valueColumns}
+                    height={250}
+                    width={300}
+                  />
+                </Link>
+              </div>
+            ) : chart.type === "Stacked Area" ? (
+              <div>
+                <Link
+                  to={{
+                    pathname: "/edit",
+                    state: { type: "Stacked Area", chartId: chart.id },
+                  }}
+                  onClick={() => {
+                    dispatch(_setData(chart.dataTable.data));
+                    dispatch(_setPrimaryColumn(chart.primaryColumn));
+                    chart.valueColumns.forEach((obj) => {
+                      dispatch(_setValueColumns(obj));
+                    });
+                    dispatch(_setDataId(chart.dataTable.id));
+                    dispatch(
+                      _setChartConfigs({
+                        title: chart.title,
+                        width: chart.width,
+                        height: chart.height,
+                        xLabel: chart.xLabel,
+                        yLabel: chart.yLabel,
+                        grid: chart.grid,
+                        legend: chart.legend,
+                      })
+                    );
+                  }}
+                >
+                  <StackedAreaComp
+                    data={chart.dataTable.data}
+                    primaryColumn={chart.primaryColumn}
+                    valueColumns={chart.valueColumns}
+                    height={250}
+                    width={300}
+                  />
+                </Link>
+              </div>
+            ) : chart.type === "Stacked Bar" ? (
+              <div>
+                <Link
+                  to={{
+                    pathname: "/edit",
+                    state: { type: "Stacked Bar", chartId: chart.id },
+                  }}
+                  onClick={() => {
+                    dispatch(_setData(chart.dataTable.data));
+                    dispatch(_setPrimaryColumn(chart.primaryColumn));
+                    chart.valueColumns.forEach((obj) => {
+                      dispatch(_setValueColumns(obj));
+                    });
+                    dispatch(_setDataId(chart.dataTable.id));
+                    dispatch(
+                      _setChartConfigs({
+                        title: chart.title,
+                        width: chart.width,
+                        height: chart.height,
+                        xLabel: chart.xLabel,
+                        yLabel: chart.yLabel,
+                        grid: chart.grid,
+                        legend: chart.legend,
+                      })
+                    );
+                  }}
+                >
+                  <StackedBarComp
+                    data={chart.dataTable.data}
+                    primaryColumn={chart.primaryColumn}
+                    valueColumns={chart.valueColumns}
+                    height={250}
+                    width={300}
+                  />
+                </Link>
+              </div>
+            ) : chart.type === "Pie" ? (
+              <div>
+                <Link
+                  to={{
+                    pathname: "/edit",
+                    state: { type: "Pie", chartId: chart.id },
+                  }}
+                  onClick={() => {
+                    dispatch(_setData(chart.dataTable.data));
+                    dispatch(_setPrimaryColumn(chart.primaryColumn));
+                    chart.valueColumns.forEach((obj) => {
+                      dispatch(_setValueColumns(obj));
+                    });
+                    dispatch(_setDataId(chart.dataTable.id));
+                    dispatch(
+                      _setChartConfigs({
+                        title: chart.title,
+                        width: chart.width,
+                        height: chart.height,
+                        xLabel: chart.xLabel,
+                        yLabel: chart.yLabel,
+                        grid: chart.grid,
+                        legend: chart.legend,
+                      })
+                    );
+                  }}
+                >
+                  <PieComp
                     data={chart.dataTable.data}
                     primaryColumn={chart.primaryColumn}
                     valueColumns={chart.valueColumns}
