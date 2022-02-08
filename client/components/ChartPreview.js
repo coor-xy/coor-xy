@@ -1,6 +1,6 @@
 import React from "react";
 import charts from "./chartComponents";
-const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
+const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp, StackedAreaComp, StackedBarComp, PieComp } = charts;
 
 const defaultConfig = {
   width: 500,
@@ -61,6 +61,48 @@ const ChartPreview = (props) => {
       )}
       {type === "Line" && (
         <LineComp
+          data={data}
+          primaryColumn={selectedColumns.primary}
+          valueColumns={selectedColumns.values}
+          width={defaultConfig.width}
+          height={defaultConfig.height}
+          xLabel={defaultConfig.xLabel}
+          yLabel={defaultConfig.yLabel}
+          legend={defaultConfig.legend}
+          title={defaultConfig.title}
+          grid={defaultConfig.grid}
+        />
+      )}
+      {type === "Stacked Bar" && (
+        <StackedBarComp
+          data={data}
+          primaryColumn={selectedColumns.primary}
+          valueColumns={selectedColumns.values}
+          width={defaultConfig.width}
+          height={defaultConfig.height}
+          xLabel={defaultConfig.xLabel}
+          yLabel={defaultConfig.yLabel}
+          legend={defaultConfig.legend}
+          title={defaultConfig.title}
+          grid={defaultConfig.grid}
+        />
+      )}
+      {type === "Stacked Area" && (
+        <StackedAreaComp
+          data={data}
+          primaryColumn={selectedColumns.primary}
+          valueColumns={selectedColumns.values}
+          width={defaultConfig.width}
+          height={defaultConfig.height}
+          xLabel={defaultConfig.xLabel}
+          yLabel={defaultConfig.yLabel}
+          legend={defaultConfig.legend}
+          title={defaultConfig.title}
+          grid={defaultConfig.grid}
+        />
+      )}
+      {type === "Pie" && (
+        <PieComp
           data={data}
           primaryColumn={selectedColumns.primary}
           valueColumns={selectedColumns.values}

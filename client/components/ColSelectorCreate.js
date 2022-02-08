@@ -38,6 +38,24 @@ const columnInfo = {
     valuesInfoBox: "Accepts numbers",
     primaryLabel: "Select a horizontal variable",
     valuesLabel: "Select vertical variables",
+  },
+  "Stacked Area": {
+    primaryInfoBox: "Accepts numbers, strings, and dates",
+    valuesInfoBox: "Accepts numbers",
+    primaryLabel: "Select a horizontal variable",
+    valuesLabel: "Select vertical variables",
+  },
+  "Stacked Bar": {
+    primaryInfoBox: "Accepts numbers, strings, and dates",
+    valuesInfoBox: "Accepts numbers",
+    primaryLabel: "Select a horizontal variable",
+    valuesLabel: "Select vertical variables",
+  },
+  "Pie": {
+    primaryInfoBox: "TBD",
+    valuesInfoBox: "TBD",
+    primaryLabel: "TBD",
+    valuesLabel: "TBD",
   }
 };
 

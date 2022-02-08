@@ -228,7 +228,32 @@ const Create = () => {
         >
           <DummyChart type={"Area"} />
         </div>
+        <div
+          className={`chart-tile ${
+            selectedChartType === "Stacked Area" ? "selected-chart" : ""
+          }`}
+          onClick={() => handleChartSelect("Stacked Area")}
+        >
+          <DummyChart type={"Stacked Area"} />
+        </div>
+        <div
+          className={`chart-tile ${
+            selectedChartType === "Stacked Bar" ? "selected-chart" : ""
+          }`}
+          onClick={() => handleChartSelect("Stacked Bar")}
+        >
+          <DummyChart type={"Stacked Bar"} />
+        </div>
+        <div
+          className={`chart-tile ${
+            selectedChartType === "Pie" ? "selected-chart" : ""
+          }`}
+          onClick={() => handleChartSelect("Pie")}
+        >
+          <DummyChart type={"Pie"} />
+        </div>
       </div>
+      {console.log(selectedChartType)}
       <h3>Step 3: Select chart variables</h3>
       <div className="chart-variable-container">
         {data.length && selectedChartType ? (

@@ -1,6 +1,14 @@
 import React from "react";
 import charts from "./chartComponents";
-const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
+const {
+  BarComp,
+  SimpleAreaComp,
+  SimpleScatterComp,
+  LineComp,
+  StackedAreaComp,
+  StackedBarComp,
+  PieComp,
+} = charts;
 
 const dummyConfig = {
   width: 500,
@@ -19,6 +27,13 @@ const dummyDataGrouped = [
     Q2: "1100",
     Q3: "1200",
     Q4: "1300",
+    Quarter: "Q1",
+    EastSales: "3200",
+    WestSales: "2300",
+    CentralSales: "4200",
+    NorthSales: "2500",
+    SouthSales: "3300",
+    SalesForecast: "1.2",
   },
   {
     Group: "Group B",
@@ -26,6 +41,13 @@ const dummyDataGrouped = [
     Q2: "2350",
     Q3: "2300",
     Q4: "2250",
+    Quarter: "Q2",
+    EastSales: "3300",
+    WestSales: "2400",
+    CentralSales: "4300",
+    NorthSales: "2800",
+    SouthSales: "3700",
+    SalesForecast: "1.5",
   },
   {
     Group: "Group C",
@@ -33,6 +55,13 @@ const dummyDataGrouped = [
     Q2: "1380",
     Q3: "1480",
     Q4: "1580",
+    Quarter: "Q3",
+    EastSales: "3200",
+    WestSales: "2300",
+    CentralSales: "4000",
+    NorthSales: "2600",
+    SouthSales: "3500",
+    SalesForecast: "1.4",
   },
   {
     Group: "Group D",
@@ -40,6 +69,13 @@ const dummyDataGrouped = [
     Q2: "1070",
     Q3: "1170",
     Q4: "1270",
+    Quarter: "Q4",
+    EastSales: "3400",
+    WestSales: "2700",
+    CentralSales: "4500",
+    NorthSales: "2900",
+    SouthSales: "3600",
+    SalesForecast: "1.6",
   },
 ];
 
@@ -129,13 +165,8 @@ const DummyChart = (props) => {
       {type === "Area" && (
         <SimpleAreaComp
           data={dummyDataGrouped}
-          primaryColumn={"Group"}
-          valueColumns={[
-            { name: "Q1", color: "#fda25a" },
-            { name: "Q2", color: "#74bdb4" },
-            { name: "Q3", color: "#8067f5" },
-            { name: "Q4", color: "#e6837d" },
-          ]}
+          primaryColumn={"Quarter"}
+          valueColumns={[{ name: "SalesForecast", color: "#fda25a" }]}
           width={dummyConfig.width}
           height={dummyConfig.height}
           xLabel={dummyConfig.xLabel}
@@ -153,6 +184,59 @@ const DummyChart = (props) => {
             { name: "PriceDemand", color: "#e6837d" },
             { name: "PriceSupply", color: "#74bdb4" },
           ]}
+          width={dummyConfig.width}
+          height={dummyConfig.height}
+          xLabel={dummyConfig.xLabel}
+          yLabel={dummyConfig.yLabel}
+          legend={dummyConfig.legend}
+          title={dummyConfig.title}
+          grid={dummyConfig.grid}
+        />
+      )}
+      {type === "Stacked Bar" && (
+        <StackedBarComp
+          data={dummyDataGrouped}
+          primaryColumn={"Group"}
+          valueColumns={[
+            { name: "Q1", color: "#fda25a" },
+            { name: "Q2", color: "#74bdb4" },
+            { name: "Q3", color: "#8067f5" },
+            { name: "Q4", color: "#e6837d" },
+          ]}
+          width={dummyConfig.width}
+          height={dummyConfig.height}
+          xLabel={dummyConfig.xLabel}
+          yLabel={dummyConfig.yLabel}
+          legend={dummyConfig.legend}
+          title={dummyConfig.title}
+          grid={dummyConfig.grid}
+        />
+      )}
+      {type === "Stacked Area" && (
+        <StackedAreaComp
+          data={dummyDataGrouped}
+          primaryColumn={"Quarter"}
+          valueColumns={[
+            { name: "EastSales", color: "#fda25a" },
+            { name: "WestSales", color: "#74bdb4" },
+            { name: "CentralSales", color: "#8067f5" },
+            { name: "NorthSales", color: "#e6837d" },
+            { name: "SouthSales", color: "#ee82ee" },
+          ]}
+          width={dummyConfig.width}
+          height={dummyConfig.height}
+          xLabel={dummyConfig.xLabel}
+          yLabel={dummyConfig.yLabel}
+          legend={dummyConfig.legend}
+          title={dummyConfig.title}
+          grid={dummyConfig.grid}
+        />
+      )}
+      {type === "Pie" && (
+        <PieComp
+          data={dummyDataGrouped}
+          primaryColumn={"Group"}
+          valueColumns={[{ name: "Q1", color: "#fda25a" }]}
           width={dummyConfig.width}
           height={dummyConfig.height}
           xLabel={dummyConfig.xLabel}
