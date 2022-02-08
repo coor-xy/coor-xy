@@ -7,26 +7,26 @@ const {
 router.get("/:chartId", async (req, res, next) => {
   try {
     const { chartId } = req.params;
-    const chart = await Chart.findByPk(chartId, {
-      attributes: [
-        "id",
-        "type",
-        "title",
-        "yLabel",
-        "xLabel",
-        "primaryColumn",
-        "valueColumns",
-        "userId",
-        "legend",
-        "grid",
-        "width",
-        "height",
-      ],
-      include: {
-        model: DataTable,
-        attributes: ["data"],
-      },
-    });
+      const chart = await Chart.findByPk(chartId, {
+        attributes: [
+          "id",
+          "type",
+          "title",
+          "yLabel",
+          "xLabel",
+          "primaryColumn",
+          "valueColumns",
+          "userId",
+          "legend",
+          "grid",
+          "width",
+          "height",
+        ],
+        include: {
+          model: DataTable,
+          attributes: ["data"],
+        },
+      });
     if (!chart.id) {
       const error = new Error("Chart Not Found");
       error.status = 404;
@@ -35,6 +35,9 @@ router.get("/:chartId", async (req, res, next) => {
       res.send(chart).status(200);
     }
   } catch (err) {
+    err.status = 404;
     next(err);
   }
 });
+
+module.exports = router;

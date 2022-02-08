@@ -4,76 +4,124 @@ import { fetchSingleChart } from '../store/singleChart'
 import {useParams} from 'react-router-dom'
 import charts from "./chartComponents";
 
-const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp } = charts;
+const { BarComp, SimpleAreaComp, SimpleScatterComp, LineComp, StackedAreaComp, StackedBarComp, PieComp } = charts;
 
 const ShareableUrl = () => {
  const dispatch = useDispatch()
- const {id, data, type, primaryColumn, width, height, xLabel, yLabel, title, grid, legend, valueColumns} = useParams()
+ const {chartId} = useParams()
+ const {type, dataTable, primaryColumn, valueColumns, width, height, xLabel,yLabel, legend, title, grid} = useSelector(state => state.singleChart)
  useEffect(() => {
-  dispatch(fetchSingleChart(id))
+  dispatch(fetchSingleChart(chartId))
  }, [])
 
   return (
     <div>
-      <h1>Shareable Page #{id}</h1>
-      <div>
-      {type === "Bar" && (
-        <BarComp
-          data={data}
-          primaryColumn={primaryColumn}
-          valueColumns={valueColumns}
-          width={width}
-          height={height}
-          xLabel={xLabel}
-          yLabel={yLabel}
-          legend={legend}
-          title={title}
-          grid={grid}
-        />
+      <h1>Shareable Page</h1>
+      {!type ? (
+        <div><h4>Chart Not Found</h4></div>
+      ): (
+        <div>
+          {type === "Bar" && (
+              <BarComp
+                data={dataTable.data}
+                primaryColumn={primaryColumn}
+                valueColumns={valueColumns}
+                width={width || 500}
+                height={height || 400}
+                xLabel={xLabel}
+                yLabel={yLabel}
+                legend={legend}
+                title={title}
+                grid={grid}
+              />
+            )}
+            {type === "Stacked Bar" && (
+              <StackedBarComp
+                data={dataTable.data}
+                primaryColumn={primaryColumn}
+                valueColumns={valueColumns}
+                width={width || 500}
+                height={height || 400}
+                xLabel={xLabel}
+                yLabel={yLabel}
+                legend={legend}
+                title={title}
+                grid={grid}
+              />
+            )}
+            {type === "Scatter" && (
+              <SimpleScatterComp
+                data={dataTable.data}
+                primaryColumn={primaryColumn}
+                valueColumns={valueColumns}
+                width={width || 500}
+                height={height || 400}
+                xLabel={xLabel}
+                yLabel={yLabel}
+                legend={legend}
+                title={title}
+                grid={grid}
+              />
+            )}
+            {type === "Area" && (
+              <SimpleAreaComp
+                data={dataTable.data}
+                primaryColumn={primaryColumn}
+                valueColumns={valueColumns}
+                width={width || 500}
+                height={height || 400}
+                xLabel={xLabel}
+                yLabel={yLabel}
+                legend={legend}
+                title={title}
+                grid={grid}
+              />
+            )}
+            {type === "Stacked Area" && (
+              <StackedAreaComp
+                data={dataTable.data}
+                primaryColumn={primaryColumn}
+                valueColumns={valueColumns}
+                width={width || 500}
+                height={height || 400}
+                xLabel={xLabel}
+                yLabel={yLabel}
+                legend={legend}
+                title={title}
+                grid={grid}
+              />
+            )}
+            {type === "Line" && (
+              <LineComp
+                data={dataTable.data}
+                primaryColumn={primaryColumn}
+                valueColumns={valueColumns}
+                width={width || 500}
+                height={height || 400}
+                xLabel={xLabel}
+                yLabel={yLabel}
+                legend={legend}
+                title={title}
+                grid={grid}
+              />
+            )}
+            {type === "Pie" && (
+              <PieComp
+                data={dataTable.data}
+                primaryColumn={primaryColumn}
+                valueColumns={valueColumns}
+                width={width || 500}
+                height={height || 400}
+                xLabel={xLabel}
+                yLabel={yLabel}
+                legend={legend}
+                title={title}
+                grid={grid}
+              />
+            )}
+        </div>
       )}
-      {type === "Scatter" && (
-        <SimpleScatterComp
-          data={data}
-          primaryColumn={primaryColumn}
-          valueColumns={valueColumns}
-          width={width}
-          height={height}
-          xLabel={xLabel}
-          yLabel={yLabel}
-          legend={legend}
-          title={title}
-          grid={grid}
-        />
-      )}
-      {type === "Area" && (
-        <SimpleAreaComp
-          data={data}
-          primaryColumn={primaryColumn}
-          valueColumns={valueColumns}
-          width={width}
-          height={height}
-          xLabel={xLabel}
-          yLabel={yLabel}
-          legend={legend}
-          title={title}
-          grid={grid}
-        />
-      )}
-      {type === "Line" && (
-        <LineComp
-          data={data}
-          primaryColumn={primaryColumn}
-          valueColumns={valueColumns}
-          width={width}
-          height={height}
-          xLabel={xLabel}
-          yLabel={yLabel}
-          legend={legend}
-          title={title}
-          grid={grid}
-        />
-      )}
-    </div>
+
     </div>
   )
 }

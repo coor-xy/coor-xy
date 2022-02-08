@@ -82,8 +82,6 @@ const Edit = () => {
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
-            <button>Delete</button>
-            <button>Share</button>
             {chartId!==undefined ?<button onClick={handleDelete}>Delete</button> : <></>}
             <button onClick={()=>{
               dispatch(_setData([]));

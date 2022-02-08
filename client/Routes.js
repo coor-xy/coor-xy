@@ -31,7 +31,7 @@ const Routes = () => {
           <Route path='/create' component={Create} />
           <Route path='/edit' component={Edit} />
           <Route path='/mycharts' component={MyCharts}/>
-          <Route exact path='/share/:id' component={ShareableUrl} />
+          <Route exact path='/share/:chartId' component={ShareableUrl} />
         </Switch>
       ) : (
         <Switch>
@@ -39,7 +39,7 @@ const Routes = () => {
           <Route exact path='/home' component={Home} />
           <Route path='/login'>{Login}</Route>
           <Route path='/signup'>{Signup}</Route>
-          <Route path='/share/:id' component={ShareableUrl} />
+          <Route path='/share/:chartId' component={ShareableUrl} />
         </Switch>
       )}
       <Switch>
