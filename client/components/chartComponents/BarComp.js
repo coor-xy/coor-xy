@@ -29,7 +29,7 @@ const BarComp = (props) => {
       <text x={(width+60) / 2} y={10} fill="black" textAnchor="middle" dominantBaseline="central">
         <tspan fontSize="20" fontWeight="bold">{title}</tspan>
       </text>
-      {grid ? 
+      {grid ?
       <CartesianGrid strokeDasharray="3 3"/> :
       <></>}
       <XAxis dataKey={primaryColumn} label={{value: xLabel, offset:10, position:"bottom"}}/>

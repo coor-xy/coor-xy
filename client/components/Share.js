@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap'
 import ShareableUrl from './ShareableUrl';
 
 
+
 function Share ({id}) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -13,18 +14,19 @@ function Share ({id}) {
     if (id === undefined) {
       return "Save your work to share!"
     }
+    // Need to change this before deploy
     return window.location.protocol + window.location.hostname + ':' + window.location.port + `/share/${id}`
   }
   return (
-    <div >
-      {console.log(id)}
-      <Button variant="primary" onClick={handleShow}>
+    <div>
+      <button variant="primary" onClick={handleShow}>
         Share
-      </Button>
+      </button>
 
       <Modal show={show}
       onHide={handleClose}
-      animation={false}>
+      animation={true}
+      >
         <div className="modal-container">
         <Modal.Header >
           <Modal.Title className="modal-title">Sharable URL</Modal.Title>

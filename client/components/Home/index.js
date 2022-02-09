@@ -10,7 +10,7 @@ const Home = props => {
   const username = useSelector(state => state.auth.username)
 
   return (
-    <div>
+    <div className="homepage-container">
       {/* <h3 className="welcome"> Welcome, {username}</h3> */}
       <link
   rel="stylesheet"
@@ -20,6 +20,10 @@ const Home = props => {
 />
       <ControlledCarousel/>
       <Page />
+      <h2 className="homepage-title">
+        Make a beautiful data visualizations with Coor|xy
+      </h2>
+      <p ></p>
     </div>
   )
 }

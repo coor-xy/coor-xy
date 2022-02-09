@@ -5,6 +5,9 @@ import DummyChart from '../DummyChart';
 
 const Page = () => {
   return (
+    <div className="homepage-grid-container">
+      <h2 className="homepage-title" >Some Examples of Graphs and Charts</h2>
+
     <div className='homepage-chart-grid'>
       <div className='homepage-chart-tile'>
         <DummyChart type={'Bar'} />
@@ -27,6 +30,7 @@ const Page = () => {
       <div className='homepage-chart-tile'>
         <DummyChart type={'Pie'} />
       </div>
+    </div>
     </div>
   );
 };
