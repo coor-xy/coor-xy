@@ -52,10 +52,10 @@ const columnInfo = {
     valuesLabel: "Select vertical variables",
   },
   "Pie": {
-    primaryInfoBox: "TBD",
-    valuesInfoBox: "TBD",
-    primaryLabel: "TBD",
-    valuesLabel: "TBD",
+    primaryInfoBox: "Accepts numbers, strings, and dates",
+    valuesInfoBox: "Accepts numbers",
+    primaryLabel: "Select slice variable",
+    valuesLabel: "Select arcs",
   }
 };
 
