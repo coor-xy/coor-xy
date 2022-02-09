@@ -222,12 +222,10 @@ const Edit = () => {
                   checked={chartConfig.grid}
                   onChange={handleConfigChange}
                 />
-<<<<<<< HEAD
               </form>
               <ColumnSelector />
               {console.log(chartConfig)}
             </div>
-=======
               </div>
 
               {selectedColumns.values.map((series, index) => (
