@@ -23,9 +23,18 @@ const AuthForm = ({ name, displayName }) => {
     dispatch(authenticate(username, password, formName, email))
   }
 
+  const myStyle={
+    "display": "flex",
+    "justifyContent": "flex-start",
+    "alignItems": "center",
+    "flexDirection": "column",
+    "border": "2px solid rgb(0 0 0)",
+    "borderRadius": "20px",
+}
+
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form style={myStyle} onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="username">
             <small>Username</small>
@@ -44,7 +53,7 @@ const AuthForm = ({ name, displayName }) => {
               <small>Email</small>
             </label>
             <input name="email" type="email" />
-          </div>: <div></div>
+          </div>: <></>
           }
         <div>
           <button type="submit">{displayName}</button>
