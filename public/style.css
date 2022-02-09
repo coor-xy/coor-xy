@@ -1,6 +1,6 @@
 body {
   font-family: sans-serif;
-  background: #EEEEEE;
+  background: #eeeeee;
 }
 
 a {
@@ -16,10 +16,9 @@ nav a {
   margin: 1em;
   text-align: center;
   align-items: center;
-  color:whitesmoke;
+  color: whitesmoke;
   font-size: 20px;
 }
-
 
 .navbar-name {
   font-weight: bold;
@@ -317,7 +316,7 @@ td {
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   padding: 0.5em;
   margin: 0.5em;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
 .homepage-chart-tile {
@@ -329,31 +328,30 @@ td {
   background-color: white;
 }
 
-
 .homepage-container {
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
 .logo {
   justify-content: center;
   align-items: center;
   width: 17%;
-  display:absolute;
-  margin-left: 41.5%
+  display: absolute;
+  margin-left: 41.5%;
 }
 
 .homepage-links {
   justify-content: center;
-  align-items:center;
+  align-items: center;
   display: flex;
 }
 
-.navbar-container{
-  background-color:#686D76;
+.navbar-container {
+  background-color: #686d76;
 }
 
 .homepage-title {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 5%;
@@ -362,16 +360,15 @@ td {
 
 .share-title {
   justify-content: center;
-  display:flex;
+  display: flex;
   align-items: center;
 }
 
 .share-charts {
   justify-content: center;
-  display:flex;
+  display: flex;
   align-items: center;
 }
-
 
 .shareable-container {
   justify-content: left;
@@ -393,15 +390,22 @@ td {
   background: #f5f5f5;
 }
 
-#editpage-form label {
+#editpage-form > label {
   display: block;
   padding: 0.5rem 0 0.5rem;
   font-size: 16px;
   justify-content: center;
 }
 
-#editpage-form input,
-select {
+#editpage-form > input {
+  display: block;
+  width: 100%;
+  padding: 0.25rem;
+  border-radius: 5px;
+  border: 1px solid rgb(137, 136, 139);
+}
+
+#editpage-form > select {
   display: block;
   width: 100%;
   padding: 0.25rem;
@@ -444,14 +448,14 @@ select {
   background: #f5f5f5;
 }
 
-.column-selector-axis label {
+.column-selector-axis > label {
   display: block;
   padding: 0.5rem 0 0.5rem;
   font-size: 16px;
   justify-content: center;
 }
 
-.column-selector-axis select {
+.column-selector-axis > select {
   display: block;
   width: 100%;
   padding: 0.25rem;
@@ -468,14 +472,14 @@ select {
   background: #f5f5f5;
 }
 
-.column-selector-values label {
+.column-selector-values > label {
   display: block;
   padding: 0.5rem 0 0.5rem;
   font-size: 16px;
   justify-content: center;
 }
 
-.column-selector-values select {
+.column-selector-values > select {
   display: block;
   width: 100%;
   padding: 0.25rem;
