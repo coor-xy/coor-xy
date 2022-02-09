@@ -24,16 +24,22 @@ const AuthForm = ({ name, displayName }) => {
   }
 
   const myStyle={
+    "marginTop":"30px",
     "display": "flex",
     "justifyContent": "flex-start",
     "alignItems": "center",
     "flexDirection": "column",
-    "border": "2px solid rgb(0 0 0)",
-    "borderRadius": "20px",
+    "borderRadius": "25px",
+    "width":"25%",
+    "backgroundColor":"#373A40",
+    "color":"white",
 }
 
   return (
-    <div>
+    <div style={{"display": "flex",
+      "alignItems": "center",
+      "flexFlow": "column wrap",
+      "justifyContent": "flex-start",}}>
       <form style={myStyle} onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="username">
@@ -56,7 +62,15 @@ const AuthForm = ({ name, displayName }) => {
           </div>: <></>
           }
         <div>
-          <button type="submit">{displayName}</button>
+          <button style={{
+            "padding": "1.05em",
+            "background": "#19D3DA",
+            "color": "black",
+            "border": "none",
+            "borderRadius": "25px",
+            "fontWeight": "600",
+            "cursor": "pointer",
+            }} type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
