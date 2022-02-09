@@ -23,9 +23,24 @@ const AuthForm = ({ name, displayName }) => {
     dispatch(authenticate(username, password, formName, email))
   }
 
+  const myStyle={
+    "marginTop":"35px",
+    "display": "flex",
+    "justifyContent": "flex-start",
+    "alignItems": "center",
+    "flexDirection": "column",
+    "borderRadius": "25px",
+    "width":"23%",
+    "backgroundColor":"#373A40",
+    "color":"white",
+}
+
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
+    <div style={{"display": "flex",
+      "alignItems": "center",
+      "flexFlow": "column wrap",
+      "justifyContent": "flex-start",}}>
+      <form style={myStyle} onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="username">
             <small>Username</small>
@@ -44,10 +59,18 @@ const AuthForm = ({ name, displayName }) => {
               <small>Email</small>
             </label>
             <input name="email" type="email" />
-          </div>: <div></div>
+          </div>: <></>
           }
         <div>
-          <button type="submit">{displayName}</button>
+          <button style={{
+            "padding": "1.05em",
+            "background": "#19D3DA",
+            "color": "black",
+            "border": "none",
+            "borderRadius": "25px",
+            "fontWeight": "600",
+            "cursor": "pointer",
+            }} type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>

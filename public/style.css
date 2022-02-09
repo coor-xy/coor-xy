@@ -129,7 +129,7 @@ form div {
   justify-content: center;
 }
 
-.column-selector-container {
+/* .column-selector-container {
   display: flex;
   place-content: space-between flex-start;
   align-items: center;
@@ -137,7 +137,7 @@ form div {
 
 .selectors {
   margin: 20px;
-}
+} */
 
 .bottom-half-container {
   display: flex;
@@ -378,3 +378,114 @@ td {
   margin-left: 10%;
 }
 
+.editpage-container {
+  display: grid;
+  grid-template-columns: minmax(150px, 20%) 1fr;
+  padding: 1em 3em;
+}
+
+#editpage-form {
+  max-width: 180px;
+  /* margin: 2rem auto; */
+  border: 2px solid #f5f5f5;
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+  background: #f5f5f5;
+}
+
+#editpage-form label {
+  display: block;
+  padding: 0.5rem 0 0.5rem;
+  font-size: 16px;
+  justify-content: center;
+}
+
+#editpage-form input,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.25rem;
+  border-radius: 5px;
+  border: 1px solid rgb(137, 136, 139);
+}
+
+.editpage-buttons {
+  display: flex;
+  justify-content: flex-end;
+  /* margin-top: 20px; */
+  margin-right: 5px;
+}
+
+.editpage-buttons button {
+  border: 1px solid #c0c0c0;
+  border-radius: 5px;
+  background: #f5f5f5;
+  color: black;
+  margin: 0.25rem;
+  margin-top: 2px;
+  width: auto;
+  cursor: pointer;
+  padding: 0.3rem;
+}
+
+.editpage-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+}
+
+.column-selector-axis {
+  max-width: 180px;
+  margin: 2rem auto;
+  border: 2px solid #f5f5f5;
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+  background: #f5f5f5;
+}
+
+.column-selector-axis label {
+  display: block;
+  padding: 0.5rem 0 0.5rem;
+  font-size: 16px;
+  justify-content: center;
+}
+
+.column-selector-axis select {
+  display: block;
+  width: 100%;
+  padding: 0.25rem;
+  border-radius: 5px;
+  border: 1px solid rgb(137, 136, 139);
+}
+
+.column-selector-values {
+  max-width: 180px;
+  margin: 2rem auto;
+  border: 2px solid #f5f5f5;
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+  background: #f5f5f5;
+}
+
+.column-selector-values label {
+  display: block;
+  padding: 0.5rem 0 0.5rem;
+  font-size: 16px;
+  justify-content: center;
+}
+
+.column-selector-values select {
+  display: block;
+  width: 100%;
+  padding: 0.25rem;
+  border-radius: 5px;
+  border: 1px solid rgb(137, 136, 139);
+}
+
+.editpage-left-column {
+  height: 600px;
+  overflow: scroll;
+  display: flex;
+  justify-content: center;
+}
