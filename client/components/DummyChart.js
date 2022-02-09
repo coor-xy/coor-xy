@@ -11,8 +11,8 @@ const {
 } = charts;
 
 const dummyConfig = {
-  width: 500,
-  height: 400,
+  width: 350,
+  height: 300,
   xLabel: "",
   yLabel: "",
   legend: false,
@@ -237,8 +237,8 @@ const DummyChart = (props) => {
           data={dummyDataGrouped}
           primaryColumn={"Group"}
           valueColumns={[{ name: "Q1", color: "#fda25a" }]}
-          width={dummyConfig.width}
-          height={dummyConfig.height}
+          width={425}
+          height={400}
           xLabel={dummyConfig.xLabel}
           yLabel={dummyConfig.yLabel}
           legend={dummyConfig.legend}

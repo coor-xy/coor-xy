@@ -13,10 +13,10 @@ const Navbar = () =>  {
 
   return (
     <div className="navbar-container">
-      <h1 className="navbar-name">Coor|xy</h1>
+      <img src="/logo.jpg" alt='logo' className="logo" />
       <nav>
         {isLoggedIn ? (
-          <div>
+          <div className="homepage-links">
             <Link to="/home">Home</Link>
 
             <Link to="/mycharts" onClick={()=>{
@@ -30,7 +30,7 @@ const Navbar = () =>  {
             </a>
           </div>
         ) : (
-          <div>
+          <div className="homepage-links">
             <Link to="/home">Home</Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>

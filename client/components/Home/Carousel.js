@@ -25,12 +25,12 @@ function ControlledCarousel() {
       <Carousel.Item>
       <img
           className="carousel-img"
-          src="https://user-images.githubusercontent.com/4280312/48332539-2526c180-e64c-11e8-9482-d7e97cc50b93.png"
+          src="/trynow.png"
           alt="Second slide"
         />
         <Carousel.Caption className="carousel-caption">
-          <h3>Bar Chart</h3>
-          <p>Bar chart description</p>
+          <h3></h3>
+          <p>signup is on the link</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -41,13 +41,13 @@ function ControlledCarousel() {
         />
         <Carousel.Caption className="carousel-caption">
           <h3>Pie Chart</h3>
-          <p>Pie chart description</p>
+          <p>pie chart can be used to show the percentages of a whole, representing percentages at a set point of time</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="carousel-img"
-          src="https://grafana.com/static/assets/img/blog/scatterplot.png"
+          src="/carouselimg.png"
           alt="Fourth slide"
         />
         <Carousel.Caption className="carousel-caption">

@@ -16,11 +16,11 @@ const ShareableUrl = () => {
 
   return (
     <div>
-      <h1>Shareable Page</h1>
+      <h1 className="share-title">Shared Page</h1>
       {!type ? (
         <div><h4>Chart Not Found</h4></div>
       ): (
-        <div>
+        <div className="share-charts">
           {type === "Bar" && (
               <BarComp
                 data={dataTable.data}
@@ -117,11 +117,11 @@ const ShareableUrl = () => {
                 legend={legend}
                 title={title}
                 grid={grid}
+
               />
             )}
         </div>
       )}
-
     </div>
   )
 }
