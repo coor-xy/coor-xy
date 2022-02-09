@@ -293,6 +293,42 @@ const MyCharts = () => {
                   />
                 </Link>
               </div>
+            ) : chart.type === "Scatter" ? (
+              <div>
+              <Link
+                to={{
+                  pathname: "/edit",
+                  state: { type: "Scatter", chartId: chart.id },
+                }}
+                onClick={() => {
+                  dispatch(_setData(chart.dataTable.data));
+                  dispatch(_setPrimaryColumn(chart.primaryColumn));
+                  chart.valueColumns.forEach((obj) => {
+                    dispatch(_setValueColumns(obj));
+                  });
+                  dispatch(_setDataId(chart.dataTable.id));
+                  dispatch(
+                    _setChartConfigs({
+                      title: chart.title,
+                      width: chart.width,
+                      height: chart.height,
+                      xLabel: chart.xLabel,
+                      yLabel: chart.yLabel,
+                      grid: chart.grid,
+                      legend: chart.legend,
+                    })
+                  );
+                }}
+              >
+                <SimpleScatterComp
+                  data={chart.dataTable.data}
+                  primaryColumn={chart.primaryColumn}
+                  valueColumns={chart.valueColumns}
+                  height={250}
+                  width={300}
+                />
+              </Link>
+            </div>
             ) : (
               <></>
             )}

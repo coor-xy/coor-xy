@@ -209,7 +209,6 @@ const Edit = () => {
 
               <button type="submit">Save Changes</button>
             </form>
-            {console.log(chartConfig)}
           </div>
           <div className="bottom-half-container">
           <ColumnSelector />
