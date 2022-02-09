@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getRandomColor } from "../utility";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRandomColor } from '../utility';
 import {
   _setPrimaryColumn,
   _removePrimaryColumn,
   _setValueColumns,
   _removeValueColumn,
-} from "../store/selectColumns";
+} from '../store/selectColumns';
 
 const ColumnSelector = () => {
   const { data, selectedColumns } = useSelector((state) => state);
@@ -20,7 +20,7 @@ const ColumnSelector = () => {
   const handleSelectColumn = (e) => {
     const axis = e.target.name;
     const column = e.target.value;
-    if (axis === "primary") {
+    if (axis === 'primary') {
       dispatch(_setPrimaryColumn(column));
     } else if (
       !selectedColumns.values.filter((obj) => obj.name === column).length
@@ -30,24 +30,24 @@ const ColumnSelector = () => {
   };
 
   const handleDeSelectColumn = (axis, columnName) => {
-    if (axis === "primary") {
-      dispatch(_removePrimaryColumn(""));
+    if (axis === 'primary') {
+      dispatch(_removePrimaryColumn(''));
     } else {
       dispatch(_removeValueColumn(columnName));
     }
   };
 
   return (
-    <div className="column-selector-container">
-      <div className="selectors">
-        <label htmlFor="primary">Select a primary axis:</label>
+    <div>
+      <div className='column-selector-axis'>
+        <label htmlFor='primary'>Select a primary axis</label>
         <select
-          name="primary"
-          id="primary-column-select"
-          size="3"
+          name='primary'
+          id='primary-column-select'
+          size='3'
           onChange={handleSelectColumn}
         >
-          <option value="" disabled>
+          <option value='' disabled>
             --Choose a column--
           </option>
           {columns.map((c, i) => (
@@ -68,23 +68,24 @@ const ColumnSelector = () => {
               <small>Selected column: </small>
             </p>
             <p>
-              {`${selectedColumns.primary} `}
-              <small onClick={() => handleDeSelectColumn("primary")}>
+              {`${selectedColumns.primary}`}
+              &#8198; &#8198; &#8198; &#8198;&#8198; &#8198;
+              <button onClick={() => handleDeSelectColumn('primary')}>
                 remove
-              </small>
+              </button>
             </p>
           </div>
         )}
       </div>
-      <div className="selectors">
-        <label htmlFor="values">Select values:</label>
+      <div className='column-selector-values'>
+        <label htmlFor='values'>Select values</label>
         <select
-          name="values"
-          id="values-column-select"
-          size="3"
+          name='values'
+          id='values-column-select'
+          size='3'
           onChange={handleSelectColumn}
         >
-          <option value="" disabled>
+          <option value='' disabled>
             --Choose a column--
           </option>
           {columns.map((c, i) => (
@@ -107,9 +108,12 @@ const ColumnSelector = () => {
             {selectedColumns.values.map((val, i) => (
               <p key={i}>
                 {`${val.name} `}
-                <small onClick={() => handleDeSelectColumn("values", val.name)}>
+                &#8198; &#8198; &#8198; &#8198;&#8198; &#8198;
+                <button
+                  onClick={() => handleDeSelectColumn('values', val.name)}
+                >
                   remove
-                </small>
+                </button>
               </p>
             ))}
           </div>
