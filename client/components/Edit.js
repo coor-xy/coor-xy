@@ -222,10 +222,31 @@ const Edit = () => {
                   checked={chartConfig.grid}
                   onChange={handleConfigChange}
                 />
+<<<<<<< HEAD
               </form>
               <ColumnSelector />
               {console.log(chartConfig)}
             </div>
+=======
+              </div>
+
+              {selectedColumns.values.map((series, index) => (
+                <div key={index}>
+                  <label htmlFor={series.name}>
+                    <small>{`${series.name} color`}</small>
+                  </label>
+                  <input
+                    name={series.name}
+                    type="color"
+                    value={series.color}
+                    onChange={handleSeriesColorChange}
+                  />
+                </div>
+              ))}
+
+              <button type="submit">Save Changes</button>
+            </form>
+>>>>>>> main
           </div>
 
           <div className='editpage-right-column'>
