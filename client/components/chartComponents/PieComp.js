@@ -30,10 +30,7 @@ const PieComp = (props) => {
     }
     valueColor = valueColumns[0].color
   }
-
   const outerRadius = width<301 ? width/5 : 80
-
-  console.log(restData)
 
   return (
       <PieChart 
