@@ -24,13 +24,13 @@ const AuthForm = ({ name, displayName }) => {
   }
 
   const myStyle={
-    "marginTop":"30px",
+    "marginTop":"35px",
     "display": "flex",
     "justifyContent": "flex-start",
     "alignItems": "center",
     "flexDirection": "column",
     "borderRadius": "25px",
-    "width":"25%",
+    "width":"23%",
     "backgroundColor":"#373A40",
     "color":"white",
 }
