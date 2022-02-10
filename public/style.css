@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
 body {
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   background: #eeeeee;
 }
 
@@ -143,7 +148,6 @@ form div {
   justify-content: flex-start;
   align-items: center;
 }
-
 .data-select-container {
   height: 250px;
   display: grid;
@@ -333,11 +337,12 @@ td {
 }
 
 .logo {
-  justify-content: center;
-  align-items: center;
-  width: 17%;
+  justify-content: left;
+  align-items: left;
+  width: 100%;
   display: absolute;
-  margin-left: 41.5%;
+  border-radius: 25%;
+  margin-right: 100px;
 }
 
 .homepage-links {
@@ -347,8 +352,8 @@ td {
 }
 
 .navbar-container {
-  background-color: #686d76;
-}
+  background: rgb(55,58,64);
+  background: linear-gradient(90deg, rgba(55,58,64,1) 5%, rgba(104,109,118,1) 46%, rgba(91,126,135,1) 55%, rgba(70,153,162,1) 68%, rgba(238,238,238,1) 100%);}
 
 .homepage-title {
   display: flex;

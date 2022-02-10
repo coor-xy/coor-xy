@@ -28,21 +28,13 @@ function ControlledCarousel() {
           src="/trynow.png"
           alt="Second slide"
         />
-        <Carousel.Caption className="carousel-caption">
-          <h3></h3>
-          <p>signup is on the link</p>
-        </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="carousel-img"
-          src="https://blackmixture.com/wp-content/uploads/2018/04/black-mixture-background-2018.jpg"
+          src="/carouselimg2.png"
           alt="Third slide"
         />
-        <Carousel.Caption className="carousel-caption">
-          <h3>Pie Chart</h3>
-          <p>pie chart can be used to show the percentages of a whole, representing percentages at a set point of time</p>
-        </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img
@@ -51,10 +43,6 @@ function ControlledCarousel() {
           alt="Fourth slide"
         />
         <Carousel.Caption className="carousel-caption">
-          <h3>Scatter Chart</h3>
-          <p>
-           Scatter chart description
-          </p>
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
