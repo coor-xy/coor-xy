@@ -27,6 +27,7 @@
     "compression": "^1.7.3",
     "dotenv": "^14.3.2",
     "express": "^4.16.4",
+    "file-saver": "^2.0.5",
     "history": "^4.9.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
@@ -34,6 +35,7 @@
     "pg": "^8.5.1",
     "react-bootstrap": "^2.1.2",
     "recharts": "^2.1.8",
+    "recharts-to-png": "^2.0.0",
     "sequelize": "^6.3.5",
     "uuid": "^8.3.2"
   },
