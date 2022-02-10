@@ -20,13 +20,26 @@ const Footer = () => {
                 "justifyContent": "center",
                 "flexDirection": "column",
                 "textAlign": "center",}}>
-                <h3>Coor|xy</h3>
-                
+                <h2>Coor|xy</h2>
+                <p>Developers:</p>
+                <div>
+                    <a href="https://github.com/davidjchoi">
+                        <span style={{color:"white",textDecoration:"none", margin:"10px"}}>David Choi</span>
+                    </a>
+                    <a href="https://github.com/interranteblaine/">
+                        <span style={{color:"white",textDecoration:"none", margin:"10px"}}>Blaine Interrante</span>
+                    </a>
+                    <a href="https://github.com/dannypacheco4">
+                        <span style={{color:"white",textDecoration:"none", margin:"10px"}}>Danny Pacheco</span>
+                    </a>
+                    <a href="https://github.com/3eds3">
+                        <span style={{color:"white",textDecoration:"none", margin:"10px"}}>Edward Shevchuk</span>
+                    </a>
+                </div>
             </div>
             <div style={{
-                "backgroundColor": "#000",
                 "width": "100vw",
-                "padding": "5px 0",
+                "padding": "3px 0",
                 "textAlign": "center",
             }}>
                 <p>
