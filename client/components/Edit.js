@@ -57,6 +57,7 @@ const Edit = () => {
     grid: chartConfigs.grid,
   });
   const dispatch = useDispatch();
+  const [download, setDownload] = useState(false);
 
   const handleConfigChange = (e) => {
     if (e.target.type === 'number') {
@@ -115,6 +116,13 @@ const Edit = () => {
   const handleDelete = () => {
     dispatch(removeChart(chartId));
   };
+
+  const handleDownload = () => {
+    setDownload(true);
+    setTimeout(() => {
+      setDownload(false);
+    }, 1000)
+  }
 
   return (
     <div>
@@ -229,6 +237,7 @@ const Edit = () => {
 
           <div className='editpage-right-column'>
             <div className='editpage-buttons'>
+              <button onClick={handleDownload}>Download</button>
               <Share
                 id={chartId}
                 show={modalShow}
@@ -268,6 +277,7 @@ const Edit = () => {
                     legend={chartConfig.legend}
                     title={chartConfig.title}
                     grid={chartConfig.grid}
+                    download={download}
                   />
                 )}
                 {chartConfig.type === 'Stacked Bar' && (
@@ -282,6 +292,7 @@ const Edit = () => {
                     legend={chartConfig.legend}
                     title={chartConfig.title}
                     grid={chartConfig.grid}
+                    download={download}
                   />
                 )}
                 {chartConfig.type === 'Scatter' && (
@@ -296,6 +307,7 @@ const Edit = () => {
                     legend={chartConfig.legend}
                     title={chartConfig.title}
                     grid={chartConfig.grid}
+                    download={download}
                   />
                 )}
                 {chartConfig.type === 'Area' && (
@@ -310,6 +322,7 @@ const Edit = () => {
                     legend={chartConfig.legend}
                     title={chartConfig.title}
                     grid={chartConfig.grid}
+                    download={download}
                   />
                 )}
                 {chartConfig.type === 'Stacked Area' && (
@@ -324,6 +337,7 @@ const Edit = () => {
                     legend={chartConfig.legend}
                     title={chartConfig.title}
                     grid={chartConfig.grid}
+                    download={download}
                   />
                 )}
                 {chartConfig.type === 'Line' && (
@@ -338,6 +352,7 @@ const Edit = () => {
                     legend={chartConfig.legend}
                     title={chartConfig.title}
                     grid={chartConfig.grid}
+                    download={download}
                   />
                 )}
                 {chartConfig.type === 'Pie' && (
@@ -352,6 +367,7 @@ const Edit = () => {
                     legend={chartConfig.legend}
                     title={chartConfig.title}
                     grid={chartConfig.grid}
+                    download={download}
                   />
                 )}
               </div>
