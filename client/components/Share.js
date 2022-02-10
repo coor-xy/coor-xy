@@ -3,8 +3,6 @@ import Modal from 'react-bootstrap/Modal'
 import { Button } from 'react-bootstrap'
 import ShareableUrl from './ShareableUrl';
 
-
-
 function Share ({id}) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -15,7 +13,7 @@ function Share ({id}) {
       return "Save your work to share!"
     }
     // Need to change this before deploy
-    return window.location.protocol + window.location.hostname + ':' + window.location.port + `/share/${id}`
+    return window.location.protocol + window.location.hostname + ':' + window.location.port +`/share/${id}`
   }
   return (
     <div>
