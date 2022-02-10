@@ -57,24 +57,23 @@ const ColumnSelector = () => {
           ))}
         </select>
         {!selectedColumns.primary ? (
-          <div>
-            <p>
-              <small>You haven't selected anything</small>
-            </p>
-          </div>
+          <small>You haven't selected anything</small>
         ) : (
-          <div>
-            <p>
+          <>
+            <label>
               <small>Selected column: </small>
-            </p>
-            <p>
-              {`${selectedColumns.primary}`}
-              &#8198; &#8198; &#8198; &#8198;&#8198; &#8198;
-              <button onClick={() => handleDeSelectColumn('primary')}>
+            </label>
+
+            <label>{`${selectedColumns.primary}`}</label>
+            <label>
+              <button
+                id='primary-column-button'
+                onClick={() => handleDeSelectColumn('primary')}
+              >
                 remove
               </button>
-            </p>
-          </div>
+            </label>
+          </>
         )}
       </div>
       <div className='column-selector-values'>
@@ -101,22 +100,25 @@ const ColumnSelector = () => {
             </p>
           </div>
         ) : (
-          <div>
-            <p>
+          <>
+            <label>
               <small>Selected Columns: </small>
-            </p>
+            </label>
+
             {selectedColumns.values.map((val, i) => (
-              <p key={i}>
-                {`${val.name} `}
-                &#8198; &#8198; &#8198; &#8198;&#8198; &#8198;
-                <button
-                  onClick={() => handleDeSelectColumn('values', val.name)}
-                >
-                  remove
-                </button>
-              </p>
+              <>
+                <label key={i}>{`${val.name} `}</label>
+                <label>
+                  <button
+                    id='selected-column-button'
+                    onClick={() => handleDeSelectColumn('values', val.name)}
+                  >
+                    remove
+                  </button>
+                </label>
+              </>
             ))}
-          </div>
+          </>
         )}
       </div>
     </div>
