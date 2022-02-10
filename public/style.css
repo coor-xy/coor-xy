@@ -133,16 +133,6 @@ form div {
   justify-content: center;
 }
 
-/* .column-selector-container {
-  display: flex;
-  place-content: space-between flex-start;
-  align-items: center;
-}
-
-.selectors {
-  margin: 20px;
-} */
-
 .bottom-half-container {
   display: flex;
   justify-content: flex-start;
@@ -352,8 +342,16 @@ td {
 }
 
 .navbar-container {
-  background: rgb(55,58,64);
-  background: linear-gradient(90deg, rgba(55,58,64,1) 5%, rgba(104,109,118,1) 46%, rgba(91,126,135,1) 55%, rgba(70,153,162,1) 68%, rgba(238,238,238,1) 100%);}
+  background: rgb(55, 58, 64);
+  background: linear-gradient(
+    90deg,
+    rgba(55, 58, 64, 1) 5%,
+    rgba(104, 109, 118, 1) 46%,
+    rgba(91, 126, 135, 1) 55%,
+    rgba(70, 153, 162, 1) 68%,
+    rgba(238, 238, 238, 1) 100%
+  );
+}
 
 .homepage-title {
   display: flex;
@@ -382,13 +380,12 @@ td {
 
 .editpage-container {
   display: grid;
-  grid-template-columns: minmax(150px, 20%) 1fr;
+  grid-template-columns: minmax(250px, 300px) 1fr;
   padding: 1em 3em;
 }
 
 #editpage-form {
-  max-width: 180px;
-  /* margin: 2rem auto; */
+  width: 240px;
   border: 2px solid #f5f5f5;
   padding: 0.5rem 2rem;
   border-radius: 5px;
@@ -396,7 +393,7 @@ td {
 }
 
 #editpage-form > label {
-  display: block;
+  display: flex;
   padding: 0.5rem 0 0.5rem;
   font-size: 16px;
   justify-content: center;
@@ -421,7 +418,6 @@ td {
 .editpage-buttons {
   display: flex;
   justify-content: flex-end;
-  /* margin-top: 20px; */
   margin-right: 5px;
 }
 
@@ -445,7 +441,7 @@ td {
 }
 
 .column-selector-axis {
-  max-width: 180px;
+  width: 240px;
   margin: 2rem auto;
   border: 2px solid #f5f5f5;
   padding: 0.5rem 2rem;
@@ -454,7 +450,7 @@ td {
 }
 
 .column-selector-axis > label {
-  display: block;
+  display: flex;
   padding: 0.5rem 0 0.5rem;
   font-size: 16px;
   justify-content: center;
@@ -469,7 +465,7 @@ td {
 }
 
 .column-selector-values {
-  max-width: 180px;
+  width: 240px;
   margin: 2rem auto;
   border: 2px solid #f5f5f5;
   padding: 0.5rem 2rem;
@@ -478,7 +474,7 @@ td {
 }
 
 .column-selector-values > label {
-  display: block;
+  display: flex;
   padding: 0.5rem 0 0.5rem;
   font-size: 16px;
   justify-content: center;
@@ -497,4 +493,22 @@ td {
   overflow: scroll;
   display: flex;
   justify-content: center;
+}
+
+#selected-column-button {
+  border: 1px solid #373a40;
+  border-radius: 5px;
+  background: #f5f5f5;
+  color: black;
+  width: auto;
+  cursor: pointer;
+}
+
+#primary-column-button {
+  border: 1px solid #373a40;
+  border-radius: 5px;
+  background: #f5f5f5;
+  color: black;
+  width: auto;
+  cursor: pointer;
 }

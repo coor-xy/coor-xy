@@ -121,8 +121,8 @@ const Edit = () => {
     setDownload(true);
     setTimeout(() => {
       setDownload(false);
-    }, 1000)
-  }
+    }, 1000);
+  };
 
   return (
     <div>
@@ -198,8 +198,8 @@ const Edit = () => {
                 />
 
                 {selectedColumns.values.map((series, index) => (
-                  <p key={index}>
-                    <label htmlFor={series.name}>
+                  <>
+                    <label htmlFor={series.name} key={index}>
                       <small>{`${series.name} Color`}</small>
                     </label>
                     <input
@@ -208,7 +208,7 @@ const Edit = () => {
                       value={series.color}
                       onChange={handleSeriesColorChange}
                     />
-                  </p>
+                  </>
                 ))}
 
                 <label htmlFor='legend'>
