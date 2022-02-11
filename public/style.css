@@ -4,7 +4,7 @@
   font-family: 'Roboto', sans-serif;
 }
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: sans-serif;
   background: #eeeeee;
 }
 
@@ -25,9 +25,6 @@ nav a {
   font-size: 20px;
 }
 
-.navbar-name {
-  font-weight: bold;
-}
 
 .logout {
   justify-content: right;
@@ -329,19 +326,20 @@ td {
 .logo {
   justify-content: left;
   align-items: left;
-  width: 100%;
+  width: 10%;
   display: absolute;
   border-radius: 25%;
   margin-right: 100px;
 }
 
-.homepage-links {
-  justify-content: center;
+.homepage-navlinks {
+  justify-content: left;
   align-items: center;
   display: flex;
+  margin-top: 0;
 }
 
-.navbar-container {
+nav {
   background: rgb(55, 58, 64);
   background: linear-gradient(
     90deg,
