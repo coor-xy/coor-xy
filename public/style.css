@@ -6,6 +6,7 @@
 body {
   font-family: sans-serif;
   background: #eeeeee;
+  margin: 0;
 }
 
 a {
@@ -135,6 +136,11 @@ form div {
   justify-content: flex-start;
   align-items: center;
 }
+
+.create-container {
+  margin: 1em 3em 1em 3em;
+}
+
 .data-select-container {
   height: 250px;
   display: grid;
@@ -204,6 +210,7 @@ td {
   justify-content: center;
   align-items: center;
   border: 2px solid gainsboro;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .chart-tile:hover,
@@ -270,6 +277,7 @@ td {
   flex-wrap: wrap;
   padding: 0 0.5em 0 0.5em;
   margin: 0 0.5em 0 0.5em;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .col-selected small {
