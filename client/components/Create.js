@@ -94,7 +94,7 @@ const Create = () => {
   };
 
   return (
-    <div>
+    <div className="create-container">
       <h3>Step 1: Select your data</h3>
       <div className="data-select-container">
         <div className="data-select-sidebar-container">
