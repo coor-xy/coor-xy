@@ -198,8 +198,8 @@ const Edit = () => {
                 />
 
                 {selectedColumns.values.map((series, index) => (
-                  <>
-                    <label htmlFor={series.name} key={index}>
+                  <div key={index}>
+                    <label htmlFor={series.name}>
                       <small>{`${series.name} Color`}</small>
                     </label>
                     <input
@@ -208,7 +208,7 @@ const Edit = () => {
                       value={series.color}
                       onChange={handleSeriesColorChange}
                     />
-                  </>
+                  </div>
                 ))}
 
                 <label htmlFor='legend'>
@@ -244,10 +244,10 @@ const Edit = () => {
                 onHide={() => setModalShow(false)}
               />
               <button type='submit' form='editpage-form'>
-                SAVE CHANGES
+                Save Changes
               </button>
               {chartId !== undefined ? (
-                <button onClick={handleDelete}>DELETE</button>
+                <button onClick={handleDelete}>Delete</button>
               ) : (
                 <></>
               )}
@@ -260,7 +260,7 @@ const Edit = () => {
                   history.goBack();
                 }}
               >
-                CANCEL
+                Cancel
               </button>
             </div>
             <div className='editpage-chart'>

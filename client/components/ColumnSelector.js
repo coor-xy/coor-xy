@@ -106,8 +106,8 @@ const ColumnSelector = () => {
             </label>
 
             {selectedColumns.values.map((val, i) => (
-              <>
-                <label key={i}>{`${val.name} `}</label>
+              <div key={i}>
+                <label>{`${val.name} `}</label>
                 <label>
                   <button
                     id='selected-column-button'
@@ -116,7 +116,7 @@ const ColumnSelector = () => {
                     remove
                   </button>
                 </label>
-              </>
+              </div>
             ))}
           </>
         )}
