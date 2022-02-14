@@ -26,7 +26,6 @@ nav a {
   font-size: 20px;
 }
 
-
 .logout {
   justify-content: right;
 }
@@ -398,26 +397,26 @@ nav {
   background: #f5f5f5;
 }
 
-#editpage-form > label {
+#editpage-form label {
   display: flex;
   padding: 0.5rem 0 0.5rem;
   font-size: 16px;
   justify-content: center;
 }
 
-#editpage-form > input {
+#editpage-form input {
   display: block;
   width: 100%;
   padding: 0.25rem;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid rgb(137, 136, 139);
 }
 
-#editpage-form > select {
+#editpage-form select {
   display: block;
   width: 100%;
   padding: 0.25rem;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid rgb(137, 136, 139);
 }
 
@@ -429,7 +428,7 @@ nav {
 
 .editpage-buttons button {
   border: 1px solid #c0c0c0;
-  border-radius: 5px;
+  border-radius: 3px;
   background: #f5f5f5;
   color: black;
   margin: 0.25rem;
@@ -455,18 +454,18 @@ nav {
   background: #f5f5f5;
 }
 
-.column-selector-axis > label {
+.column-selector-axis label {
   display: flex;
   padding: 0.5rem 0 0.5rem;
   font-size: 16px;
   justify-content: center;
 }
 
-.column-selector-axis > select {
+.column-selector-axis select {
   display: block;
   width: 100%;
   padding: 0.25rem;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid rgb(137, 136, 139);
 }
 
@@ -479,18 +478,18 @@ nav {
   background: #f5f5f5;
 }
 
-.column-selector-values > label {
+.column-selector-values label {
   display: flex;
   padding: 0.5rem 0 0.5rem;
   font-size: 16px;
   justify-content: center;
 }
 
-.column-selector-values > select {
+.column-selector-values select {
   display: block;
   width: 100%;
   padding: 0.25rem;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid rgb(137, 136, 139);
 }
 
@@ -503,7 +502,7 @@ nav {
 
 #selected-column-button {
   border: 1px solid #373a40;
-  border-radius: 5px;
+  border-radius: 3px;
   background: #f5f5f5;
   color: black;
   width: auto;
@@ -512,9 +511,17 @@ nav {
 
 #primary-column-button {
   border: 1px solid #373a40;
-  border-radius: 5px;
+  border-radius: 3px;
   background: #f5f5f5;
   color: black;
   width: auto;
   cursor: pointer;
+}
+
+#editpage-form div {
+  display: block;
+}
+
+.column-selector-values div {
+  display: block;
 }
